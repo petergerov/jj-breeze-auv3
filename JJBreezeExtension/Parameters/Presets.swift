@@ -32,10 +32,10 @@ struct FactoryPreset: Sendable {
 enum FactoryPresets {
     static let all: [FactoryPreset] = [
         FactoryPreset(number: 0, name: "Default",
-                      pitchL: 300, pitchR: 300, delayL: 15, delayR: 15, focus: 150, mix: 50,
-                      vibratoRate: 1.2, vibratoDepth: 3.0, vibratoMix: 0,
-                      warmthTone: 3500, warmthDrive: 20, warmthBody: 0, warmthMix: 0,
-                      shiftOn: true, vibratoOn: false, warmthOn: false),
+                      pitchL: 300, pitchR: 300, delayL: 27, delayR: 37, focus: 20, mix: 27,
+                      vibratoRate: 1.2, vibratoDepth: 3.0, vibratoMix: 20,
+                      warmthTone: 3500, warmthDrive: 20, warmthBody: 0, warmthMix: 20,
+                      shiftOn: true, vibratoOn: true, warmthOn: true),
         FactoryPreset(number: 1, name: "JJ Cale Vocal",
                       pitchL: 4, pitchR: -4, delayL: 8, delayR: 10, focus: 300, mix: 18,
                       vibratoRate: 1.2, vibratoDepth: 3.0, vibratoMix: 0,
