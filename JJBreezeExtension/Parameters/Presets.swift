@@ -41,12 +41,18 @@ enum FactoryPresets {
                       vibratoRate: 1.2, vibratoDepth: 2.5, vibratoMix: 10,
                       warmthTone: 3500, warmthDrive: 18, warmthBody: 0, warmthMix: 15,
                       shiftOn: true, vibratoOn: true, warmthOn: true),
-        FactoryPreset(number: 2, name: "JJ Cale Cajun Moon Vocal",
+        FactoryPreset(number: 2, name: "J.J.Cale Cajun Moon",
                       pitchL: 300, pitchR: 300, delayL: 27, delayR: 37, focus: 20, mix: 13,
                       vibratoRate: 1.2, vibratoDepth: 3.0, vibratoMix: 15,
                       warmthTone: 3500, warmthDrive: 20, warmthBody: 0, warmthMix: 20,
                       shiftOn: true, vibratoOn: true, warmthOn: true),
-        FactoryPreset(number: 3, name: "JJ Dark Vocal",
+        // Desktop jj-breeze "Lies": Pitch L 0 / R +470 ct from lies_1 vs lies_2.
+        FactoryPreset(number: 7, name: "J.J.Cale Lies",
+                      pitchL: 0, pitchR: 470, delayL: 15, delayR: 15, focus: 25, mix: 25,
+                      vibratoRate: 1.2, vibratoDepth: 3.0, vibratoMix: 0,
+                      warmthTone: 3500, warmthDrive: 20, warmthBody: 0, warmthMix: 0,
+                      shiftOn: true, vibratoOn: false, warmthOn: false),
+        FactoryPreset(number: 3, name: "J.J.Cale Dark Vocal",
                       pitchL: -300, pitchR: -300, delayL: 17, delayR: 27, focus: 25, mix: 15,
                       vibratoRate: 1.1, vibratoDepth: 3.5, vibratoMix: 15,
                       warmthTone: 2800, warmthDrive: 25, warmthBody: 0, warmthMix: 20,
@@ -60,7 +66,13 @@ enum FactoryPresets {
                       pitchL: -700, pitchR: -700, delayL: 15, delayR: 15, focus: 25, mix: 20,
                       vibratoRate: 1.1, vibratoDepth: 3.5, vibratoMix: 0,
                       warmthTone: 2500, warmthDrive: 35, warmthBody: 10, warmthMix: 20,
-                      shiftOn: true, vibratoOn: false, warmthOn: true)
+                      shiftOn: true, vibratoOn: false, warmthOn: true),
+        // Desktop: Pitch 0/0, Delay 110/115 ms, Focus 25 Hz, Mix 35%. Vibrato and Warmth off.
+        FactoryPreset(number: 8, name: "Slapback Twang",
+                      pitchL: 0, pitchR: 0, delayL: 110, delayR: 115, focus: 25, mix: 35,
+                      vibratoRate: 1.2, vibratoDepth: 3.0, vibratoMix: 0,
+                      warmthTone: 3500, warmthDrive: 20, warmthBody: 0, warmthMix: 0,
+                      shiftOn: true, vibratoOn: false, warmthOn: false)
     ]
 }
 

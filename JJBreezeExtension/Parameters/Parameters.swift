@@ -8,9 +8,9 @@ let JJBreezeParameterSpecs = ParameterTreeSpec {
         ParameterSpec(address: .pitchR, identifier: "pitchR", name: "Pitch R",
                       units: .cents, valueRange: -1200.0...1200.0, defaultValue: 300.0, unitName: "ct")
         ParameterSpec(address: .delayL, identifier: "delayL", name: "Delay L",
-                      units: .milliseconds, valueRange: 0.0...40.0, defaultValue: 23.0, unitName: "ms")
+                      units: .milliseconds, valueRange: 0.0...250.0, defaultValue: 23.0, unitName: "ms")
         ParameterSpec(address: .delayR, identifier: "delayR", name: "Delay R",
-                      units: .milliseconds, valueRange: 0.0...40.0, defaultValue: 37.0, unitName: "ms")
+                      units: .milliseconds, valueRange: 0.0...250.0, defaultValue: 37.0, unitName: "ms")
         ParameterSpec(address: .focus, identifier: "focus", name: "Focus",
                       units: .hertz, valueRange: 20.0...10_000.0, defaultValue: 20.0, unitName: "Hz")
         ParameterSpec(address: .mix, identifier: "mix", name: "Mix",

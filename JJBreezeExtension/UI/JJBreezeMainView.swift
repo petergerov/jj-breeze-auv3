@@ -50,8 +50,8 @@ struct JJBreezeMainView: View {
                                     skew: 0.25,
                                     helpText: "Crossover frequency. Frequencies below this stay dry; highs go through pitch and delay."
                                 )
-                                KnobView(param: parameterTree.shift.delayL, caption: "DELAY L", linkedPeer: parameterTree.shift.delayR, linkEnabled: linkDelay)
-                                KnobView(param: parameterTree.shift.delayR, caption: "DELAY R", linkedPeer: parameterTree.shift.delayL, linkEnabled: linkDelay)
+                                KnobView(param: parameterTree.shift.delayL, caption: "DELAY L", skew: 0.3, linkedPeer: parameterTree.shift.delayR, linkEnabled: linkDelay)
+                                KnobView(param: parameterTree.shift.delayR, caption: "DELAY R", skew: 0.3, linkedPeer: parameterTree.shift.delayL, linkEnabled: linkDelay)
                                 KnobView(param: parameterTree.shift.mix, caption: "MIX")
                             }
                         }

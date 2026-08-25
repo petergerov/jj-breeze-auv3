@@ -21,7 +21,7 @@ public:
     void prepare (double sampleRateIn)
     {
         sampleRate = sampleRateIn;
-        maxDelaySamples = std::max (64, (int) std::round (sampleRate * 0.1)); // 100 ms headroom
+        maxDelaySamples = std::max (64, (int) std::round (sampleRate * 0.3)); // 300 ms: 250 ms Delay L/R + LFO
         buffer.assign ((size_t) maxDelaySamples, 0.0f);
         writePos = 0;
         lfoPhase = 0.0f;
