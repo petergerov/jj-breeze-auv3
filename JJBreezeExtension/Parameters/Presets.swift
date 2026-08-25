@@ -68,3 +68,20 @@ enum FactoryPresets {
                       shiftOn: true, vibratoOn: false, warmthOn: true)
     ]
 }
+
+enum JJBreezePresetError: LocalizedError {
+    case emptyName
+    case persistFailed
+    case notFound
+
+    var errorDescription: String? {
+        switch self {
+        case .emptyName:
+            return "Enter a preset name."
+        case .persistFailed:
+            return "Could not save the preset on this device."
+        case .notFound:
+            return "That preset is no longer on this device."
+        }
+    }
+}

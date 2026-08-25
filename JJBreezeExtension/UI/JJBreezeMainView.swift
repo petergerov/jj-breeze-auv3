@@ -73,29 +73,8 @@ struct JJBreezeMainView: View {
                 .minimumScaleFactor(0.7)
                 .lineLimit(1)
 
-            Menu {
-                ForEach(FactoryPresets.all, id: \.number) { preset in
-                    Button(preset.name) {
-                        audioUnit?.currentPreset = audioUnit?.factoryPresets?[preset.number]
-                    }
-                }
-            } label: {
-                HStack(spacing: 6) {
-                    Text(audioUnit?.currentPreset?.name ?? "Default")
-                        .font(.system(size: 12, weight: .semibold))
-                    Image(systemName: "chevron.down")
-                        .font(.system(size: 10, weight: .bold))
-                }
-                .foregroundStyle(GearTheme.accent)
-                .padding(.horizontal, 12)
-                .padding(.vertical, 6)
-                .background(GearTheme.panelFill)
-                .overlay(
-                    RoundedRectangle(cornerRadius: 6)
-                        .stroke(GearTheme.metalDark, lineWidth: 1)
-                )
-            }
-            .padding(.top, 6)
+            PresetBar(audioUnit: audioUnit)
+                .padding(.top, 6)
         }
         .padding(.bottom, 4)
     }

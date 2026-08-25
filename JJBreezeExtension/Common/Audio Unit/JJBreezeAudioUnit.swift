@@ -83,17 +83,150 @@ public class JJBreezeAudioUnit: AUAudioUnit, @unchecked Sendable {
 
     public override var supportsUserPresets: Bool { true }
 
+    public override var userPresets: [AUAudioUnitPreset] {
+        UserPresetStore.load().map { record in
+            let preset = AUAudioUnitPreset()
+            preset.number = record.number
+            preset.name = record.name
+            return preset
+        }
+    }
+
+    public override func saveUserPreset(_ userPreset: AUAudioUnitPreset) throws {
+        guard userPreset.number < 0 else { throw JJBreezePresetError.persistFailed }
+        let snapshot = currentParameterSnapshot()
+        var records = UserPresetStore.load()
+        if let index = records.firstIndex(where: { $0.number == userPreset.number }) {
+            records[index].name = userPreset.name
+            records[index].values = snapshot
+        } else if let index = records.firstIndex(where: { $0.name.caseInsensitiveCompare(userPreset.name) == .orderedSame }) {
+            records[index].values = snapshot
+        } else {
+            records.append(UserPresetRecord(number: userPreset.number, name: userPreset.name, values: snapshot))
+        }
+        willChangeValue(forKey: "userPresets")
+        try UserPresetStore.save(records)
+        didChangeValue(forKey: "userPresets")
+    }
+
+    public override func deleteUserPreset(_ userPreset: AUAudioUnitPreset) throws {
+        var records = UserPresetStore.load()
+        records.removeAll { $0.number == userPreset.number }
+        willChangeValue(forKey: "userPresets")
+        try UserPresetStore.save(records)
+        didChangeValue(forKey: "userPresets")
+    }
+
+    public override func presetState(for userPreset: AUAudioUnitPreset) throws -> [String: Any] {
+        guard let record = matchingRecord(for: userPreset) else {
+            throw JJBreezePresetError.notFound
+        }
+        let previous = currentParameterSnapshot()
+        applyUserValues(record.values)
+        let state = fullState ?? [:]
+        applyUserValues(previous)
+        return state
+    }
+
     public override var currentPreset: AUAudioUnitPreset? {
         get { _currentPreset }
         set {
+            willChangeValue(forKey: "currentPreset")
+            defer { didChangeValue(forKey: "currentPreset") }
+
             guard let preset = newValue else {
                 _currentPreset = nil
                 return
             }
             if preset.number >= 0 {
                 applyFactoryPreset(preset.number)
+            } else if let record = matchingRecord(for: preset) {
+                applyUserValues(record.values)
             }
             _currentPreset = preset
+        }
+    }
+
+    func saveCurrentStateAsUserPreset(name: String) throws {
+        let trimmed = name.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !trimmed.isEmpty else { throw JJBreezePresetError.emptyName }
+
+        let preset = AUAudioUnitPreset()
+        preset.name = trimmed
+        if let existing = userPresets.first(where: { $0.name.caseInsensitiveCompare(trimmed) == .orderedSame }) {
+            preset.number = existing.number
+        } else {
+            preset.number = nextUserPresetNumber()
+        }
+        try saveUserPreset(preset)
+        currentPreset = preset
+    }
+
+    func renameUserPreset(_ preset: AUAudioUnitPreset, to name: String) throws {
+        let trimmed = name.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !trimmed.isEmpty else { throw JJBreezePresetError.emptyName }
+        guard preset.number < 0 else { return }
+
+        var records = UserPresetStore.load()
+        guard let index = records.firstIndex(where: { $0.number == preset.number }) else {
+            throw JJBreezePresetError.notFound
+        }
+        records[index].name = trimmed
+        willChangeValue(forKey: "userPresets")
+        try UserPresetStore.save(records)
+        didChangeValue(forKey: "userPresets")
+
+        if _currentPreset?.number == preset.number {
+            let updated = AUAudioUnitPreset()
+            updated.number = preset.number
+            updated.name = trimmed
+            willChangeValue(forKey: "currentPreset")
+            _currentPreset = updated
+            didChangeValue(forKey: "currentPreset")
+        }
+    }
+
+    func removeUserPreset(_ preset: AUAudioUnitPreset) throws {
+        guard preset.number < 0 else { return }
+        let wasCurrent = _currentPreset?.number == preset.number
+        try deleteUserPreset(preset)
+        if wasCurrent {
+            currentPreset = presetList.first
+        }
+    }
+
+    private func nextUserPresetNumber() -> Int {
+        let used = Set(UserPresetStore.load().map(\.number))
+        var number = -1
+        while used.contains(number) {
+            number -= 1
+        }
+        return number
+    }
+
+    private func matchingRecord(for preset: AUAudioUnitPreset) -> UserPresetRecord? {
+        let records = UserPresetStore.load()
+        if let match = records.first(where: { $0.number == preset.number && $0.name == preset.name }) {
+            return match
+        }
+        if let match = records.first(where: { $0.number == preset.number }) {
+            return match
+        }
+        return records.first(where: { $0.name == preset.name })
+    }
+
+    private func currentParameterSnapshot() -> [String: Float] {
+        var values: [String: Float] = [:]
+        parameterTree?.allParameters.forEach { values[$0.identifier] = $0.value }
+        return values
+    }
+
+    private func applyUserValues(_ values: [String: Float]) {
+        guard let tree = parameterTree else { return }
+        for parameter in tree.allParameters {
+            if let value = values[parameter.identifier] {
+                parameter.value = value
+            }
         }
     }
 
