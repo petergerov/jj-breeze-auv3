@@ -35,6 +35,9 @@ targets:
       - path: JJBreezeExtension/Common/UI
         excludes:
           - AudioUnitViewController.swift
+      - path: loop/jj-loop.mp3
+        type: file
+        buildPhase: resources
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.gerov.jjbreeze

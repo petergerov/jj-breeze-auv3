@@ -22,14 +22,19 @@ public class SimplePlayEngine {
     private var engine: AVAudioEngine?
     private let player = AVAudioPlayerNode()
     private var demoBuffer: AVAudioPCMBuffer?
+    private var graphFormat: AVAudioFormat
     private(set) var isPlaying = false
     private(set) var lastError: String?
     var source: Source = .loop
 
-    private let graphFormat = AVAudioFormat(standardFormatWithSampleRate: 44_100, channels: 2)!
-
     public init() {
-        demoBuffer = Self.makeDemoBuffer(sampleRate: graphFormat.sampleRate)
+        if let buffer = Self.loadDemoLoop() {
+            demoBuffer = buffer
+            graphFormat = buffer.format
+        } else {
+            graphFormat = AVAudioFormat(standardFormatWithSampleRate: 44_100, channels: 2)!
+            log.error("Demo loop missing: loop/jj-loop.mp3 is not in the app bundle")
+        }
     }
 
     func initComponent(type: String, subType: String, manufacturer: String) async -> ViewController? {
@@ -113,7 +118,13 @@ public class SimplePlayEngine {
         case .loop:
             player.stop()
             if let demoBuffer {
-                await player.scheduleBuffer(demoBuffer, at: nil, options: .loops)
+                // Non-async overload: for a looping buffer the completion callback
+                // only fires once looping stops, so `await`-ing it here would leave
+                // this call suspended until the next stop/play, and its `player.play()`
+                // below would then fire later as a stale continuation racing whatever
+                // engine is current at that point (crashes if the node has since been
+                // detached). Fire-and-forget scheduling avoids that entirely.
+                player.scheduleBuffer(demoBuffer, at: nil, options: .loops, completionHandler: nil)
             } else {
                 lastError = "Demo audio is missing."
                 teardownEngine()
@@ -266,35 +277,23 @@ public class SimplePlayEngine {
         }
     }
 
-    /// Short plucked notes so width, delay, vibrato and warmth are obvious.
-    private static func makeDemoBuffer(sampleRate: Double) -> AVAudioPCMBuffer? {
-        let seconds = 8.0
-        let frames = AVAudioFrameCount(seconds * sampleRate)
-        guard let format = AVAudioFormat(standardFormatWithSampleRate: sampleRate, channels: 2),
-              let buffer = AVAudioPCMBuffer(pcmFormat: format, frameCapacity: frames),
-              let left = buffer.floatChannelData?[0],
-              let right = buffer.floatChannelData?[1]
-        else { return nil }
-
-        buffer.frameLength = frames
-        let notes = [220.0, 277.2, 329.6, 246.9, 220.0, 196.0, 220.0, 329.6]
-        let noteLength = sampleRate * (seconds / Double(notes.count))
-
-        for i in 0..<Int(frames) {
-            let noteIndex = min(notes.count - 1, Int(Double(i) / noteLength))
-            let tNote = Double(i) - Double(noteIndex) * noteLength
-            let freq = notes[noteIndex]
-            let env = Float(exp(-tNote / sampleRate * 3.2))
-            let pluck = Float(tNote < sampleRate * 0.004 ? (1.0 - tNote / (sampleRate * 0.004)) * 0.15 : 0)
-            let tone = sin(2 * Double.pi * freq * (Double(i) / sampleRate)) * 0.55
-                + sin(2 * Double.pi * freq * 2 * (Double(i) / sampleRate)) * 0.18
-                + sin(2 * Double.pi * freq * 3 * (Double(i) / sampleRate)) * 0.07
-            let sample = (Float(tone) + pluck) * env * 0.85
-            left[i] = sample
-            right[i] = (Float(sin(2 * Double.pi * (freq * 1.003) * (Double(i) / sampleRate))) * 0.55
-                        + Float(sin(2 * Double.pi * freq * 2.01 * (Double(i) / sampleRate))) * 0.18)
-                * env * 0.85 + pluck * env
+    private static func loadDemoLoop() -> AVAudioPCMBuffer? {
+        guard let url = Bundle.main.url(forResource: "jj-loop", withExtension: "mp3")
+                ?? Bundle.main.url(forResource: "jj-loop", withExtension: "mp3", subdirectory: "loop")
+        else {
+            return nil
         }
-        return buffer
+        do {
+            let file = try AVAudioFile(forReading: url)
+            let frames = AVAudioFrameCount(file.length)
+            guard frames > 0,
+                  let buffer = AVAudioPCMBuffer(pcmFormat: file.processingFormat, frameCapacity: frames)
+            else { return nil }
+            try file.read(into: buffer)
+            return buffer
+        } catch {
+            log.error("Could not read jj-loop.mp3: \(error.localizedDescription, privacy: .public)")
+            return nil
+        }
     }
 }

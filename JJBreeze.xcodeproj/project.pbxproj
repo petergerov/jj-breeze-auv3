@@ -14,6 +14,7 @@
 		2810E6EF9D447024F22DE543 /* JJBreezeApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C09ED05444D7AE59F7E96CB /* JJBreezeApp.swift */; };
 		2FA3AEC62A46DACA30A0A521 /* ObservableAUParameter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A953DF6F6158D606F4149A9A /* ObservableAUParameter.swift */; };
 		305E76B571CD98216A8FB2A6 /* CrossPlatform.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8223D075BB2D5B34F46874A2 /* CrossPlatform.swift */; };
+		34DBBFA1818B08A0F0769D56 /* jj-loop.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 586C4A7A12DD85EA12D6C15F /* jj-loop.mp3 */; };
 		3A8BCB34084E2F87DA04BD3C /* GearTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1784B45FC635D0F32462A79D /* GearTheme.swift */; };
 		4103E9655FD0E5B197ACE387 /* ExceptionCatcher.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EE4704D1E097ABA9198640F /* ExceptionCatcher.m */; };
 		451BAB7B7700407F4BB9C399 /* String+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24FF480129D499AE6023B1EC /* String+Utils.swift */; };
@@ -87,6 +88,7 @@
 		4066A829C2CCFE6240EDD21B /* KnobView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KnobView.swift; sourceTree = "<group>"; };
 		45656FA18688DB43EA835191 /* AudioUnitHostModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioUnitHostModel.swift; sourceTree = "<group>"; };
 		522A2BB71BB434B76A29EE59 /* PitchShifter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PitchShifter.h; sourceTree = "<group>"; };
+		586C4A7A12DD85EA12D6C15F /* jj-loop.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "jj-loop.mp3"; sourceTree = "<group>"; };
 		588ADE91EAA26EED1756FDC7 /* JJBreezeExtension.appex */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = "wrapper.app-extension"; path = JJBreezeExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		6404B139982ABE69DDAF5C9E /* JJBreezeAUProcessHelper.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = JJBreezeAUProcessHelper.hpp; sourceTree = "<group>"; };
 		71303BD80C2F950040DBE6B2 /* JJBreezeParameterAddresses.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JJBreezeParameterAddresses.h; sourceTree = "<group>"; };
@@ -139,6 +141,14 @@
 				0A02B661F17625E9FBF5EE49 /* ViewControllerRepresentable.swift */,
 			);
 			path = Common;
+			sourceTree = "<group>";
+		};
+		10FDDBB749A47BCE262BCC0B /* loop */ = {
+			isa = PBXGroup;
+			children = (
+				586C4A7A12DD85EA12D6C15F /* jj-loop.mp3 */,
+			);
+			path = loop;
 			sourceTree = "<group>";
 		};
 		26BA60A57F42EAE01C8F957A /* UI */ = {
@@ -260,6 +270,7 @@
 			children = (
 				391127A38256B355BE1E248F /* JJBreeze */,
 				05C1496AD87351C7EB96C41F /* JJBreezeExtension */,
+				10FDDBB749A47BCE262BCC0B /* loop */,
 				30A64E374703D832D3048BCC /* Products */,
 			);
 			sourceTree = "<group>";
@@ -358,6 +369,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E31C23FA145262EA59B74A10 /* Assets.xcassets in Resources */,
+				34DBBFA1818B08A0F0769D56 /* jj-loop.mp3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

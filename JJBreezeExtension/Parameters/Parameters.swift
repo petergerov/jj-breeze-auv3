@@ -8,13 +8,13 @@ let JJBreezeParameterSpecs = ParameterTreeSpec {
         ParameterSpec(address: .pitchR, identifier: "pitchR", name: "Pitch R",
                       units: .cents, valueRange: -1200.0...1200.0, defaultValue: 300.0, unitName: "ct")
         ParameterSpec(address: .delayL, identifier: "delayL", name: "Delay L",
-                      units: .milliseconds, valueRange: 0.0...40.0, defaultValue: 15.0, unitName: "ms")
+                      units: .milliseconds, valueRange: 0.0...40.0, defaultValue: 27.0, unitName: "ms")
         ParameterSpec(address: .delayR, identifier: "delayR", name: "Delay R",
-                      units: .milliseconds, valueRange: 0.0...40.0, defaultValue: 15.0, unitName: "ms")
+                      units: .milliseconds, valueRange: 0.0...40.0, defaultValue: 37.0, unitName: "ms")
         ParameterSpec(address: .focus, identifier: "focus", name: "Focus",
-                      units: .hertz, valueRange: 20.0...10_000.0, defaultValue: 150.0, unitName: "Hz")
+                      units: .hertz, valueRange: 20.0...10_000.0, defaultValue: 20.0, unitName: "Hz")
         ParameterSpec(address: .mix, identifier: "mix", name: "Mix",
-                      units: .percent, valueRange: 0.0...100.0, defaultValue: 50.0, unitName: "%")
+                      units: .percent, valueRange: 0.0...100.0, defaultValue: 27.0, unitName: "%")
         ParameterSpec(address: .shiftOn, identifier: "shiftOn", name: "Shift On",
                       units: .boolean, valueRange: 0.0...1.0, defaultValue: 1.0)
     }
@@ -24,9 +24,9 @@ let JJBreezeParameterSpecs = ParameterTreeSpec {
         ParameterSpec(address: .vibratoDepth, identifier: "vibratoDepth", name: "Vibrato Depth",
                       units: .milliseconds, valueRange: 0.0...8.0, defaultValue: 3.0, unitName: "ms")
         ParameterSpec(address: .vibratoMix, identifier: "vibratoMix", name: "Vibrato Mix",
-                      units: .percent, valueRange: 0.0...100.0, defaultValue: 0.0, unitName: "%")
+                      units: .percent, valueRange: 0.0...100.0, defaultValue: 20.0, unitName: "%")
         ParameterSpec(address: .vibratoOn, identifier: "vibratoOn", name: "Vibrato On",
-                      units: .boolean, valueRange: 0.0...1.0, defaultValue: 0.0)
+                      units: .boolean, valueRange: 0.0...1.0, defaultValue: 1.0)
     }
     ParameterGroupSpec(identifier: "warmth", name: "Warmth") {
         ParameterSpec(address: .warmthTone, identifier: "warmthTone", name: "Warmth Tone",
@@ -36,9 +36,9 @@ let JJBreezeParameterSpecs = ParameterTreeSpec {
         ParameterSpec(address: .warmthBody, identifier: "warmthBody", name: "Warmth Body",
                       units: .percent, valueRange: 0.0...100.0, defaultValue: 0.0, unitName: "%")
         ParameterSpec(address: .warmthMix, identifier: "warmthMix", name: "Warmth Mix",
-                      units: .percent, valueRange: 0.0...100.0, defaultValue: 0.0, unitName: "%")
+                      units: .percent, valueRange: 0.0...100.0, defaultValue: 20.0, unitName: "%")
         ParameterSpec(address: .warmthOn, identifier: "warmthOn", name: "Warmth On",
-                      units: .boolean, valueRange: 0.0...1.0, defaultValue: 0.0)
+                      units: .boolean, valueRange: 0.0...1.0, defaultValue: 1.0)
     }
 }
 
