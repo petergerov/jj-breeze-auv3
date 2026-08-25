@@ -48,6 +48,8 @@ class AudioUnitHostModel {
         )
         if viewController == nil {
             playbackError = viewModel.message
+        } else {
+            await startPlaying()
         }
     }
 

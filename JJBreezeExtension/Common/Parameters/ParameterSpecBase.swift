@@ -128,6 +128,24 @@ extension AUParameterTree {
     }
 }
 
+enum ParameterDefaults {
+    static let values: [AUParameterAddress: AUValue] = {
+        var map: [AUParameterAddress: AUValue] = [:]
+        collect(JJBreezeParameterSpecs.children, into: &map)
+        return map
+    }()
+
+    private static func collect(_ nodes: [NodeSpec], into map: inout [AUParameterAddress: AUValue]) {
+        for node in nodes {
+            if let spec = node as? ParameterSpec {
+                map[spec.address] = spec.defaultValue
+            } else if let group = node as? ParameterGroupSpec {
+                collect(group.children, into: &map)
+            }
+        }
+    }
+}
+
 extension Array where Element == NodeSpec {
     func createAUParameterNodes() -> [AUParameterNode] {
         self.map { spec in

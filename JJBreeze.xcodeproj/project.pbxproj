@@ -30,6 +30,7 @@
 		7965DF6E9862C7D3EF2863FB /* TypeAliases.swift in Sources */ = {isa = PBXBuildFile; fileRef = 918D7CB7528A7731B982A290 /* TypeAliases.swift */; };
 		7A178FA5DEB19815C3757C09 /* ParameterSpecBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = A66071388B657E1299D72EF0 /* ParameterSpecBase.swift */; };
 		849B60974E63655042B97A2A /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15B68F6CE2E7514230DCF1B5 /* ContentView.swift */; };
+		865DA5FE5E53AF42734C5AB1 /* LevelMeterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D65B5E99E873ECA533F0A2CE /* LevelMeterView.swift */; };
 		8D7B7D052ECDD936CE4F4EC2 /* SimplePlayEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91E7613A8B4F7469062B1726 /* SimplePlayEngine.swift */; };
 		91100E19AF06F0EC967DA375 /* Parameters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 128E35FC6D6CD7116A9B70FC /* Parameters.swift */; };
 		91816DB9CC5EA3C00C7EE3F0 /* LedToggle.swift in Sources */ = {isa = PBXBuildFile; fileRef = AADFF4467066854CF5F45A2F /* LedToggle.swift */; };
@@ -40,6 +41,7 @@
 		B332E29006E90C2A008E35C0 /* KnobView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4066A829C2CCFE6240EDD21B /* KnobView.swift */; };
 		B5C7E64F36E6BF8EFEA95318 /* GearTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1784B45FC635D0F32462A79D /* GearTheme.swift */; };
 		C0C1FAED8270F6210683D9A3 /* JJBreezeAudioUnit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DDAA7B8A767965D3000AED5 /* JJBreezeAudioUnit.swift */; };
+		CBEA7E04A9BDA04890DA702F /* LevelMeterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D65B5E99E873ECA533F0A2CE /* LevelMeterView.swift */; };
 		D4CF2E26116AD90D37290C6D /* Presets.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA3A0CEBC026D7B52D5B843F /* Presets.swift */; };
 		D71E4CA426B982B48564B189 /* CrossPlatform.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8223D075BB2D5B34F46874A2 /* CrossPlatform.swift */; };
 		DF84A93B5A0F207872D83686 /* PresetBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C901A2B4BFE1C304676D87B /* PresetBar.swift */; };
@@ -115,6 +117,7 @@
 		AE33C83C4E4BAF31F474C5BF /* JJBreezeBufferedAudioBus.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = JJBreezeBufferedAudioBus.hpp; sourceTree = "<group>"; };
 		C1EDB6165CC7CAF75B7FCFB6 /* AudioUnitViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioUnitViewModel.swift; sourceTree = "<group>"; };
 		D37147F81EF3D39490932C14 /* DSPCommon.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DSPCommon.h; sourceTree = "<group>"; };
+		D65B5E99E873ECA533F0A2CE /* LevelMeterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelMeterView.swift; sourceTree = "<group>"; };
 		EB10926AB2297DEE56C600CC /* JJBreezeExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = JJBreezeExtension.entitlements; sourceTree = "<group>"; };
 		EE97EDC214E7780923FB2476 /* ModulatedDelay.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ModulatedDelay.h; sourceTree = "<group>"; };
 		FA3A0CEBC026D7B52D5B843F /* Presets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Presets.swift; sourceTree = "<group>"; };
@@ -164,6 +167,7 @@
 				A897FB2ECFB558E030AAC069 /* JJBreezeMainView.swift */,
 				4066A829C2CCFE6240EDD21B /* KnobView.swift */,
 				AADFF4467066854CF5F45A2F /* LedToggle.swift */,
+				D65B5E99E873ECA533F0A2CE /* LevelMeterView.swift */,
 				3C901A2B4BFE1C304676D87B /* PresetBar.swift */,
 				0B17617621083B0BA4D8AE26 /* Skew.swift */,
 			);
@@ -395,6 +399,7 @@
 				4866C3D85822C0E962A5F20A /* JJBreezeMainView.swift in Sources */,
 				B332E29006E90C2A008E35C0 /* KnobView.swift in Sources */,
 				91816DB9CC5EA3C00C7EE3F0 /* LedToggle.swift in Sources */,
+				CBEA7E04A9BDA04890DA702F /* LevelMeterView.swift in Sources */,
 				2FA3AEC62A46DACA30A0A521 /* ObservableAUParameter.swift in Sources */,
 				73181DC8DD030B3C69C47979 /* ParameterSpecBase.swift in Sources */,
 				FA8FEFDBEDFF1F5F56E7937C /* Parameters.swift in Sources */,
@@ -421,6 +426,7 @@
 				10232BB3EF84E6F1F5248298 /* JJBreezeMainView.swift in Sources */,
 				22B8FCA58313ACBF479DEC6F /* KnobView.swift in Sources */,
 				4876C7F33CA1BC0FEA5A9DD5 /* LedToggle.swift in Sources */,
+				865DA5FE5E53AF42734C5AB1 /* LevelMeterView.swift in Sources */,
 				AC1243E59A30631D2602D488 /* ObservableAUParameter.swift in Sources */,
 				7A178FA5DEB19815C3757C09 /* ParameterSpecBase.swift in Sources */,
 				91100E19AF06F0EC967DA375 /* Parameters.swift in Sources */,

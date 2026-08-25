@@ -12,7 +12,11 @@ struct PresetBar: View {
     @State private var errorMessage: String?
 
     var body: some View {
-        HStack(spacing: 8) {
+        HStack(spacing: 6) {
+            stepButton(systemName: "chevron.left") {
+                audioUnit?.stepPreset(by: -1)
+            }
+
             Menu {
                 Section("Factory") {
                     ForEach(FactoryPresets.all, id: \.number) { preset in
@@ -34,6 +38,7 @@ struct PresetBar: View {
                 }
             } label: {
                 HStack(spacing: 6) {
+                    DirtyDot(audioUnit: audioUnit)
                     Text(title)
                         .font(.system(size: 12, weight: .semibold))
                         .lineLimit(1)
@@ -41,9 +46,9 @@ struct PresetBar: View {
                         .font(.system(size: 10, weight: .bold))
                 }
                 .foregroundStyle(GearTheme.accent)
-                .padding(.horizontal, 12)
-                .padding(.vertical, 6)
-                .frame(maxWidth: .infinity, alignment: .leading)
+                .padding(.horizontal, 10)
+                .padding(.vertical, 8)
+                .frame(maxWidth: .infinity, minHeight: 44, alignment: .leading)
                 .background(GearTheme.panelFill)
                 .overlay(
                     RoundedRectangle(cornerRadius: 6)
@@ -51,6 +56,10 @@ struct PresetBar: View {
                 )
             }
             .id("user-presets-\(userPresets.count)-\(title)")
+
+            stepButton(systemName: "chevron.right") {
+                audioUnit?.stepPreset(by: 1)
+            }
 
             presetButton("SAVE") {
                 saveName = suggestedSaveName
@@ -62,8 +71,18 @@ struct PresetBar: View {
             }
         }
         .onAppear(perform: reload)
+        .onReceive(NotificationCenter.default.publisher(for: .jjBreezePresetChanged)) { _ in
+            reload()
+        }
         .sheet(isPresented: $showSave) {
-            saveSheet
+            PresetNameSheet(
+                title: "Save Preset",
+                caption: "Saves the current knobs. A preset with the same name is replaced.",
+                name: $saveName,
+                confirmTitle: "Save",
+                onCancel: { showSave = false },
+                onConfirm: { save() }
+            )
         }
         .alert("Preset", isPresented: Binding(
             get: { errorMessage != nil },
@@ -98,41 +117,21 @@ struct PresetBar: View {
         return ""
     }
 
-    private var saveSheet: some View {
-        NavigationStack {
-            VStack(alignment: .leading, spacing: 12) {
-                Text("Saves the current knobs. A preset with the same name is replaced.")
-                    .font(.system(size: 13))
-                    .foregroundStyle(GearTheme.textMuted)
-                TextField("Name", text: $saveName)
-                    .textInputAutocapitalization(.words)
-                    .padding(10)
-                    .background(GearTheme.panelFill)
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 6)
-                            .stroke(GearTheme.metalDark, lineWidth: 1)
-                    )
-                    .foregroundStyle(GearTheme.textLight)
-                Spacer()
-            }
-            .padding(16)
-            .background(GearTheme.chassisBottom)
-            .navigationTitle("Save Preset")
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .cancellationAction) {
-                    Button("Cancel") { showSave = false }
-                        .foregroundStyle(GearTheme.accent)
-                }
-                ToolbarItem(placement: .confirmationAction) {
-                    Button("Save") { save() }
-                        .foregroundStyle(GearTheme.accent)
-                        .disabled(saveName.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
-                }
-            }
+    private func stepButton(systemName: String, action: @escaping () -> Void) -> some View {
+        Button(action: action) {
+            Image(systemName: systemName)
+                .font(.system(size: 12, weight: .bold))
+                .foregroundStyle(GearTheme.textLight)
+                .frame(width: 44, height: 44)
+                .background(GearTheme.panelFill)
+                .overlay(
+                    RoundedRectangle(cornerRadius: 6)
+                        .stroke(GearTheme.metalDark, lineWidth: 1)
+                )
         }
-        .presentationDetents([.height(220), .medium])
-        .tint(GearTheme.accent)
+        .buttonStyle(.plain)
+        .disabled(audioUnit == nil)
+        .accessibilityLabel(systemName.contains("left") ? "Previous preset" : "Next preset")
     }
 
     private func presetButton(_ title: String, action: @escaping () -> Void) -> some View {
@@ -142,7 +141,7 @@ struct PresetBar: View {
                 .tracking(0.8)
                 .foregroundStyle(GearTheme.textLight)
                 .padding(.horizontal, 10)
-                .padding(.vertical, 8)
+                .frame(minHeight: 44)
                 .background(GearTheme.panelFill)
                 .overlay(
                     RoundedRectangle(cornerRadius: 6)
@@ -161,7 +160,7 @@ struct PresetBar: View {
     }
 
     private func selectFactory(_ number: Int) {
-        audioUnit?.currentPreset = audioUnit?.factoryPresets?[number]
+        audioUnit?.currentPreset = audioUnit?.factoryPresets?.first { $0.number == number }
         reload()
     }
 
@@ -200,6 +199,52 @@ struct PresetBar: View {
         } catch {
             errorMessage = error.localizedDescription
         }
+    }
+}
+
+private struct PresetNameSheet: View {
+    let title: String
+    let caption: String
+    @Binding var name: String
+    let confirmTitle: String
+    let onCancel: () -> Void
+    let onConfirm: () -> Void
+
+    var body: some View {
+        NavigationStack {
+            VStack(alignment: .leading, spacing: 12) {
+                Text(caption)
+                    .font(.system(size: 13))
+                    .foregroundStyle(GearTheme.textMuted)
+                TextField("Name", text: $name)
+                    .textInputAutocapitalization(.words)
+                    .padding(10)
+                    .background(GearTheme.panelFill)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 6)
+                            .stroke(GearTheme.metalDark, lineWidth: 1)
+                    )
+                    .foregroundStyle(GearTheme.textLight)
+                Spacer()
+            }
+            .padding(16)
+            .background(GearTheme.chassisBottom)
+            .navigationTitle(title)
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .cancellationAction) {
+                    Button("Cancel", action: onCancel)
+                        .foregroundStyle(GearTheme.accent)
+                }
+                ToolbarItem(placement: .confirmationAction) {
+                    Button(confirmTitle, action: onConfirm)
+                        .foregroundStyle(GearTheme.accent)
+                        .disabled(name.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
+                }
+            }
+        }
+        .presentationDetents([.height(220), .medium])
+        .tint(GearTheme.accent)
     }
 }
 
@@ -244,7 +289,7 @@ private struct PresetManagerSheet: View {
                 } header: {
                     Text("User presets")
                 } footer: {
-                    Text("Factory presets stay in the menu and cannot be changed. User presets are stored on this device and available in GarageBand, Logic, and this app.")
+                    Text("Factory presets stay in the menu and cannot be changed. User presets are stored on this device. The standalone player and GarageBand each keep their own list until an App Group is enabled for both targets.")
                 }
             }
             .scrollContentBackground(.hidden)
@@ -257,20 +302,37 @@ private struct PresetManagerSheet: View {
                         .foregroundStyle(GearTheme.accent)
                 }
             }
-            .alert("Rename Preset", isPresented: Binding(
+            .sheet(isPresented: Binding(
                 get: { renameTarget != nil },
                 set: { if !$0 { renameTarget = nil } }
             )) {
-                TextField("Name", text: $renameText)
-                Button("Rename") {
-                    if let preset = renameTarget {
-                        onRename(preset, renameText)
+                PresetNameSheet(
+                    title: "Rename Preset",
+                    caption: "The new name replaces this user preset.",
+                    name: $renameText,
+                    confirmTitle: "Rename",
+                    onCancel: { renameTarget = nil },
+                    onConfirm: {
+                        if let preset = renameTarget {
+                            onRename(preset, renameText)
+                        }
+                        renameTarget = nil
                     }
-                    renameTarget = nil
-                }
-                Button("Cancel", role: .cancel) { renameTarget = nil }
+                )
             }
         }
         .tint(GearTheme.accent)
+    }
+}
+
+private struct DirtyDot: View {
+    let audioUnit: JJBreezeAudioUnit?
+
+    var body: some View {
+        TimelineView(.periodic(from: .now, by: 0.25)) { _ in
+            Circle()
+                .fill((audioUnit?.isPresetDirty() ?? false) ? GearTheme.accent : Color.clear)
+                .frame(width: 7, height: 7)
+        }
     }
 }

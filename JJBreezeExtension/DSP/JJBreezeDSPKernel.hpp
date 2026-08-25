@@ -2,6 +2,7 @@
 
 #include <AudioToolbox/AudioToolbox.h>
 #include <algorithm>
+#include <cmath>
 #include <span>
 #include <vector>
 
@@ -117,11 +118,15 @@ public:
 
         if (mBypassed)
         {
+            float peak = 0.f;
             for (size_t channel = 0; channel < outputBuffers.size(); ++channel)
             {
                 const float* src = inputBuffers[std::min(channel, inputBuffers.size() - 1)];
                 std::copy_n(src, frameCount, outputBuffers[channel]);
+                for (AUAudioFrameCount n = 0; n < frameCount; ++n)
+                    peak = std::max(peak, std::abs(src[n]));
             }
+            capturePeaks(peak, peak);
             return;
         }
 
@@ -174,6 +179,9 @@ public:
         float* outLPtr = outputBuffers[0];
         float* outRPtr = outputBuffers.size() > 1 ? outputBuffers[1] : outputBuffers[0];
 
+        float peakIn = 0.f;
+        float peakOut = 0.f;
+
         for (AUAudioFrameCount n = 0; n < frameCount; ++n)
         {
             const float dryL = inL[n];
@@ -206,8 +214,29 @@ public:
             const float warmR = warmthR.processSample(chainR);
             const float warmthBlend = warmthIsOn ? warmthMixAmt : 0.0f;
 
-            outLPtr[n] = chainL + warmthBlend * (warmL - chainL);
-            outRPtr[n] = chainR + warmthBlend * (warmR - chainR);
+            const float outL = chainL + warmthBlend * (warmL - chainL);
+            const float outR = chainR + warmthBlend * (warmR - chainR);
+            outLPtr[n] = outL;
+            outRPtr[n] = outR;
+
+            peakIn = std::max(peakIn, std::max(std::abs(dryL), std::abs(dryR)));
+            peakOut = std::max(peakOut, std::max(std::abs(outL), std::abs(outR)));
+        }
+
+        capturePeaks(peakIn, peakOut);
+    }
+
+    void readPeaks(float* inPeak, float* outPeak)
+    {
+        if (inPeak)
+        {
+            *inPeak = mPeakIn;
+            mPeakIn = 0.f;
+        }
+        if (outPeak)
+        {
+            *outPeak = mPeakOut;
+            mPeakOut = 0.f;
         }
     }
 
@@ -282,4 +311,15 @@ private:
     float mShiftOn = 1.0f;
     float mVibratoOn = 0.0f;
     float mWarmthOn = 0.0f;
+
+    float mPeakIn = 0.f;
+    float mPeakOut = 0.f;
+
+    void capturePeaks(float inPeak, float outPeak)
+    {
+        if (inPeak > mPeakIn)
+            mPeakIn = inPeak;
+        if (outPeak > mPeakOut)
+            mPeakOut = outPeak;
+    }
 };

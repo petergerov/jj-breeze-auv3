@@ -118,7 +118,7 @@ final class ObservableAUParameter: ObservableAUParameterNode {
     let min: AUValue
     let max: AUValue
     let displayName: String
-    let defaultValue: AUValue = 0.0
+    let defaultValue: AUValue
     let unit: AudioUnitParameterUnit
     let address: AUParameterAddress
 
@@ -128,6 +128,7 @@ final class ObservableAUParameter: ObservableAUParameterNode {
         self.min = parameter.minValue
         self.max = parameter.maxValue
         self.displayName = parameter.displayName
+        self.defaultValue = ParameterDefaults.values[parameter.address] ?? parameter.value
         self.unit = parameter.unit
         self.address = parameter.address
         super.init()

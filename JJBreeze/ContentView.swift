@@ -15,14 +15,6 @@ struct ContentView: View {
                     .padding(.horizontal, 16)
                     .padding(.vertical, 8)
                     .background(Color.red.opacity(0.85))
-            } else if hostModel.viewModel.viewController != nil, !hostModel.isPlaying {
-                Text("Tap Play to hear the effect. Knobs do nothing until audio is running. For your own tracks, open this app once, then load Gerov: jj-breeze in GarageBand or Logic.")
-                    .font(.caption)
-                    .foregroundStyle(Color(red: 0.92, green: 0.86, blue: 0.72))
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .padding(.horizontal, 16)
-                    .padding(.vertical, 8)
-                    .background(Color(red: 0.22, green: 0.16, blue: 0.08))
             }
             transport
         }
@@ -35,13 +27,9 @@ struct ContentView: View {
 
     private var header: some View {
         HStack(alignment: .center, spacing: 12) {
-            VStack(alignment: .leading, spacing: 2) {
-                Text("jj-breeze")
-                    .font(.headline)
-                Text(hostModel.isPlaying ? "Playing through the effect" : "Standalone player")
-                    .font(.caption)
-                    .foregroundStyle(.secondary)
-            }
+            Text(hostModel.isPlaying ? "Playing through the effect" : "Standalone player")
+                .font(.caption)
+                .foregroundStyle(.secondary)
             Spacer()
             if hostModel.isPlaying {
                 Label("ON AIR", systemImage: "waveform")

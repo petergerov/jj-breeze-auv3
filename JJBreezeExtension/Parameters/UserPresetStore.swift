@@ -6,14 +6,24 @@ struct UserPresetRecord: Codable, Equatable, Sendable {
     var values: [String: Float]
 }
 
+extension Notification.Name {
+    static let jjBreezePresetChanged = Notification.Name("jjBreezePresetChanged")
+}
+
 enum UserPresetStore {
+    static let appGroupID = "group.com.gerov.jjbreeze"
     private static let defaultsKey = "jjbreeze.userPresets.v1"
 
     static func load() -> [UserPresetRecord] {
-        if let data = UserDefaults.standard.data(forKey: defaultsKey), let records = decode(data) {
+        if let records = decode(groupDefaults?.data(forKey: defaultsKey)) { return records }
+        if let records = decode(UserDefaults.standard.data(forKey: defaultsKey)) {
+            try? save(records)
             return records
         }
-        if let records = decode(fileData()) { return records }
+        if let records = decode(fileData()) {
+            try? save(records)
+            return records
+        }
         return []
     }
 
@@ -24,12 +34,21 @@ enum UserPresetStore {
 
     static func save(_ records: [UserPresetRecord]) throws {
         let data = try JSONEncoder().encode(records)
+        if let suite = groupDefaults {
+            suite.set(data, forKey: defaultsKey)
+        }
         UserDefaults.standard.set(data, forKey: defaultsKey)
-        UserDefaults.standard.synchronize()
         if let url = try? fileURL() {
             try? FileManager.default.createDirectory(at: url.deletingLastPathComponent(), withIntermediateDirectories: true)
             try? data.write(to: url, options: [.atomic])
         }
+    }
+
+    private static var groupDefaults: UserDefaults? {
+        guard FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: appGroupID) != nil else {
+            return nil
+        }
+        return UserDefaults(suiteName: appGroupID)
     }
 
     private static func fileData() -> Data? {
@@ -38,6 +57,9 @@ enum UserPresetStore {
     }
 
     private static func directoryURL() throws -> URL {
+        if let group = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: appGroupID) {
+            return group.appendingPathComponent("jj-breeze", isDirectory: true)
+        }
         let base = try FileManager.default.url(
             for: .applicationSupportDirectory,
             in: .userDomainMask,

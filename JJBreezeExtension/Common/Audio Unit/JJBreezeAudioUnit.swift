@@ -12,6 +12,7 @@ public class JJBreezeAudioUnit: AUAudioUnit, @unchecked Sendable {
     private var _outputBusses: AUAudioUnitBusArray!
     private var _currentPreset: AUAudioUnitPreset?
     private let presetList: [AUAudioUnitPreset] = FactoryPresets.all.map(\.auPreset)
+    private var loadedSnapshot: [String: Float] = [:]
 
     @objc override init(componentDescription: AudioComponentDescription, options: AudioComponentInstantiationOptions) throws {
         let format = AVAudioFormat(standardFormatWithSampleRate: 44_100, channels: 2)!
@@ -144,6 +145,8 @@ public class JJBreezeAudioUnit: AUAudioUnit, @unchecked Sendable {
                 applyUserValues(record.values)
             }
             _currentPreset = preset
+            loadedSnapshot = currentParameterSnapshot()
+            NotificationCenter.default.post(name: .jjBreezePresetChanged, object: self)
         }
     }
 
@@ -183,6 +186,7 @@ public class JJBreezeAudioUnit: AUAudioUnit, @unchecked Sendable {
             willChangeValue(forKey: "currentPreset")
             _currentPreset = updated
             didChangeValue(forKey: "currentPreset")
+            NotificationCenter.default.post(name: .jjBreezePresetChanged, object: self)
         }
     }
 
@@ -237,11 +241,11 @@ public class JJBreezeAudioUnit: AUAudioUnit, @unchecked Sendable {
         }
         setupParameterCallbacks()
         currentPreset = presetList.first
+        loadedSnapshot = currentParameterSnapshot()
     }
 
-    func applyFactoryPreset(_ index: Int) {
-        guard index >= 0, index < FactoryPresets.all.count, let tree = parameterTree else { return }
-        let preset = FactoryPresets.all[index]
+    func applyFactoryPreset(_ number: Int) {
+        guard let preset = FactoryPresets.all.first(where: { $0.number == number }), let tree = parameterTree else { return }
         func set(_ address: JJBreezeParameterAddress, _ value: AUValue) {
             tree.parameter(withAddress: address.rawValue)?.value = value
         }
@@ -295,5 +299,45 @@ public class JJBreezeAudioUnit: AUAudioUnit, @unchecked Sendable {
         default:
             return String(format: "%.2f", value)
         }
+    }
+
+    static func parse(_ raw: String, address: AUParameterAddress, min: AUValue, max: AUValue) -> AUValue? {
+        let cleaned = raw
+            .replacingOccurrences(of: ",", with: ".")
+            .filter { $0.isNumber || $0 == "." || $0 == "-" || $0 == "+" }
+        guard let value = Float(cleaned) else { return nil }
+        return Swift.min(max, Swift.max(min, value))
+    }
+
+    func takeMeterPeaks() -> (input: Float, output: Float) {
+        var input: Float = 0
+        var output: Float = 0
+        kernel.readPeaks(&input, &output)
+        return (input, output)
+    }
+
+    func isPresetDirty() -> Bool {
+        guard !loadedSnapshot.isEmpty else { return false }
+        let now = currentParameterSnapshot()
+        for (key, value) in now {
+            let reference = loadedSnapshot[key] ?? value
+            if abs(reference - value) > 0.35 {
+                return true
+            }
+        }
+        return false
+    }
+
+    func stepPreset(by delta: Int) {
+        let factory = factoryPresets ?? []
+        let user = userPresets.sorted {
+            $0.name.localizedCaseInsensitiveCompare($1.name) == .orderedAscending
+        }
+        let all = factory + user
+        guard !all.isEmpty else { return }
+        let currentNumber = _currentPreset?.number
+        let index = all.firstIndex(where: { $0.number == currentNumber }) ?? 0
+        let next = (index + delta + all.count * 8) % all.count
+        currentPreset = all[next]
     }
 }

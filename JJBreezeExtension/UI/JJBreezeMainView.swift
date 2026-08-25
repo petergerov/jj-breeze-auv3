@@ -4,6 +4,10 @@ struct JJBreezeMainView: View {
     var parameterTree: ObservableAUParameterGroup
     var audioUnit: JJBreezeAudioUnit?
 
+    @State private var linkPitch = true
+    @State private var linkDelay = true
+    @State private var isBypassed = false
+
     var body: some View {
         GeometryReader { geo in
             ZStack {
@@ -15,39 +19,77 @@ struct JJBreezeMainView: View {
                 .ignoresSafeArea()
 
                 ScrollView(.vertical, showsIndicators: false) {
-                    VStack(spacing: 12) {
+                    VStack(spacing: 10) {
                         header
                         EffectSection(title: "SHIFT", enabled: parameterTree.shift.shiftOn) {
-                            LazyVGrid(columns: threeColumns, spacing: 8) {
-                                KnobView(param: parameterTree.shift.pitchL, caption: "PITCH L", skew: 0.4, symmetric: true)
-                                KnobView(param: parameterTree.shift.pitchR, caption: "PITCH R", skew: 0.4, symmetric: true)
-                                KnobView(param: parameterTree.shift.focus, caption: "FOCUS", skew: 0.25)
-                                KnobView(param: parameterTree.shift.delayL, caption: "DELAY L")
-                                KnobView(param: parameterTree.shift.delayR, caption: "DELAY R")
+                            HStack {
+                                LinkToggle(isOn: $linkPitch, title: "PITCH")
+                                LinkToggle(isOn: $linkDelay, title: "DELAY")
+                                Spacer()
+                            }
+                            LazyVGrid(columns: threeColumns, spacing: 10) {
+                                KnobView(
+                                    param: parameterTree.shift.pitchL,
+                                    caption: "PITCH L",
+                                    skew: 0.4,
+                                    symmetric: true,
+                                    linkedPeer: parameterTree.shift.pitchR,
+                                    linkEnabled: linkPitch
+                                )
+                                KnobView(
+                                    param: parameterTree.shift.pitchR,
+                                    caption: "PITCH R",
+                                    skew: 0.4,
+                                    symmetric: true,
+                                    linkedPeer: parameterTree.shift.pitchL,
+                                    linkEnabled: linkPitch
+                                )
+                                KnobView(
+                                    param: parameterTree.shift.focus,
+                                    caption: "FOCUS",
+                                    skew: 0.25,
+                                    helpText: "Crossover frequency. Frequencies below this stay dry; highs go through pitch and delay."
+                                )
+                                KnobView(param: parameterTree.shift.delayL, caption: "DELAY L", linkedPeer: parameterTree.shift.delayR, linkEnabled: linkDelay)
+                                KnobView(param: parameterTree.shift.delayR, caption: "DELAY R", linkedPeer: parameterTree.shift.delayL, linkEnabled: linkDelay)
                                 KnobView(param: parameterTree.shift.mix, caption: "MIX")
                             }
                         }
                         EffectSection(title: "VIBRATO", enabled: parameterTree.vibrato.vibratoOn) {
-                            LazyVGrid(columns: threeColumns, spacing: 8) {
+                            LazyVGrid(columns: threeColumns, spacing: 10) {
                                 KnobView(param: parameterTree.vibrato.vibratoRate, caption: "RATE", skew: 0.4)
                                 KnobView(param: parameterTree.vibrato.vibratoDepth, caption: "DEPTH")
                                 KnobView(param: parameterTree.vibrato.vibratoMix, caption: "MIX")
                             }
                         }
                         EffectSection(title: "WARMTH", enabled: parameterTree.warmth.warmthOn) {
-                            LazyVGrid(columns: fourColumns, spacing: 8) {
+                            LazyVGrid(columns: threeColumns, spacing: 10) {
                                 KnobView(param: parameterTree.warmth.warmthTone, caption: "TONE", skew: 0.3)
-                                KnobView(param: parameterTree.warmth.warmthDrive, caption: "DRIVE")
-                                KnobView(param: parameterTree.warmth.warmthBody, caption: "BODY")
+                                KnobView(
+                                    param: parameterTree.warmth.warmthDrive,
+                                    caption: "DRIVE",
+                                    helpText: "Saturation amount in the warmth stage."
+                                )
+                                KnobView(
+                                    param: parameterTree.warmth.warmthBody,
+                                    caption: "BODY",
+                                    helpText: "Low-shelf boost in the warmth stage. Adds weight without changing Tone."
+                                )
                                 KnobView(param: parameterTree.warmth.warmthMix, caption: "MIX")
                             }
                         }
                     }
-                    .padding(.horizontal, 16)
-                    .padding(.vertical, 12)
-                    .frame(minHeight: max(geo.size.height, 640))
+                    .padding(.horizontal, 14)
+                    .padding(.vertical, 10)
+                    .frame(minHeight: max(geo.size.height, 560))
                 }
             }
+        }
+        .onAppear {
+            isBypassed = audioUnit?.shouldBypassEffect ?? false
+        }
+        .onChange(of: isBypassed) { _, newValue in
+            audioUnit?.shouldBypassEffect = newValue
         }
     }
 
@@ -55,28 +97,22 @@ struct JJBreezeMainView: View {
         Array(repeating: GridItem(.flexible(), spacing: 8), count: 3)
     }
 
-    private var fourColumns: [GridItem] {
-        Array(repeating: GridItem(.flexible(), spacing: 8), count: 4)
-    }
-
     private var header: some View {
-        VStack(spacing: 4) {
-            Text("J.J. BREEZE")
-                .font(.system(size: 22, weight: .bold, design: .serif))
-                .tracking(2)
-                .foregroundStyle(GearTheme.textLight)
-
-            Text("STEREO WIDENER  ·  VIBRATO  ·  WARMTH")
-                .font(.system(size: 9, weight: .regular, design: .monospaced))
-                .tracking(0.6)
-                .foregroundStyle(GearTheme.textMuted)
-                .minimumScaleFactor(0.7)
-                .lineLimit(1)
+        VStack(spacing: 8) {
+            HStack(spacing: 8) {
+                Text("J.J.BREEZE")
+                    .font(.system(size: 16, weight: .bold, design: .serif))
+                    .tracking(1.2)
+                    .foregroundStyle(GearTheme.textLight)
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.7)
+                Spacer(minLength: 4)
+                LevelMeterView(audioUnit: audioUnit)
+                BypassToggle(isBypassed: $isBypassed)
+            }
 
             PresetBar(audioUnit: audioUnit)
-                .padding(.top, 6)
         }
-        .padding(.bottom, 4)
     }
 }
 
@@ -91,20 +127,19 @@ private struct EffectSection<Content: View>: View {
                 Text(title)
                     .font(.system(size: 12, weight: .bold))
                     .tracking(1.6)
-                    .foregroundStyle(GearTheme.accent)
+                    .foregroundStyle(enabled.boolValue ? GearTheme.accent : GearTheme.textMuted)
                 Spacer()
                 LedToggle(param: enabled)
             }
             .overlay(alignment: .bottom) {
                 Rectangle()
-                    .fill(GearTheme.accent.opacity(0.5))
+                    .fill(GearTheme.accent.opacity(enabled.boolValue ? 0.5 : 0.2))
                     .frame(height: 1)
-                    .padding(.trailing, 42)
+                    .padding(.trailing, 60)
             }
 
-            if enabled.boolValue {
-                content()
-            }
+            content()
+                .opacity(enabled.boolValue ? 1 : 0.42)
         }
         .padding(12)
         .background(
