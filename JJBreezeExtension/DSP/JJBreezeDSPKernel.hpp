@@ -58,8 +58,8 @@ public:
         {
             case JJBreezeParameterAddress::pitchL:       mPitchL = value; break;
             case JJBreezeParameterAddress::pitchR:       mPitchR = value; break;
-            case JJBreezeParameterAddress::delayL:       mDelayL = value; break;
-            case JJBreezeParameterAddress::delayR:       mDelayR = value; break;
+            case JJBreezeParameterAddress::delayL:       mDelayL = std::clamp(value, 0.0f, 250.0f); break;
+            case JJBreezeParameterAddress::delayR:       mDelayR = std::clamp(value, 0.0f, 250.0f); break;
             case JJBreezeParameterAddress::focus:        mFocus = value; break;
             case JJBreezeParameterAddress::mix:          mMix = value; break;
             case JJBreezeParameterAddress::vibratoRate:  mVibratoRate = value; break;

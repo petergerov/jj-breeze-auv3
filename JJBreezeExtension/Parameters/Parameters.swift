@@ -1,6 +1,9 @@
 import Foundation
 import AudioToolbox
 
+/// Shift Delay L/R — same 0–250 ms range as desktop jj-breeze (covers slapback).
+let JJBreezeDelayMaxMs: AUValue = 250
+
 let JJBreezeParameterSpecs = ParameterTreeSpec {
     ParameterGroupSpec(identifier: "shift", name: "Shift") {
         ParameterSpec(address: .pitchL, identifier: "pitchL", name: "Pitch L",
@@ -8,9 +11,9 @@ let JJBreezeParameterSpecs = ParameterTreeSpec {
         ParameterSpec(address: .pitchR, identifier: "pitchR", name: "Pitch R",
                       units: .cents, valueRange: -1200.0...1200.0, defaultValue: 300.0, unitName: "ct")
         ParameterSpec(address: .delayL, identifier: "delayL", name: "Delay L",
-                      units: .milliseconds, valueRange: 0.0...250.0, defaultValue: 23.0, unitName: "ms")
+                      units: .milliseconds, valueRange: 0.0...JJBreezeDelayMaxMs, defaultValue: 23.0, unitName: "ms")
         ParameterSpec(address: .delayR, identifier: "delayR", name: "Delay R",
-                      units: .milliseconds, valueRange: 0.0...250.0, defaultValue: 37.0, unitName: "ms")
+                      units: .milliseconds, valueRange: 0.0...JJBreezeDelayMaxMs, defaultValue: 37.0, unitName: "ms")
         ParameterSpec(address: .focus, identifier: "focus", name: "Focus",
                       units: .hertz, valueRange: 20.0...10_000.0, defaultValue: 20.0, unitName: "Hz")
         ParameterSpec(address: .mix, identifier: "mix", name: "Mix",

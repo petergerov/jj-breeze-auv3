@@ -131,16 +131,26 @@ extension AUParameterTree {
 enum ParameterDefaults {
     static let values: [AUParameterAddress: AUValue] = {
         var map: [AUParameterAddress: AUValue] = [:]
-        collect(JJBreezeParameterSpecs.children, into: &map)
+        collect(JJBreezeParameterSpecs.children) { spec in
+            map[spec.address] = spec.defaultValue
+        }
         return map
     }()
 
-    private static func collect(_ nodes: [NodeSpec], into map: inout [AUParameterAddress: AUValue]) {
+    static let ranges: [AUParameterAddress: (min: AUValue, max: AUValue)] = {
+        var map: [AUParameterAddress: (min: AUValue, max: AUValue)] = [:]
+        collect(JJBreezeParameterSpecs.children) { spec in
+            map[spec.address] = (spec.minValue, spec.maxValue)
+        }
+        return map
+    }()
+
+    private static func collect(_ nodes: [NodeSpec], _ body: (ParameterSpec) -> Void) {
         for node in nodes {
             if let spec = node as? ParameterSpec {
-                map[spec.address] = spec.defaultValue
+                body(spec)
             } else if let group = node as? ParameterGroupSpec {
-                collect(group.children, into: &map)
+                collect(group.children, body)
             }
         }
     }

@@ -240,6 +240,10 @@ public class JJBreezeAudioUnit: AUAudioUnit, @unchecked Sendable {
             kernel.setParameter(param.address, param.value)
         }
         setupParameterCallbacks()
+        #if DEBUG
+        let delayMax = parameterTree.parameter(withAddress: JJBreezeParameterAddress.delayL.rawValue)?.maxValue ?? 0
+        precondition(delayMax >= JJBreezeDelayMaxMs - 0.5, "Delay L maxValue is \(delayMax), expected \(JJBreezeDelayMaxMs)")
+        #endif
         currentPreset = presetList.first
         loadedSnapshot = currentParameterSnapshot()
     }

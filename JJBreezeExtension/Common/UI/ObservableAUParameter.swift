@@ -125,9 +125,10 @@ final class ObservableAUParameter: ObservableAUParameterNode {
     init(_ parameter: AUParameter) {
         self.parameter = parameter
         self.value = parameter.value
-        self.min = parameter.minValue
-        self.max = parameter.maxValue
         self.displayName = parameter.displayName
+        let range = ParameterDefaults.ranges[parameter.address]
+        self.min = range?.min ?? parameter.minValue
+        self.max = range?.max ?? parameter.maxValue
         self.defaultValue = ParameterDefaults.values[parameter.address] ?? parameter.value
         self.unit = parameter.unit
         self.address = parameter.address
