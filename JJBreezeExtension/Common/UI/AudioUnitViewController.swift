@@ -5,6 +5,7 @@ import SwiftUI
 
 private let log = Logger(subsystem: "com.gerov.jjbreeze.AUv3", category: "AudioUnitViewController")
 
+@objc(AudioUnitViewController)
 @MainActor
 public class AudioUnitViewController: AUViewController, AUAudioUnitFactory {
     var audioUnit: AUAudioUnit?
@@ -18,34 +19,33 @@ public class AudioUnitViewController: AUViewController, AUAudioUnitFactory {
         configureSwiftUIView(audioUnit: audioUnit)
     }
 
+    /// Must not `DispatchQueue.main.sync` when already on the main thread — that deadlocks
+    /// the extension process and the host reports "Audio Unit failed to load".
     nonisolated public func createAudioUnit(with componentDescription: AudioComponentDescription) throws -> AUAudioUnit {
-        try DispatchQueue.main.sync {
-            audioUnit = try JJBreezeAudioUnit(componentDescription: componentDescription, options: [])
+        let unit = try JJBreezeAudioUnit(componentDescription: componentDescription, options: [])
+        unit.setupParameterTree(JJBreezeParameterSpecs.createAUParameterTree())
 
-            guard let audioUnit = self.audioUnit as? JJBreezeAudioUnit else {
-                log.error("Unable to create JJBreezeAudioUnit")
-                return audioUnit!
+        let attach = {
+            MainActor.assumeIsolated {
+                self.attach(unit)
             }
+        }
+        if Thread.isMainThread {
+            attach()
+        } else {
+            DispatchQueue.main.sync(execute: attach)
+        }
+        return unit
+    }
 
-            defer {
-                DispatchQueue.main.async {
-                    self.configureSwiftUIView(audioUnit: audioUnit)
-                }
-            }
-
-            audioUnit.setupParameterTree(JJBreezeParameterSpecs.createAUParameterTree())
-
-            self.observation = audioUnit.observe(\.allParameterValues, options: [.new]) { object, change in
-                guard let tree = audioUnit.parameterTree else { return }
-                for param in tree.allParameters { param.value = param.value }
-            }
-
-            guard audioUnit.parameterTree != nil else {
-                log.error("Unable to access AU ParameterTree")
-                return audioUnit
-            }
-
-            return audioUnit
+    private func attach(_ unit: JJBreezeAudioUnit) {
+        audioUnit = unit
+        observation = unit.observe(\.allParameterValues, options: [.new]) { _, _ in
+            guard let tree = unit.parameterTree else { return }
+            for param in tree.allParameters { param.value = param.value }
+        }
+        if isViewLoaded {
+            configureSwiftUIView(audioUnit: unit)
         }
     }
 

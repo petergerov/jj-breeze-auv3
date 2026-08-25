@@ -23,6 +23,18 @@ targets:
     platform: iOS
     sources:
       - path: JJBreeze
+      # Same DSP/AU/UI as the appex so the companion app can host in-process
+      # without waiting for iOS to register the extension (fails often on iPad).
+      - path: JJBreezeExtension/DSP
+      - path: JJBreezeExtension/Parameters
+      - path: JJBreezeExtension/UI
+      - path: JJBreezeExtension/Common/Audio Unit
+      - path: JJBreezeExtension/Common/DSP
+      - path: JJBreezeExtension/Common/Parameters
+      - path: JJBreezeExtension/Common/Utility
+      - path: JJBreezeExtension/Common/UI
+        excludes:
+          - AudioUnitViewController.swift
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.gerov.jjbreeze
@@ -39,6 +51,12 @@ targets:
         ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES: YES
         SWIFT_OBJC_BRIDGING_HEADER: JJBreeze/Common/JJBreezeApp-Bridging-Header.h
         CLANG_ENABLE_MODULES: YES
+        SWIFT_OBJC_INTEROP_MODE: objcxx
+        CLANG_CXX_LANGUAGE_STANDARD: gnu++20
+        CLANG_CXX_LIBRARY: libc++
+        HEADER_SEARCH_PATHS: "$(SRCROOT)/JJBreezeExtension/DSP $(SRCROOT)/JJBreezeExtension/Parameters $(SRCROOT)/JJBreezeExtension/Common/DSP"
+        USER_HEADER_SEARCH_PATHS: "$(SRCROOT)/JJBreezeExtension/DSP $(SRCROOT)/JJBreezeExtension/Parameters $(SRCROOT)/JJBreezeExtension/Common/DSP"
+        OTHER_LDFLAGS: "-framework AudioToolbox -framework AVFoundation -framework CoreAudioKit"
     dependencies:
       - target: JJBreezeExtension
         embed: true

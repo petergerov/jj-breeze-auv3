@@ -8,9 +8,13 @@ import UIKit
 class AudioUnitHostModel {
     private let playEngine = SimplePlayEngine()
     var viewModel = AudioUnitViewModel()
-    var isPlaying: Bool { playEngine.isPlaying }
-    var source: SimplePlayEngine.Source { playEngine.source }
-    var audioUnitCrashed = false
+    var isPlaying = false
+    var isLoading = true
+    var playbackError: String?
+    var source: SimplePlayEngine.Source {
+        get { playEngine.source }
+        set { setSource(newValue) }
+    }
 
     let type = "aufx"
     let subType = "Jjbz"
@@ -24,6 +28,7 @@ class AudioUnitHostModel {
     func start() async {
         guard !didStart else { return }
         didStart = true
+        isLoading = true
         await waitUntilActive()
 
         let viewController = await playEngine.initComponent(
@@ -32,14 +37,18 @@ class AudioUnitHostModel {
             manufacturer: manufacturer
         )
 
+        isLoading = false
         viewModel = AudioUnitViewModel(
             showAudioControls: true,
-            title: "Gerov: jj-breeze",
+            title: "jj-breeze",
             message: viewController == nil
-                ? "Audio Unit failed to load. Build and run this app once so iOS can register the AUv3 extension."
-                : "Loaded AUv3",
+                ? (playEngine.lastError ?? "Built-in effect failed to load.")
+                : "Loaded",
             viewController: viewController
         )
+        if viewController == nil {
+            playbackError = viewModel.message
+        }
     }
 
     private func waitUntilActive() async {
@@ -49,7 +58,27 @@ class AudioUnitHostModel {
         }
     }
 
-    func startPlaying() async { await playEngine.startPlaying() }
-    func stopPlaying() { playEngine.stopPlaying() }
-    func setSource(_ source: SimplePlayEngine.Source) { playEngine.setSource(source) }
+    func startPlaying() async {
+        playbackError = nil
+        await playEngine.startPlaying()
+        isPlaying = playEngine.isPlaying
+        if !isPlaying {
+            playbackError = playEngine.lastError ?? "Could not start audio. Check volume and the silent switch."
+        }
+    }
+
+    func stopPlaying() {
+        playEngine.stopPlaying()
+        isPlaying = false
+        playbackError = nil
+    }
+
+    func setSource(_ source: SimplePlayEngine.Source) {
+        let wasPlaying = isPlaying
+        playEngine.setSource(source)
+        isPlaying = playEngine.isPlaying
+        if wasPlaying {
+            Task { await startPlaying() }
+        }
+    }
 }

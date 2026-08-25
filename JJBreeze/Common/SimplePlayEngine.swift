@@ -1,24 +1,12 @@
 import Foundation
 import AVFoundation
 import CoreAudioKit
+import AudioToolbox
+import SwiftUI
 import os
 @preconcurrency import AVFAudio
 
 private let log = Logger(subsystem: "com.gerov.jjbreeze", category: "PlayEngine")
-
-extension AVAudioUnit {
-    @MainActor
-    func loadAudioUnitViewController() async -> ViewController? {
-        let unit = auAudioUnit
-        let viewController = await unit.requestViewController()
-        if viewController == nil {
-            let genericViewController = AUGenericViewController()
-            genericViewController.auAudioUnit = unit
-            return genericViewController
-        }
-        return viewController
-    }
-}
 
 @MainActor
 @Observable
@@ -35,6 +23,7 @@ public class SimplePlayEngine {
     private let player = AVAudioPlayerNode()
     private var demoBuffer: AVAudioPCMBuffer?
     private(set) var isPlaying = false
+    private(set) var lastError: String?
     var source: Source = .loop
 
     private let graphFormat = AVAudioFormat(standardFormatWithSampleRate: 44_100, channels: 2)!
@@ -47,37 +36,77 @@ public class SimplePlayEngine {
         reset()
         configureSession(for: .loop)
 
-        let description = AudioComponentDescription(
-            componentType: type.fourCharCode ?? kAudioUnitType_Effect,
-            componentSubType: subType.fourCharCode ?? 0,
-            componentManufacturer: manufacturer.fourCharCode ?? 0,
-            componentFlags: 0,
-            componentFlagsMask: 0
+        // Do not instantiate aufx/Jjbz/Grov here. That is the AUv3 appex; loading your
+        // own extension from the containing app fails on device even when GarageBand works.
+        // The standalone player uses a private in-process subclass instead.
+        var local = AudioComponentDescription()
+        local.componentType = kAudioUnitType_Effect
+        local.componentSubType = "JjbH".fourCharCode ?? 0
+        local.componentManufacturer = "Grov".fourCharCode ?? 0
+        local.componentFlags = 0
+        local.componentFlagsMask = 0
+
+        AUAudioUnit.registerSubclass(
+            JJBreezeAudioUnit.self,
+            as: local,
+            name: "jj-breeze standalone",
+            version: 1
         )
 
         do {
-            let audioUnit = try await AVAudioUnit.instantiate(with: description, options: .loadOutOfProcess)
-            self.avAudioUnit = audioUnit
-            return await audioUnit.loadAudioUnitViewController()
+            let audioUnit = try await AVAudioUnit.instantiate(with: local, options: [])
+            return finishLoadInProcess(audioUnit)
         } catch {
-            log.error("AU instantiate failed: \(error.localizedDescription, privacy: .public)")
+            lastError = "Could not start the built-in effect: \(error.localizedDescription)"
+            log.error("Standalone AU failed: \(error.localizedDescription, privacy: .public)")
             return nil
         }
     }
 
+    private func finishLoadInProcess(_ audioUnit: AVAudioUnit) -> ViewController? {
+        guard let breeze = audioUnit.auAudioUnit as? JJBreezeAudioUnit else {
+            lastError = "Built-in effect did not load in-process."
+            return nil
+        }
+        avAudioUnit = audioUnit
+        lastError = nil
+        if breeze.parameterTree == nil {
+            breeze.setupParameterTree(JJBreezeParameterSpecs.createAUParameterTree())
+        }
+        guard let tree = breeze.observableParameterTree else {
+            lastError = "Effect parameters failed to load."
+            return nil
+        }
+        let host = HostingController(rootView: JJBreezeMainView(parameterTree: tree, audioUnit: breeze))
+        host.view.backgroundColor = .black
+        return host
+    }
+
     func startPlaying() async {
-        guard let avAudioUnit, !isPlaying else { return }
+        lastError = nil
+        guard let avAudioUnit else {
+            lastError = "The effect is not loaded yet."
+            return
+        }
+        guard !isPlaying else { return }
 
         if source == .microphone {
             let granted = await AVAudioApplication.requestRecordPermission()
             guard granted else {
-                log.error("Microphone permission denied")
+                lastError = "Microphone access is off. Use Demo, or allow the mic in Settings."
                 return
             }
         }
 
-        guard let engine = makeEngine() else { return }
-        guard wireGraph(engine: engine, avAudioUnit: avAudioUnit) else { return }
+        guard let engine = makeEngine() else {
+            lastError = lastError ?? "Could not start the audio engine."
+            return
+        }
+        guard wireGraph(engine: engine, avAudioUnit: avAudioUnit) else {
+            lastError = lastError ?? "Could not connect the effect to audio."
+            teardownEngine()
+            return
+        }
         guard startEngine(engine) else { return }
 
         switch source {
@@ -85,6 +114,10 @@ public class SimplePlayEngine {
             player.stop()
             if let demoBuffer {
                 await player.scheduleBuffer(demoBuffer, at: nil, options: .loops)
+            } else {
+                lastError = "Demo audio is missing."
+                teardownEngine()
+                return
             }
             player.play()
         case .microphone:
@@ -99,12 +132,8 @@ public class SimplePlayEngine {
     }
 
     func setSource(_ newSource: Source) {
-        let wasPlaying = isPlaying
-        if wasPlaying { teardownEngine() }
+        if isPlaying { teardownEngine() }
         source = newSource
-        if wasPlaying {
-            Task { await startPlaying() }
-        }
     }
 
     func reset() {
@@ -157,6 +186,7 @@ public class SimplePlayEngine {
             let input = engine.inputNode
             let inputFormat = input.outputFormat(forBus: 0)
             guard inputFormat.sampleRate > 0, inputFormat.channelCount > 0 else {
+                lastError = "Microphone is not ready. Unplug accessories and try again."
                 log.error("Microphone format is not ready")
                 return false
             }
@@ -180,16 +210,19 @@ public class SimplePlayEngine {
         }, &exception)
 
         if let exception {
+            lastError = "Audio engine failed: \(exception.localizedDescription)"
             log.error("AVAudioEngine exception: \(exception.localizedDescription, privacy: .public)")
             teardownEngine()
             return false
         }
         if let startError {
+            lastError = "Audio engine failed: \(startError.localizedDescription)"
             log.error("AVAudioEngine start failed: \(startError.localizedDescription, privacy: .public)")
             teardownEngine()
             return false
         }
         if !ok || !engine.isRunning {
+            lastError = "Audio engine did not start. Check the silent switch and volume."
             log.error("AVAudioEngine did not start")
             teardownEngine()
             return false
@@ -228,12 +261,14 @@ public class SimplePlayEngine {
             }
             try session.setActive(true)
         } catch {
+            lastError = "Audio session failed: \(error.localizedDescription)"
             log.error("Audio session failed: \(error.localizedDescription, privacy: .public)")
         }
     }
 
+    /// Short plucked notes so width, delay, vibrato and warmth are obvious.
     private static func makeDemoBuffer(sampleRate: Double) -> AVAudioPCMBuffer? {
-        let seconds = 4.0
+        let seconds = 8.0
         let frames = AVAudioFrameCount(seconds * sampleRate)
         guard let format = AVAudioFormat(standardFormatWithSampleRate: sampleRate, channels: 2),
               let buffer = AVAudioPCMBuffer(pcmFormat: format, frameCapacity: frames),
@@ -242,16 +277,23 @@ public class SimplePlayEngine {
         else { return nil }
 
         buffer.frameLength = frames
+        let notes = [220.0, 277.2, 329.6, 246.9, 220.0, 196.0, 220.0, 329.6]
+        let noteLength = sampleRate * (seconds / Double(notes.count))
+
         for i in 0..<Int(frames) {
-            let t = Double(i) / sampleRate
-            let env = 0.28 + 0.08 * sin(2 * Double.pi * 0.25 * t)
-            let tone = sin(2 * Double.pi * 220 * t) * 0.55
-                + sin(2 * Double.pi * 330 * t) * 0.22
-                + sin(2 * Double.pi * 440 * t) * 0.10
-            left[i] = Float(tone * env)
-            right[i] = Float((sin(2 * Double.pi * 220.7 * t) * 0.55
-                              + sin(2 * Double.pi * 329.4 * t) * 0.22
-                              + sin(2 * Double.pi * 441.2 * t) * 0.10) * env)
+            let noteIndex = min(notes.count - 1, Int(Double(i) / noteLength))
+            let tNote = Double(i) - Double(noteIndex) * noteLength
+            let freq = notes[noteIndex]
+            let env = Float(exp(-tNote / sampleRate * 3.2))
+            let pluck = Float(tNote < sampleRate * 0.004 ? (1.0 - tNote / (sampleRate * 0.004)) * 0.15 : 0)
+            let tone = sin(2 * Double.pi * freq * (Double(i) / sampleRate)) * 0.55
+                + sin(2 * Double.pi * freq * 2 * (Double(i) / sampleRate)) * 0.18
+                + sin(2 * Double.pi * freq * 3 * (Double(i) / sampleRate)) * 0.07
+            let sample = (Float(tone) + pluck) * env * 0.85
+            left[i] = sample
+            right[i] = (Float(sin(2 * Double.pi * (freq * 1.003) * (Double(i) / sampleRate))) * 0.55
+                        + Float(sin(2 * Double.pi * freq * 2.01 * (Double(i) / sampleRate))) * 0.18)
+                * env * 0.85 + pluck * env
         }
         return buffer
     }

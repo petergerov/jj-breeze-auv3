@@ -19,7 +19,7 @@ Before the first upload, bump the public version from `0.1.0` to **`1.0.0`** (Bu
 | Primary language | English (U.S.) |
 | Team ID | `C9LBGZNZ6P` |
 | Apple Audio Unit | type `aufx`, subtype `Jjbz`, manufacturer `Grov` |
-| Name in hosts | **Gerov: jj-breeze** |
+| Name in hosts | **jj-breeze** |
 | Platforms | iPhone and iPad (iOS 17+) |
 | Category | **Music** |
 | Secondary | Entertainment |
@@ -33,7 +33,7 @@ Before the first upload, bump the public version from `0.1.0` to **`1.0.0`** (Bu
 Rotates without a new binary. Leave blank if unused.
 
 ```
-A stereo micro-pitch widener with vibrato and a warmth stage. Open this app and tap Play, or load Gerov: jj-breeze in GarageBand, Logic for iPad, or AUM.
+A stereo micro-pitch widener with vibrato and a warmth stage. Open this app and tap Play, or load: jj-breeze in GarageBand, Logic for iPad, or AUM.
 ```
 
 ---
@@ -43,7 +43,7 @@ A stereo micro-pitch widener with vibrato and a warmth stage. Open this app and 
 ```
 jj-breeze is a stereo micro-pitch widener with vibrato and a warmth tone stage. It is an Audio Unit (AUv3) effect for iPhone and iPad.
 
-Open the app, tap Play, and listen to a built-in demo through the effect. Turn knobs, enable sections, and try factory presets. After you have launched the app once, the same plug-in is available in GarageBand, Logic for iPad, AUM, and other AUv3 hosts as Gerov: jj-breeze.
+Open the app, tap Play, and listen to a built-in demo through the effect. Turn knobs, enable sections, and try factory presets. After you have launched the app once, the same plug-in is available in GarageBand, Logic for iPad, AUM, and other AUv3 hosts as: jj-breeze.
 
 WHAT IT DOES
 Shift creates width or a full-band pitch change with independent left and right pitch (±1 octave) and delay, plus a Focus crossover so the low end can stay dry. Vibrato adds a slow delay-based pitch wobble. Warmth is a final tone stage: low-shelf body, low-pass, and gentle saturation.
@@ -60,9 +60,9 @@ Default, JJ Cale Vocal, Cajun Moon Vocal, JJ Dark Vocal, JJ Dark Vocal (Up), Oct
 
 IN A DAW
 1. Install and open jj-breeze once (this registers the Audio Unit).
-2. GarageBand: Audio FX → Audio Unit Extensions → Gerov: jj-breeze
+2. GarageBand: Audio FX → Audio Unit Extensions → jj-breeze
 3. Logic for iPad: Audio Units → Gerov
-4. AUM and other AUv3 hosts: look for Gerov: jj-breeze
+4. AUM and other AUv3 hosts: look for: jj-breeze
 
 This app is a working host, not an empty wrapper. You can hear and edit the effect without leaving the app. Microphone input in the host is optional (Demo Loop is the default).
 
@@ -76,7 +76,7 @@ jj-breeze is an original effect. It is not affiliated with any third-party plug-
 ```
 jj-breeze ist ein stereo Micro-Pitch-Widener mit Vibrato und einer Warmth-Stufe. Es ist ein Audio-Unit-Effekt (AUv3) für iPhone und iPad.
 
-App öffnen, Play tippen, Demo-Ton durch den Effekt hören. Regler drehen, Sektionen einschalten, Factory-Presets laden. Nach dem ersten Start erscheint dasselbe Plug-in in GarageBand, Logic für iPad, AUM und anderen AUv3-Hosts als Gerov: jj-breeze.
+App öffnen, Play tippen, Demo-Ton durch den Effekt hören. Regler drehen, Sektionen einschalten, Factory-Presets laden. Nach dem ersten Start erscheint dasselbe Plug-in in GarageBand, Logic für iPad, AUM und anderen AUv3-Hosts als jj-breeze.
 
 WAS ES TUT
 Shift erzeugt Breite oder eine Vollband-Tonhöhenänderung: Pitch L/R unabhängig (±1 Oktave), Delay L/R, Focus-Crossover (Tiefen können trockenen bleiben). Vibrato ist ein langsames Delay-Vibrato. Warmth ist die letzte Klangstufe: Body-Low-Shelf, Tiefpass und sanfte Sättigung.
@@ -93,9 +93,9 @@ Default, JJ Cale Vocal, Cajun Moon Vocal, JJ Dark Vocal, JJ Dark Vocal (Up), Oct
 
 IN EINER DAW
 1. jj-breeze einmal installieren und öffnen (registriert die Audio Unit).
-2. GarageBand: Audio-FX → Audio-Unit-Erweiterungen → Gerov: jj-breeze
+2. GarageBand: Audio-FX → Audio-Unit-Erweiterungen → jj-breeze
 3. Logic für iPad: Audio Units → Gerov
-4. AUM und andere AUv3-Hosts: Gerov: jj-breeze
+4. AUM und andere AUv3-Hosts: jj-breeze
 
 Die App ist ein funktionierender Host, kein leerer Wrapper. Mikrofon im Host ist optional (Standard: Demo Loop).
 
@@ -162,25 +162,27 @@ This is an Audio Unit v3 (AUv3) audio effect. The container app is a working hos
 HOW TO REVIEW (no GarageBand required)
 
 1. Launch “jj-breeze”.
-2. Wait until the analog-style editor appears (Gerov: jj-breeze). If you see “Audio Unit failed to load”, force-quit and reopen once so iOS can register the extension.
+2. Wait until the analog-style editor appears (jj-breeze). If you see “Audio Unit failed to load”, force-quit and reopen once so iOS can register the extension.
 3. Leave the source on “Demo Loop”.
-4. Tap Play (orange). You should hear a short looping tone through the effect.
+4. You should see an amber hint: “Tap Play to hear the effect.” Tap Play (orange). You should hear plucked notes through the effect. The header shows ON AIR.
 5. Turn Shift knobs (Pitch L/R, Mix). The sound should change.
 6. Enable Vibrato and Warmth with the section LEDs and move their Mix knobs.
 7. Open the preset menu (under the title) and load “Cajun Moon Vocal” or “Deep Baritone”.
 8. Tap Stop.
 
+The knobs are silent until Play is running. That is expected: this is an effect, not a synth. Demo Loop is the default source.
+
 OPTIONAL: GARAGEBAND (iPad)
 
 1. Keep jj-breeze installed. Open GarageBand and create or open a song.
 2. Add an Audio Recorder or any audio track.
-3. Plug-ins / Audio FX → Audio Unit Extensions → Gerov: jj-breeze.
+3. Plug-ins / Audio FX → Audio Unit Extensions → jj-breeze.
 4. Play the track. The same editor should appear.
 
 IDENTITY
 • Bundle ID: com.gerov.jjbreeze
 • Extension: com.gerov.jjbreeze.AUv3
-• AU: aufx / Jjbz / Grov — listed as “Gerov: jj-breeze”
+• AU: aufx / Jjbz / Grov — listed as “jj-breeze”
 
 MICROPHONE
 The host can switch source to “Microphone” to hear live input. This is optional. Review with Demo Loop; you do not need to grant mic access. The Audio Unit itself does not require the microphone when hosted in GarageBand or Logic.
@@ -288,7 +290,7 @@ Minimum for iPhone + iPad:
 | 1 | iPhone 6.7" (e.g. 15 Pro Max) | Editor, Default preset, Play visible |
 | 2 | iPhone 6.7" | Vibrato + Warmth enabled, knobs readable |
 | 3 | iPhone 6.7" | Preset menu open |
-| 4 (optional) | iPhone 6.7" | Caption: “Also works in GarageBand as Gerov: jj-breeze” |
+| 4 (optional) | iPhone 6.7" | Caption: “Also works in GarageBand as jj-breeze” |
 | 1 | iPad 13" | Same editor, landscape |
 | 2 | iPad 13" | Play + Demo Loop |
 
@@ -319,7 +321,7 @@ Microphone
 The optional “Microphone” mode in the companion host processes audio on the device so you can hear the effect on live input. Microphone audio is not recorded to disk by this app and is not uploaded. You can use Demo Loop instead and deny microphone permission.
 
 Audio Unit hosts
-When you load Gerov: jj-breeze in GarageBand, Logic for iPad, AUM, or another host, that host’s privacy policy applies to anything that host records or shares.
+When you load jj-breeze in GarageBand, Logic for iPad, AUM, or another host, that host’s privacy policy applies to anything that host records or shares.
 
 Children
 The app is not directed at children and does not collect data from anyone.
@@ -338,7 +340,7 @@ Apple often rejects Audio Unit apps for these. This project is set up to avoid t
 
 1. **Empty container (4.2 Minimum Functionality)** — The app must do something on its own. Reviewers can tap Play. Do not describe the listing as “opens GarageBand only.”
 2. **Extension never registers** — Review notes say to launch the app once. If the editor fails to load on first launch, they should reopen once.
-3. **They cannot find the AU in GarageBand** — Full path is in the notes: Audio FX → Audio Unit Extensions → **Gerov: jj-breeze**.
+3. **They cannot find the AU in GarageBand** — Full path is in the notes: Audio FX → Audio Unit Extensions → **jj-breeze**.
 4. **Microphone permission scare** — Default source is Demo Loop. Notes say mic is optional.
 5. **Missing privacy policy URL** — Host the policy before you submit.
 6. **Archive of the extension instead of the app** — Archive scheme **jj-breeze** so Organizer lists an **iOS App**, not Other Items. Bundle ID must be `com.gerov.jjbreeze`.
@@ -369,4 +371,4 @@ If Legal asks you to rename presets before 1.0, change them in `JJBreezeExtensio
 - [ ] App Encryption Documentation: **None of the algorithms mentioned above** (or skip if plist already exempts)
 - [ ] iPhone 6.7" and iPad 13" screenshots
 - [ ] Archive is **jj-breeze.app** under iOS Apps
-- [ ] TestFlight install: open app → Play works → GarageBand sees **Gerov: jj-breeze**
+- [ ] TestFlight install: open app → Play works → GarageBand sees **jj-breeze**
