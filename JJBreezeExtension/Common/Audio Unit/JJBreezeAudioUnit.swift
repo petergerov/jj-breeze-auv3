@@ -118,9 +118,6 @@ public class JJBreezeAudioUnit: AUAudioUnit, @unchecked Sendable {
         set(.delayR, preset.delayR)
         set(.focus, preset.focus)
         set(.mix, preset.mix)
-        set(.slapTime, preset.slapTime)
-        set(.slapFeedback, preset.slapFeedback)
-        set(.slapMix, preset.slapMix)
         set(.vibratoRate, preset.vibratoRate)
         set(.vibratoDepth, preset.vibratoDepth)
         set(.vibratoMix, preset.vibratoMix)
@@ -129,7 +126,6 @@ public class JJBreezeAudioUnit: AUAudioUnit, @unchecked Sendable {
         set(.warmthBody, preset.warmthBody)
         set(.warmthMix, preset.warmthMix)
         set(.shiftOn, preset.shiftOn ? 1 : 0)
-        set(.slapOn, preset.slapOn ? 1 : 0)
         set(.vibratoOn, preset.vibratoOn ? 1 : 0)
         set(.warmthOn, preset.warmthOn ? 1 : 0)
     }
@@ -153,15 +149,15 @@ public class JJBreezeAudioUnit: AUAudioUnit, @unchecked Sendable {
         switch JJBreezeParameterAddress(rawValue: address) {
         case .pitchL, .pitchR:
             return String(format: "%.1f ct", value)
-        case .delayL, .delayR, .slapTime, .vibratoDepth:
+        case .delayL, .delayR, .vibratoDepth:
             return String(format: "%.1f ms", value)
         case .focus, .warmthTone:
             return String(format: "%.0f Hz", value)
-        case .mix, .slapFeedback, .slapMix, .vibratoMix, .warmthDrive, .warmthBody, .warmthMix:
+        case .mix, .vibratoMix, .warmthDrive, .warmthBody, .warmthMix:
             return String(format: "%.0f %%", value)
         case .vibratoRate:
             return String(format: "%.2f Hz", value)
-        case .shiftOn, .slapOn, .vibratoOn, .warmthOn:
+        case .shiftOn, .vibratoOn, .warmthOn:
             return value >= 0.5 ? "On" : "Off"
         default:
             return String(format: "%.2f", value)

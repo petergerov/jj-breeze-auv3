@@ -8,7 +8,6 @@
 #include "JJBreezeParameterAddresses.h"
 #include "PitchShifter.h"
 #include "ModulatedDelay.h"
-#include "SlapbackDelay.h"
 #include "Warmth.h"
 #include "Biquad.hpp"
 
@@ -26,8 +25,6 @@ public:
         leftVoice.delay.setLfoStartPhase(0.0f);
         rightVoice.delay.setLfoStartPhase(0.5f);
 
-        slapback.prepare(inSampleRate);
-
         vibratoL.prepare(inSampleRate);
         vibratoR.prepare(inSampleRate);
         vibratoL.setBaseDelayMs(9.0f);
@@ -44,7 +41,6 @@ public:
     {
         leftVoice.reset();
         rightVoice.reset();
-        slapback.reset();
         vibratoL.reset();
         vibratoR.reset();
         warmthL.reset();
@@ -65,9 +61,6 @@ public:
             case JJBreezeParameterAddress::delayR:       mDelayR = value; break;
             case JJBreezeParameterAddress::focus:        mFocus = value; break;
             case JJBreezeParameterAddress::mix:          mMix = value; break;
-            case JJBreezeParameterAddress::slapTime:     mSlapTime = value; break;
-            case JJBreezeParameterAddress::slapFeedback: mSlapFeedback = value; break;
-            case JJBreezeParameterAddress::slapMix:      mSlapMix = value; break;
             case JJBreezeParameterAddress::vibratoRate:  mVibratoRate = value; break;
             case JJBreezeParameterAddress::vibratoDepth: mVibratoDepth = value; break;
             case JJBreezeParameterAddress::vibratoMix:   mVibratoMix = value; break;
@@ -76,7 +69,6 @@ public:
             case JJBreezeParameterAddress::warmthBody:   mWarmthBody = value; break;
             case JJBreezeParameterAddress::warmthMix:    mWarmthMix = value; break;
             case JJBreezeParameterAddress::shiftOn:      mShiftOn = value; break;
-            case JJBreezeParameterAddress::slapOn:       mSlapOn = value; break;
             case JJBreezeParameterAddress::vibratoOn:    mVibratoOn = value; break;
             case JJBreezeParameterAddress::warmthOn:     mWarmthOn = value; break;
             default: break;
@@ -93,9 +85,6 @@ public:
             case JJBreezeParameterAddress::delayR:       return mDelayR;
             case JJBreezeParameterAddress::focus:        return mFocus;
             case JJBreezeParameterAddress::mix:          return mMix;
-            case JJBreezeParameterAddress::slapTime:     return mSlapTime;
-            case JJBreezeParameterAddress::slapFeedback: return mSlapFeedback;
-            case JJBreezeParameterAddress::slapMix:      return mSlapMix;
             case JJBreezeParameterAddress::vibratoRate:  return mVibratoRate;
             case JJBreezeParameterAddress::vibratoDepth: return mVibratoDepth;
             case JJBreezeParameterAddress::vibratoMix:   return mVibratoMix;
@@ -104,7 +93,6 @@ public:
             case JJBreezeParameterAddress::warmthBody:   return mWarmthBody;
             case JJBreezeParameterAddress::warmthMix:    return mWarmthMix;
             case JJBreezeParameterAddress::shiftOn:      return mShiftOn;
-            case JJBreezeParameterAddress::slapOn:       return mSlapOn;
             case JJBreezeParameterAddress::vibratoOn:    return mVibratoOn;
             case JJBreezeParameterAddress::warmthOn:     return mWarmthOn;
             default: return 0.f;
@@ -145,9 +133,6 @@ public:
         const float delayRMs    = mDelayR;
         const float focusHz     = mFocus;
         const float mix         = mMix * 0.01f;
-        const float slapTimeMs  = mSlapTime;
-        const float slapFeedbk  = mSlapFeedback * 0.01f;
-        const float slapMixAmt  = mSlapMix * 0.01f;
         const float vibRateHz   = mVibratoRate;
         const float vibDepthMs  = mVibratoDepth;
         const float vibMixAmt   = mVibratoMix * 0.01f;
@@ -157,7 +142,6 @@ public:
         const float warmthMixAmt   = mWarmthMix * 0.01f;
 
         const bool shiftIsOn   = mShiftOn > 0.5f;
-        const bool slapIsOn    = mSlapOn > 0.5f;
         const bool vibratoIsOn = mVibratoOn > 0.5f;
         const bool warmthIsOn  = mWarmthOn > 0.5f;
 
@@ -172,9 +156,6 @@ public:
         leftVoice.highBandFilter.setFromArray(highCoeffs);
         rightVoice.lowBandFilter.setFromArray(lowCoeffs);
         rightVoice.highBandFilter.setFromArray(highCoeffs);
-
-        slapback.setTimeMs(slapTimeMs);
-        slapback.setFeedback(slapFeedbk);
 
         vibratoL.lfoRateHz  = vibRateHz;
         vibratoL.lfoDepthMs = vibDepthMs;
@@ -210,8 +191,6 @@ public:
             highR = rightVoice.delay.processSample(highR);
             const float wetR = lowR + highR;
 
-            const float slapEcho = slapback.processSample(0.5f * (dryL + dryR)) * slapMixAmt;
-
             const float vibL = vibratoL.processSample(dryL);
             const float vibR = vibratoR.processSample(dryR);
 
@@ -219,10 +198,9 @@ public:
             const float shiftMixR = shiftIsOn ? mix * (wetR - dryR) : 0.0f;
             const float vibMixL   = vibratoIsOn ? vibMixAmt * (vibL - dryL) : 0.0f;
             const float vibMixR   = vibratoIsOn ? vibMixAmt * (vibR - dryR) : 0.0f;
-            const float slapOut   = slapIsOn ? slapEcho : 0.0f;
 
-            const float chainL = dryL + shiftMixL + vibMixL + slapOut;
-            const float chainR = dryR + shiftMixR + vibMixR + slapOut;
+            const float chainL = dryL + shiftMixL + vibMixL;
+            const float chainR = dryR + shiftMixR + vibMixR;
 
             const float warmL = warmthL.processSample(chainL);
             const float warmR = warmthR.processSample(chainR);
@@ -276,7 +254,6 @@ private:
     };
 
     ChannelVoice leftVoice, rightVoice;
-    SlapbackDelay slapback;
     ModulatedDelay vibratoL, vibratoR;
     WarmthStage warmthL, warmthR;
 
@@ -295,9 +272,6 @@ private:
     float mDelayR = 15.0f;
     float mFocus = 150.0f;
     float mMix = 50.0f;
-    float mSlapTime = 110.0f;
-    float mSlapFeedback = 15.0f;
-    float mSlapMix = 0.0f;
     float mVibratoRate = 1.2f;
     float mVibratoDepth = 3.0f;
     float mVibratoMix = 0.0f;
@@ -306,7 +280,6 @@ private:
     float mWarmthBody = 0.0f;
     float mWarmthMix = 0.0f;
     float mShiftOn = 1.0f;
-    float mSlapOn = 0.0f;
     float mVibratoOn = 0.0f;
     float mWarmthOn = 0.0f;
 };

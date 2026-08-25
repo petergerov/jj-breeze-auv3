@@ -9,9 +9,6 @@ typedef NS_ENUM(AUParameterAddress, JJBreezeParameterAddress) {
     delayR,
     focus,
     mix,
-    slapTime,
-    slapFeedback,
-    slapMix,
     vibratoRate,
     vibratoDepth,
     vibratoMix,
@@ -20,7 +17,6 @@ typedef NS_ENUM(AUParameterAddress, JJBreezeParameterAddress) {
     warmthBody,
     warmthMix,
     shiftOn,
-    slapOn,
     vibratoOn,
     warmthOn
 };

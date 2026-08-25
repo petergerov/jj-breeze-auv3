@@ -27,13 +27,6 @@ struct JJBreezeMainView: View {
                                 KnobView(param: parameterTree.shift.mix, caption: "MIX")
                             }
                         }
-                        EffectSection(title: "SLAPBACK", enabled: parameterTree.slapback.slapOn) {
-                            LazyVGrid(columns: threeColumns, spacing: 8) {
-                                KnobView(param: parameterTree.slapback.slapTime, caption: "TIME")
-                                KnobView(param: parameterTree.slapback.slapFeedback, caption: "FEEDBACK")
-                                KnobView(param: parameterTree.slapback.slapMix, caption: "MIX")
-                            }
-                        }
                         EffectSection(title: "VIBRATO", enabled: parameterTree.vibrato.vibratoOn) {
                             LazyVGrid(columns: threeColumns, spacing: 8) {
                                 KnobView(param: parameterTree.vibrato.vibratoRate, caption: "RATE", skew: 0.4)
@@ -73,7 +66,7 @@ struct JJBreezeMainView: View {
                 .tracking(2)
                 .foregroundStyle(GearTheme.textLight)
 
-            Text("STEREO WIDENER  ·  SLAPBACK  ·  VIBRATO  ·  WARMTH")
+            Text("STEREO WIDENER  ·  VIBRATO  ·  WARMTH")
                 .font(.system(size: 9, weight: .regular, design: .monospaced))
                 .tracking(0.6)
                 .foregroundStyle(GearTheme.textMuted)

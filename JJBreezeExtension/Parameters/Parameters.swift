@@ -18,16 +18,6 @@ let JJBreezeParameterSpecs = ParameterTreeSpec {
         ParameterSpec(address: .shiftOn, identifier: "shiftOn", name: "Shift On",
                       units: .boolean, valueRange: 0.0...1.0, defaultValue: 1.0)
     }
-    ParameterGroupSpec(identifier: "slapback", name: "Slapback") {
-        ParameterSpec(address: .slapTime, identifier: "slapTime", name: "Slap Time",
-                      units: .milliseconds, valueRange: 30.0...300.0, defaultValue: 110.0, unitName: "ms")
-        ParameterSpec(address: .slapFeedback, identifier: "slapFeedback", name: "Slap Feedback",
-                      units: .percent, valueRange: 0.0...70.0, defaultValue: 15.0, unitName: "%")
-        ParameterSpec(address: .slapMix, identifier: "slapMix", name: "Slap Mix",
-                      units: .percent, valueRange: 0.0...100.0, defaultValue: 0.0, unitName: "%")
-        ParameterSpec(address: .slapOn, identifier: "slapOn", name: "Slapback On",
-                      units: .boolean, valueRange: 0.0...1.0, defaultValue: 0.0)
-    }
     ParameterGroupSpec(identifier: "vibrato", name: "Vibrato") {
         ParameterSpec(address: .vibratoRate, identifier: "vibratoRate", name: "Vibrato Rate",
                       units: .hertz, valueRange: 0.1...8.0, defaultValue: 1.2, unitName: "Hz")

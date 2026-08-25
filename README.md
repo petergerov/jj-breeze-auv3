@@ -1,10 +1,10 @@
 # jj-breeze (AUv3)
 
-iPhone and iPad AUv3 of [jj-breeze](https://github.com/pgerov/jj-breeze): a stereo micro-pitch widener, slapback echo, vibrato, and warmth stage.
+iPhone and iPad AUv3 of [jj-breeze](https://github.com/pgerov/jj-breeze): a stereo micro-pitch widener, vibrato, and warmth stage.
 
 This is the Apple-native stack, not JUCE:
 
-- **C++ DSP kernel** — the same algorithms as the desktop AU/VST3 (`PitchShifter`, `ModulatedDelay`, `SlapbackDelay`, warmth/crossover biquads matching JUCE 9 IIR)
+- **C++ DSP kernel** — the same algorithms as the desktop AU/VST3 (`PitchShifter`, `ModulatedDelay`, warmth/crossover biquads matching JUCE 9 IIR)
 - **`AUAudioUnit`** — buses, `AUParameterTree`, factory presets, render block
 - **SwiftUI** — analog-gear editor hosted in `AUViewController`
 - **Container app** — test host that registers the extension so GarageBand, AUM, and Logic for iPad can load it
@@ -36,7 +36,7 @@ After the container app has been launched once:
 - **Logic for iPad** — Audio Units → Gerov
 - **AUM**, Cubasis, BeatMaker, and other AUv3 hosts
 
-The in-plugin preset menu matches the desktop factory presets (Default, JJ Cale Vocal, Cajun Moon Vocal, JJ Dark Vocal, JJ Dark Vocal (Up), Octave Width, Slapback Twang, Deep Baritone).
+The in-plugin preset menu matches the desktop factory presets (Default, JJ Cale Vocal, Cajun Moon Vocal, JJ Dark Vocal, JJ Dark Vocal (Up), Octave Width, Deep Baritone).
 
 ## Project layout
 
