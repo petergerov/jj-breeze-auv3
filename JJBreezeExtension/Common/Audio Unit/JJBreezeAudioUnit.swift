@@ -76,8 +76,27 @@ public class JJBreezeAudioUnit: AUAudioUnit, @unchecked Sendable {
         super.deallocateRenderResources()
     }
 
+    /// A host that offers several view configurations (e.g. a compact
+    /// inline mixer-strip slot alongside a larger "full editor" size) picks
+    /// freely among whichever indices we say we support here — once a host
+    /// uses this API it can matter more than `preferredContentSize`
+    /// (`AudioUnitViewController.idealInitialContentSize`): Loopy Pro
+    /// (2026-08-26) showed the exact same cramped panel — only the first
+    /// knob row visible — after that preferred-height request was raised
+    /// substantially, which is what you'd expect if it's really choosing
+    /// from these instead and always landing on a small one because we
+    /// blindly said yes to everything. Reject configurations too short for
+    /// the panel to be usable, so a host offering a choice is steered
+    /// toward a larger one; a height of 0 means "no constraint, you decide"
+    /// and is always fine. Never end up with an empty set, though — a host
+    /// offering only small configurations still needs *something* to embed.
     public override func supportedViewConfigurations(_ availableViewConfigurations: [AUAudioUnitViewConfiguration]) -> IndexSet {
-        IndexSet(availableViewConfigurations.indices)
+        let minimumUsableHeight: CGFloat = 320
+        let usable: [Int] = availableViewConfigurations.indices.filter { i in
+            let height = availableViewConfigurations[i].height
+            return height == 0 || height >= minimumUsableHeight
+        }
+        return usable.isEmpty ? IndexSet(availableViewConfigurations.indices) : IndexSet(usable)
     }
 
     public override var factoryPresets: [AUAudioUnitPreset]? { presetList }

@@ -41,26 +41,7 @@ struct JJBreezeMainView: View {
                     // host is short, the spacers collapse and it scrolls.
                     VStack(spacing: 0) {
                         Spacer(minLength: 0)
-
-                        header
-                            .padding(.horizontal, sideInset)
-                            .padding(.top, 10)
-                            .padding(.bottom, 8)
-
-                        Rectangle()
-                            .fill(GearTheme.textLight.opacity(0.14))
-                            .frame(height: 1)
-                            .padding(.horizontal, sideInset)
-
-                        sectionsLayout(isWide: geo.size.width >= wideThreshold)
-                            .padding(.horizontal, sideInset)
-                            .padding(.top, 12)
-                            .padding(.bottom, 8)
-
-                        versionFooter
-                            .padding(.horizontal, sideInset)
-                            .padding(.bottom, footerHeight + 6)
-
+                        panelContent(width: geo.size.width)
                         Spacer(minLength: 0)
                     }
                     .frame(minHeight: geo.size.height)
@@ -78,6 +59,39 @@ struct JJBreezeMainView: View {
         .onChange(of: isBypassed) { _, newValue in
             audioUnit?.shouldBypassEffect = newValue
         }
+    }
+
+    // The panel's actual content — header, divider, sections, footer — at
+    // its natural size for a given width, with no outer chassis/scrolling
+    // wrapper. `body` embeds this inside the always-fills GeometryReader/
+    // ScrollView above; `AudioUnitViewController` also hosts it standalone
+    // to *measure* the height a host should be asked for via
+    // `preferredContentSize`, so that initial request reflects this view's
+    // real layout instead of a hand-tuned guess that drifts out of sync
+    // with it.
+    func panelContent(width: CGFloat) -> some View {
+        let sideInset = earWidth + contentGutter
+        return VStack(spacing: 0) {
+            header
+                .padding(.horizontal, sideInset)
+                .padding(.top, 10)
+                .padding(.bottom, 8)
+
+            Rectangle()
+                .fill(GearTheme.textLight.opacity(0.14))
+                .frame(height: 1)
+                .padding(.horizontal, sideInset)
+
+            sectionsLayout(isWide: width >= wideThreshold)
+                .padding(.horizontal, sideInset)
+                .padding(.top, 12)
+                .padding(.bottom, 8)
+
+            versionFooter
+                .padding(.horizontal, sideInset)
+                .padding(.bottom, footerHeight + 6)
+        }
+        .frame(width: width)
     }
 
     // MARK: - Header
