@@ -200,7 +200,7 @@ struct JJBreezeMainView: View {
     // plus its VStack's 6pt spacing before the knob. Keeps the link badge
     // aligned with the knobs' top edge rather than the row's own centre
     // (which sits lower, pulled down by the value chip below the knob).
-    private let knobTopOffset: CGFloat = 22
+    private let knobTopOffset: CGFloat = 30
 
     // Positions a LinkIconBadge in the gap between a row's first two knobs
     // (e.g. PITCH L/PITCH R) — an overlay rather than a real HStack sibling,

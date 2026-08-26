@@ -117,9 +117,9 @@ struct LinkIconBadge: View {
             UIImpactFeedbackGenerator(style: .light).impactOccurred()
         } label: {
             Image(systemName: isOn ? "link" : "link.badge.plus")
-                .font(.system(size: 10, weight: .bold))
+                .font(.system(size: 12, weight: .bold))
                 .foregroundStyle(isOn ? GearTheme.accent : GearTheme.textMuted)
-                .frame(width: 22, height: 22)
+                .frame(width: 26, height: 26)
                 .background(Circle().fill(GearTheme.panelFill))
                 .overlay(
                     Circle().stroke(isOn ? GearTheme.accent.opacity(0.6) : GearTheme.metalDark, lineWidth: 1)
