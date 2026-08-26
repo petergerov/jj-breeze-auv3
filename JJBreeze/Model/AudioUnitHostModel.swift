@@ -48,9 +48,9 @@ class AudioUnitHostModel {
         )
         if viewController == nil {
             playbackError = viewModel.message
-        } else {
-            await startPlaying()
         }
+        // Load the effect and leave it stopped — don't start the demo loop
+        // (or the microphone) until the user taps Play.
     }
 
     private func waitUntilActive() async {

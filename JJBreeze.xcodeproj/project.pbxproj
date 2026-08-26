@@ -40,12 +40,14 @@
 		AC1243E59A30631D2602D488 /* ObservableAUParameter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A953DF6F6158D606F4149A9A /* ObservableAUParameter.swift */; };
 		B332E29006E90C2A008E35C0 /* KnobView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4066A829C2CCFE6240EDD21B /* KnobView.swift */; };
 		B5C7E64F36E6BF8EFEA95318 /* GearTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1784B45FC635D0F32462A79D /* GearTheme.swift */; };
+		BF12EFDA11A6D3D6B0E45C29 /* RackPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FCE1C61941CBE7229B8D31F /* RackPanel.swift */; };
 		C0C1FAED8270F6210683D9A3 /* JJBreezeAudioUnit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DDAA7B8A767965D3000AED5 /* JJBreezeAudioUnit.swift */; };
 		CBEA7E04A9BDA04890DA702F /* LevelMeterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D65B5E99E873ECA533F0A2CE /* LevelMeterView.swift */; };
 		D4CF2E26116AD90D37290C6D /* Presets.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA3A0CEBC026D7B52D5B843F /* Presets.swift */; };
 		D71E4CA426B982B48564B189 /* CrossPlatform.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8223D075BB2D5B34F46874A2 /* CrossPlatform.swift */; };
 		DF84A93B5A0F207872D83686 /* PresetBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C901A2B4BFE1C304676D87B /* PresetBar.swift */; };
 		E31C23FA145262EA59B74A10 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 76E145400C0136DBB4463897 /* Assets.xcassets */; };
+		E7588310DED18128C75D1514 /* RackPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FCE1C61941CBE7229B8D31F /* RackPanel.swift */; };
 		E8CE42EB3BD2AB7D49960A2C /* String+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24FF480129D499AE6023B1EC /* String+Utils.swift */; };
 		E935535C4451E249A58E8C4D /* StringHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B0591E55E3CCC71E8D84ABD /* StringHelpers.swift */; };
 		FA8FEFDBEDFF1F5F56E7937C /* Parameters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 128E35FC6D6CD7116A9B70FC /* Parameters.swift */; };
@@ -88,6 +90,7 @@
 		128E35FC6D6CD7116A9B70FC /* Parameters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Parameters.swift; sourceTree = "<group>"; };
 		15B68F6CE2E7514230DCF1B5 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		1784B45FC635D0F32462A79D /* GearTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GearTheme.swift; sourceTree = "<group>"; };
+		1FCE1C61941CBE7229B8D31F /* RackPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RackPanel.swift; sourceTree = "<group>"; };
 		24FF480129D499AE6023B1EC /* String+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Utils.swift"; sourceTree = "<group>"; };
 		321D7561D243BAA6E1501A3C /* UserPresetStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserPresetStore.swift; sourceTree = "<group>"; };
 		37E651BD22ADC6FCEB0283C4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
@@ -169,6 +172,7 @@
 				AADFF4467066854CF5F45A2F /* LedToggle.swift */,
 				D65B5E99E873ECA533F0A2CE /* LevelMeterView.swift */,
 				3C901A2B4BFE1C304676D87B /* PresetBar.swift */,
+				1FCE1C61941CBE7229B8D31F /* RackPanel.swift */,
 				0B17617621083B0BA4D8AE26 /* Skew.swift */,
 			);
 			path = UI;
@@ -405,6 +409,7 @@
 				FA8FEFDBEDFF1F5F56E7937C /* Parameters.swift in Sources */,
 				25A3D82A44289E58344A5468 /* PresetBar.swift in Sources */,
 				479928A32083DC104BDFBBD8 /* Presets.swift in Sources */,
+				E7588310DED18128C75D1514 /* RackPanel.swift in Sources */,
 				A26E51CB26014CEBB154FFEA /* Skew.swift in Sources */,
 				451BAB7B7700407F4BB9C399 /* String+Utils.swift in Sources */,
 				A4449EBFD7FDF9D3B8A41E14 /* UserPresetStore.swift in Sources */,
@@ -432,6 +437,7 @@
 				91100E19AF06F0EC967DA375 /* Parameters.swift in Sources */,
 				DF84A93B5A0F207872D83686 /* PresetBar.swift in Sources */,
 				D4CF2E26116AD90D37290C6D /* Presets.swift in Sources */,
+				BF12EFDA11A6D3D6B0E45C29 /* RackPanel.swift in Sources */,
 				8D7B7D052ECDD936CE4F4EC2 /* SimplePlayEngine.swift in Sources */,
 				5A9BC327EE68189A8E2D8FB0 /* Skew.swift in Sources */,
 				E8CE42EB3BD2AB7D49960A2C /* String+Utils.swift in Sources */,
@@ -488,7 +494,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = C9LBGZNZ6P;
 				ENABLE_NS_ASSERTIONS = NO;
@@ -655,7 +661,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = C9LBGZNZ6P;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;

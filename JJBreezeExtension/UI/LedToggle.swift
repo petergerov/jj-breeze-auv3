@@ -1,6 +1,72 @@
 import SwiftUI
 import UIKit
 
+/// A physical-style rocker/slide switch — a vertical slot with a lever that
+/// sits at the top (on) or bottom (off), glowing accent-coloured when on.
+/// Matches the rack-panel design's IN/OUT and POWER switches; LedToggle and
+/// BypassToggle below both draw one of these, just bound to different state.
+struct RockerSwitch: View {
+    var isOn: Bool
+    var accent: Color = GearTheme.accent
+
+    private let slotAspect: CGFloat = 17.0 / 30.0 // width / height
+
+    var body: some View {
+        GeometryReader { geo in
+            let slot = slotSize(in: geo.size)
+
+            ZStack(alignment: .topLeading) {
+                RoundedRectangle(cornerRadius: slot.width * 0.18)
+                    .fill(LinearGradient(
+                        colors: [GearTheme.ledBackground.opacity(0.95), GearTheme.chassisBottom],
+                        startPoint: .top, endPoint: .bottom))
+                    .frame(width: slot.width, height: slot.height)
+
+                lever(in: slot)
+            }
+            .frame(width: slot.width, height: slot.height)
+            .position(x: geo.size.width / 2, y: geo.size.height / 2)
+        }
+    }
+
+    private func slotSize(in full: CGSize) -> CGSize {
+        var height = full.height
+        var width = height * slotAspect
+        if width > full.width {
+            width = full.width
+            height = width / slotAspect
+        }
+        return CGSize(width: width, height: height)
+    }
+
+    @ViewBuilder
+    private func lever(in slot: CGSize) -> some View {
+        let margin = slot.width * 0.15
+        let leverWidth = slot.width - margin * 2
+        let leverHeight = slot.height * 0.43
+        let leverTop = isOn ? slot.height * 0.08 : slot.height * (1 - 0.43 - 0.08)
+
+        ZStack(alignment: .topLeading) {
+            if isOn {
+                let expand = slot.width * 0.56
+                RoundedRectangle(cornerRadius: leverHeight / 2)
+                    .fill(accent.opacity(0.4))
+                    .frame(width: leverWidth + expand, height: leverHeight + expand)
+                    .offset(x: margin - expand / 2, y: leverTop - expand / 2)
+            }
+
+            RoundedRectangle(cornerRadius: leverWidth * 0.2)
+                .fill(LinearGradient(
+                    colors: [Color(red: 0xef / 255, green: 0xe9 / 255, blue: 0xdb / 255),
+                             Color(red: 0xa9 / 255, green: 0xa0 / 255, blue: 0x8c / 255)],
+                    startPoint: .topLeading, endPoint: .bottomTrailing))
+                .frame(width: leverWidth, height: leverHeight)
+                .offset(x: margin, y: leverTop)
+        }
+        .frame(width: slot.width, height: slot.height, alignment: .topLeading)
+    }
+}
+
 struct LedToggle: View {
     @Bindable var param: ObservableAUParameter
 
@@ -9,28 +75,8 @@ struct LedToggle: View {
             param.boolValue.toggle()
             UIImpactFeedbackGenerator(style: .light).impactOccurred()
         } label: {
-            ZStack {
-                Capsule()
-                    .fill(
-                        LinearGradient(
-                            colors: [GearTheme.metalMid, GearTheme.chassisBottom],
-                            startPoint: .topLeading,
-                            endPoint: .bottomTrailing
-                        )
-                    )
-                Capsule()
-                    .stroke(GearTheme.chassisBottom.opacity(0.9), lineWidth: 1)
-
-                Circle()
-                    .fill(param.boolValue ? GearTheme.accent.opacity(0.30) : .clear)
-                    .frame(width: 28, height: 28)
-
-                Circle()
-                    .fill(param.boolValue ? GearTheme.accent : Color(red: 0.21, green: 0.20, blue: 0.18))
-                    .frame(width: 14, height: 14)
-            }
-            .frame(width: 52, height: 32)
-            .contentShape(Rectangle())
+            RockerSwitch(isOn: param.boolValue)
+                .contentShape(Rectangle())
         }
         .buttonStyle(.plain)
         .accessibilityLabel(param.displayName)
@@ -46,20 +92,14 @@ struct BypassToggle: View {
             isBypassed.toggle()
             UIImpactFeedbackGenerator(style: .light).impactOccurred()
         } label: {
-            Text("BYP")
-                .font(.system(size: 10, weight: .bold))
-                .tracking(0.8)
-                .foregroundStyle(isBypassed ? GearTheme.chassisBottom : GearTheme.textLight)
-                .frame(minWidth: 44, minHeight: 32)
-                .background(isBypassed ? GearTheme.accent : GearTheme.panelFill)
-                .overlay(
-                    RoundedRectangle(cornerRadius: 6)
-                        .stroke(isBypassed ? GearTheme.accent : GearTheme.metalDark, lineWidth: 1)
-                )
+            // Drawn state is the inverse of the flag — a power switch reads
+            // on when the effect is actually processing, i.e. not bypassed.
+            RockerSwitch(isOn: !isBypassed)
+                .contentShape(Rectangle())
         }
         .buttonStyle(.plain)
-        .accessibilityLabel("Bypass")
-        .accessibilityValue(isBypassed ? "On" : "Off")
+        .accessibilityLabel("Power")
+        .accessibilityValue(isBypassed ? "Off" : "On")
     }
 }
 

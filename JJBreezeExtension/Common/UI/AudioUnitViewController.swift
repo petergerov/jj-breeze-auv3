@@ -14,7 +14,13 @@ public class AudioUnitViewController: AUViewController, AUAudioUnitFactory {
 
     public override func viewDidLoad() {
         super.viewDidLoad()
-        preferredContentSize = CGSize(width: 480, height: 760)
+        // A bright/landscape default so a host (Logic, GarageBand, Loopy Pro…)
+        // opens with all three columns (Shift/Vibrato/Warmth) visible side by
+        // side rather than the narrow stacked fallback — see wideThreshold in
+        // JJBreezeMainView. Narrower than the panel's own comfortable width
+        // so the extra height needed to avoid clipping in real hosts fits
+        // within a sane aspect ratio instead of ballooning the width too.
+        preferredContentSize = CGSize(width: 700, height: 670)
         guard let audioUnit else { return }
         configureSwiftUIView(audioUnit: audioUnit)
     }

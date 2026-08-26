@@ -36,6 +36,8 @@ struct KnobView: View {
                 .font(.system(size: 11, weight: .bold, design: .default))
                 .tracking(1.0)
                 .foregroundStyle(GearTheme.textLight.opacity(0.85))
+                .lineLimit(1)
+                .minimumScaleFactor(0.6)
                 .frame(minHeight: 16)
                 .contentShape(Rectangle())
                 .onLongPressGesture {
@@ -47,7 +49,12 @@ struct KnobView: View {
 
             AnalogKnob(normalized: normalized, accent: GearTheme.accent)
                 .aspectRatio(1, contentMode: .fit)
-                .frame(minWidth: 44, minHeight: 44)
+                // Capped so a host that hands us far more space than we
+                // asked for (or ignores preferredContentSize entirely)
+                // doesn't blow the knobs up to an absurd size — a real
+                // hardware knob doesn't grow just because its rack panel
+                // has more headroom.
+                .frame(minWidth: 44, maxWidth: 96, minHeight: 44, maxHeight: 96)
                 .contentShape(Rectangle())
                 .gesture(dragGesture)
                 .simultaneousGesture(TapGesture(count: 2).onEnded(resetToDefault))
@@ -59,6 +66,8 @@ struct KnobView: View {
                 Text(readout)
                     .font(.system(size: 11, weight: .medium, design: .monospaced))
                     .foregroundStyle(GearTheme.ledText)
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.6)
                     .padding(.horizontal, 8)
                     .padding(.vertical, 5)
                     .frame(minHeight: 28)
@@ -196,75 +205,87 @@ struct KnobView: View {
     }
 }
 
+/// A knurled-metal rack-hardware knob: a fixed 7-tick printed scale, a
+/// rotating cap with a straight pointer and jewel tip — matches the
+/// desktop design's RetroLookAndFeel::drawRotarySlider exactly, proportions
+/// scaled from its 78px reference knob to whatever size this one is.
 private struct AnalogKnob: View {
     var normalized: Float
     var accent: Color
 
-    private let startAngle = Angle.degrees(-135)
-    private let endAngle = Angle.degrees(135)
+    private let startAngle = -135.0 * .pi / 180.0
+    private let endAngle = 135.0 * .pi / 180.0
 
     var body: some View {
         Canvas { context, size in
-            let rect = CGRect(origin: .zero, size: size).insetBy(dx: 4, dy: 4)
-            let radius = min(rect.width, rect.height) / 2
+            let rect = CGRect(origin: .zero, size: size).insetBy(dx: 3, dy: 3)
+            let diameter = min(rect.width, rect.height)
+            let radius = diameter / 2
             let centre = CGPoint(x: rect.midX, y: rect.midY)
-            let angle = startAngle.radians + Double(normalized) * (endAngle.radians - startAngle.radians)
+            let px = diameter / 78.0 // scales the fixed-px details below
+            let angle = startAngle + Double(normalized) * (endAngle - startAngle)
 
-            for i in 0..<11 {
-                let t = Double(i) / 10.0
-                let tickAngle = startAngle.radians + t * (endAngle.radians - startAngle.radians)
-                let major = (i == 0 || i == 10 || i == 5)
-                let inner = CGPoint(x: centre.x + CGFloat(sin(tickAngle)) * radius * 0.88,
-                                    y: centre.y - CGFloat(cos(tickAngle)) * radius * 0.88)
-                let outer = CGPoint(x: centre.x + CGFloat(sin(tickAngle)) * radius,
-                                    y: centre.y - CGFloat(cos(tickAngle)) * radius)
+            // Soft cast shadow behind the whole knob.
+            let shadow = CGRect(x: centre.x - radius + 2 * px, y: centre.y - radius + 3 * px,
+                                 width: diameter, height: diameter)
+            context.fill(Path(ellipseIn: shadow), with: .color(GearTheme.chassisBottom.opacity(0.3)))
+
+            // Fixed 7-tick scale (-135/-90/-45/0/45/90/135) — printed on the
+            // panel, doesn't rotate with the knob.
+            for i in 0..<7 {
+                let t = Double(i) / 6.0
+                let tickAngle = startAngle + t * (endAngle - startAngle)
+                let major = i % 3 == 0
+                let outer = CGPoint(x: centre.x + CGFloat(sin(tickAngle)) * radius * 0.99,
+                                    y: centre.y - CGFloat(cos(tickAngle)) * radius * 0.99)
+                let inner = CGPoint(x: centre.x + CGFloat(sin(tickAngle)) * radius * 0.89,
+                                    y: centre.y - CGFloat(cos(tickAngle)) * radius * 0.89)
                 var path = Path()
                 path.move(to: inner)
                 path.addLine(to: outer)
-                context.stroke(path, with: .color(GearTheme.textMuted.opacity(major ? 0.85 : 0.45)),
-                               lineWidth: major ? 1.6 : 1.0)
+                context.stroke(path, with: .color(major ? GearTheme.textLight.opacity(0.85) : GearTheme.textMuted.opacity(0.5)),
+                               lineWidth: (major ? 2.6 : 2.0) * px)
             }
 
-            let arcRadius = radius * 0.82
-            var track = Path()
-            track.addArc(center: centre, radius: arcRadius, startAngle: startAngle - .degrees(90),
-                         endAngle: endAngle - .degrees(90), clockwise: false)
-            context.stroke(track, with: .color(GearTheme.metalDark.opacity(0.9)),
-                           style: StrokeStyle(lineWidth: 2.5, lineCap: .round))
-
-            var valueArc = Path()
-            valueArc.addArc(center: centre, radius: arcRadius, startAngle: startAngle - .degrees(90),
-                            endAngle: Angle.radians(angle) - .degrees(90), clockwise: false)
-            context.stroke(valueArc, with: .color(accent),
-                           style: StrokeStyle(lineWidth: 2.5, lineCap: .round))
-
-            let skirtR = radius * 0.66
-            let capR = skirtR * 0.80
-            let shadow = CGRect(x: centre.x - skirtR + 1.5, y: centre.y - skirtR + 2.5, width: skirtR * 2, height: skirtR * 2)
-            context.fill(Path(ellipseIn: shadow), with: .color(GearTheme.chassisBottom.opacity(0.55)))
-
+            // Skirt (74% of the knob's diameter).
+            let skirtR = radius * 0.74
             let skirt = CGRect(x: centre.x - skirtR, y: centre.y - skirtR, width: skirtR * 2, height: skirtR * 2)
-            context.fill(Path(ellipseIn: skirt), with: .linearGradient(
+            context.fill(Path(ellipseIn: skirt), with: .radialGradient(
                 Gradient(colors: [GearTheme.metalMid, GearTheme.chassisBottom]),
-                startPoint: CGPoint(x: skirt.minX, y: skirt.minY),
-                endPoint: CGPoint(x: skirt.maxX, y: skirt.maxY)
-            ))
+                center: CGPoint(x: centre.x - skirtR * 0.32, y: centre.y - skirtR * 0.44),
+                startRadius: 0, endRadius: skirtR * 1.4))
+
+            // Cap (66% of the skirt's diameter), rotating with the value.
+            let capR = skirtR * 0.66
+            var rotated = context
+            rotated.translateBy(x: centre.x, y: centre.y)
+            rotated.rotate(by: .radians(angle))
+            rotated.translateBy(x: -centre.x, y: -centre.y)
 
             let cap = CGRect(x: centre.x - capR, y: centre.y - capR, width: capR * 2, height: capR * 2)
-            context.fill(Path(ellipseIn: cap), with: .linearGradient(
+            rotated.fill(Path(ellipseIn: cap), with: .linearGradient(
                 Gradient(colors: [GearTheme.metalLight, GearTheme.metalDark]),
-                startPoint: CGPoint(x: cap.minX, y: cap.minY),
-                endPoint: CGPoint(x: cap.maxX, y: cap.maxY)
-            ))
+                startPoint: CGPoint(x: centre.x - capR * 0.5, y: centre.y - capR * 0.6),
+                endPoint: CGPoint(x: centre.x + capR * 0.6, y: centre.y + capR * 0.7)))
 
-            let pointerLength = capR * 0.82
-            let tip = CGPoint(x: centre.x + CGFloat(sin(angle)) * pointerLength,
-                              y: centre.y - CGFloat(cos(angle)) * pointerLength)
-            var pointer = Path()
-            pointer.move(to: centre)
-            pointer.addLine(to: tip)
-            context.stroke(pointer, with: .color(accent), style: StrokeStyle(lineWidth: 2.6, lineCap: .round))
-            context.fill(Path(ellipseIn: CGRect(x: tip.x - 2, y: tip.y - 2, width: 4, height: 4)), with: .color(accent))
+            // Pointer + jewel tip, defined centre-relative (i.e. in the
+            // cap's unrotated frame) and drawn through the same rotated
+            // context so both rotate together with the cap.
+            let pointerWidth = 3.0 * px
+            let pointerNear = -0.32 * capR, pointerFar = -0.8 * capR
+            let pointerRect = CGRect(x: centre.x - pointerWidth / 2, y: centre.y + pointerFar,
+                                      width: pointerWidth, height: pointerNear - pointerFar)
+            rotated.fill(Path(roundedRect: pointerRect, cornerRadius: pointerWidth * 0.4),
+                         with: .color(GearTheme.textLight))
+
+            let jewel = CGPoint(x: centre.x, y: centre.y - 0.84 * capR)
+            let jewelD = 5.0 * px
+            rotated.fill(Path(ellipseIn: CGRect(x: jewel.x - jewelD * 1.2, y: jewel.y - jewelD * 1.2,
+                                                 width: jewelD * 2.4, height: jewelD * 2.4)),
+                         with: .color(accent.opacity(0.55)))
+            rotated.fill(Path(ellipseIn: CGRect(x: jewel.x - jewelD / 2, y: jewel.y - jewelD / 2,
+                                                 width: jewelD, height: jewelD)),
+                         with: .color(accent))
         }
     }
 }
