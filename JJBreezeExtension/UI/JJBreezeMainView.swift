@@ -195,6 +195,13 @@ struct JJBreezeMainView: View {
             .frame(maxWidth: .infinity)
     }
 
+    // Vertical distance from a knob row's top to the top edge of the knob
+    // circles themselves — matches KnobView's caption (.frame(minHeight: 16))
+    // plus its VStack's 6pt spacing before the knob. Keeps the link badge
+    // aligned with the knobs' top edge rather than the row's own centre
+    // (which sits lower, pulled down by the value chip below the knob).
+    private let knobTopOffset: CGFloat = 22
+
     // Positions a LinkIconBadge in the gap between a row's first two knobs
     // (e.g. PITCH L/PITCH R) — an overlay rather than a real HStack sibling,
     // so it doesn't disturb the three knobs' otherwise-equal widths, and
@@ -204,7 +211,7 @@ struct JJBreezeMainView: View {
         GeometryReader { g in
             let columnWidth = (g.size.width - knobRowSpacing * 2) / 3
             LinkIconBadge(isOn: isOn, title: title)
-                .position(x: columnWidth + knobRowSpacing / 2, y: g.size.height / 2)
+                .position(x: columnWidth + knobRowSpacing / 2, y: knobTopOffset)
         }
     }
 
