@@ -224,6 +224,11 @@ struct JJBreezeMainView: View {
                 }
             }
             .opacity(shiftOn.boolValue ? 1 : 0.42)
+            // Blocks all touch input (drag, tap, long-press-for-help) to the
+            // knobs and link toggles, not just the Button-based ones — a
+            // disabled section shouldn't be editable, and .disabled() alone
+            // wouldn't stop KnobView's raw .gesture()-based drag/long-press.
+            .allowsHitTesting(shiftOn.boolValue)
         }
         .frame(maxWidth: .infinity, alignment: .leading)
     }
@@ -239,6 +244,7 @@ struct JJBreezeMainView: View {
                 knob(parameterTree.vibrato.vibratoMix, "MIX")
             }
             .opacity(vibratoOn.boolValue ? 1 : 0.42)
+            .allowsHitTesting(vibratoOn.boolValue)
         }
         .frame(maxWidth: .infinity, alignment: .leading)
     }
@@ -261,6 +267,7 @@ struct JJBreezeMainView: View {
                 }
             }
             .opacity(warmthOn.boolValue ? 1 : 0.42)
+            .allowsHitTesting(warmthOn.boolValue)
         }
         .frame(maxWidth: .infinity, alignment: .leading)
     }
