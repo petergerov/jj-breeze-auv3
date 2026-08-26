@@ -103,7 +103,11 @@ struct BypassToggle: View {
     }
 }
 
-struct LinkToggle: View {
+/// A small round link/unlink badge sitting in the gap between a pair of
+/// knobs (e.g. PITCH L/PITCH R) rather than in a separate row above them —
+/// toggles whether dragging one of the pair moves the other by the same
+/// amount (see KnobView's linkedPeer/linkEnabled).
+struct LinkIconBadge: View {
     @Binding var isOn: Bool
     var title: String
 
@@ -112,21 +116,17 @@ struct LinkToggle: View {
             isOn.toggle()
             UIImpactFeedbackGenerator(style: .light).impactOccurred()
         } label: {
-            HStack(spacing: 4) {
-                Image(systemName: isOn ? "link" : "link.badge.plus")
-                    .font(.system(size: 10, weight: .bold))
-                Text(title)
-                    .font(.system(size: 9, weight: .bold))
-                    .tracking(0.4)
-            }
-            .foregroundStyle(isOn ? GearTheme.accent : GearTheme.textMuted)
-            .padding(.horizontal, 8)
-            .frame(minHeight: 32)
-            .background(GearTheme.panelFill.opacity(0.01))
-            .contentShape(Rectangle())
+            Image(systemName: isOn ? "link" : "link.badge.plus")
+                .font(.system(size: 10, weight: .bold))
+                .foregroundStyle(isOn ? GearTheme.accent : GearTheme.textMuted)
+                .frame(width: 22, height: 22)
+                .background(Circle().fill(GearTheme.panelFill))
+                .overlay(
+                    Circle().stroke(isOn ? GearTheme.accent.opacity(0.6) : GearTheme.metalDark, lineWidth: 1)
+                )
         }
         .buttonStyle(.plain)
-        .accessibilityLabel(title)
+        .accessibilityLabel("\(title) link")
         .accessibilityValue(isOn ? "Linked" : "Unlinked")
     }
 }

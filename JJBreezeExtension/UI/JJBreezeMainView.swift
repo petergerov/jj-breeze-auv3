@@ -4,8 +4,8 @@ struct JJBreezeMainView: View {
     var parameterTree: ObservableAUParameterGroup
     var audioUnit: JJBreezeAudioUnit?
 
-    @State private var linkPitch = true
-    @State private var linkDelay = true
+    @State private var linkPitch = false
+    @State private var linkDelay = false
     @State private var isBypassed = false
 
     // Rack-panel geometry — matches the desktop design's headerHeight/
@@ -183,12 +183,29 @@ struct JJBreezeMainView: View {
         }
     }
 
+    // Shared by knob rows that need a link badge positioned between their
+    // first two knobs — see linkBadge(isOn:title:) below.
+    private let knobRowSpacing: CGFloat = 8
+
     private func knob(_ param: ObservableAUParameter, _ caption: String, skew: Float = 1,
                        symmetric: Bool = false, help: String? = nil,
                        peer: ObservableAUParameter? = nil, linked: Bool = false) -> some View {
         KnobView(param: param, caption: caption, skew: skew, symmetric: symmetric,
                  helpText: help, linkedPeer: peer, linkEnabled: linked)
             .frame(maxWidth: .infinity)
+    }
+
+    // Positions a LinkIconBadge in the gap between a row's first two knobs
+    // (e.g. PITCH L/PITCH R) — an overlay rather than a real HStack sibling,
+    // so it doesn't disturb the three knobs' otherwise-equal widths, and
+    // (like the column dividers) can't leak flexible sizing into the row's
+    // own layout the way a plain sibling view would.
+    private func linkBadge(isOn: Binding<Bool>, title: String) -> some View {
+        GeometryReader { g in
+            let columnWidth = (g.size.width - knobRowSpacing * 2) / 3
+            LinkIconBadge(isOn: isOn, title: title)
+                .position(x: columnWidth + knobRowSpacing / 2, y: g.size.height / 2)
+        }
     }
 
     private var shiftColumn: some View {
@@ -200,12 +217,7 @@ struct JJBreezeMainView: View {
             sectionHeader("SHIFT", enabled: shiftOn)
 
             Group {
-                HStack(spacing: 12) {
-                    LinkToggle(isOn: $linkPitch, title: "PITCH")
-                    LinkToggle(isOn: $linkDelay, title: "DELAY")
-                    Spacer()
-                }
-                HStack(spacing: 8) {
+                HStack(spacing: knobRowSpacing) {
                     knob(parameterTree.shift.pitchL, "PITCH L", skew: 0.4, symmetric: true,
                          peer: parameterTree.shift.pitchR, linked: linkPitch)
                     knob(parameterTree.shift.pitchR, "PITCH R", skew: 0.4, symmetric: true,
@@ -213,7 +225,8 @@ struct JJBreezeMainView: View {
                     knob(parameterTree.shift.focus, "FOCUS", skew: 0.25,
                          help: "Crossover frequency. Frequencies below this stay dry; highs go through pitch and delay.")
                 }
-                HStack(spacing: 8) {
+                .overlay { linkBadge(isOn: $linkPitch, title: "Pitch") }
+                HStack(spacing: knobRowSpacing) {
                     knob(parameterTree.shift.delayL, "DELAY L", skew: 0.3,
                          help: "Left delay tap, 0–250 ms. Short times add width; around 110 ms is slapback.",
                          peer: parameterTree.shift.delayR, linked: linkDelay)
@@ -222,6 +235,7 @@ struct JJBreezeMainView: View {
                          peer: parameterTree.shift.delayL, linked: linkDelay)
                     knob(parameterTree.shift.mix, "MIX")
                 }
+                .overlay { linkBadge(isOn: $linkDelay, title: "Delay") }
             }
             .opacity(shiftOn.boolValue ? 1 : 0.42)
             // Blocks all touch input (drag, tap, long-press-for-help) to the
