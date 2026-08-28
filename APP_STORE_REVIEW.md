@@ -238,7 +238,7 @@ Apple rejects the submission if Support URL or Privacy Policy URL is missing.
 
 | Field | What to put |
 |---|---|
-| Support URL | A page with contact email (GitHub Issues or a simple site). Example: `https://github.com/pgerov/jj-breeze-auv3` |
+| Support URL | GitHub Issues (same pattern as Gig Songbook). Use `https://github.com/petergerov/jj-breeze-auv3/issues` |
 | Marketing URL | Optional. Same repo or a product page. |
 | Privacy Policy URL | **Required.** Host the policy below on a public HTTPS page (GitHub Pages, Notion, your site). |
 
@@ -482,7 +482,7 @@ If Legal asks you to rename presets before 1.0, change them in `JJBreezeExtensio
 - [ ] Sandbox tester created; unlock + restore tested on device
 - [ ] First launch: Play works with no purchase sheet
 - [ ] Version **1.0.0**, unique build number
-- [ ] Support URL live
+- [ ] Support URL live: `https://github.com/petergerov/jj-breeze-auv3/issues`
 - [ ] Privacy Policy URL live (text above)
 - [ ] English description + review notes pasted
 - [ ] Age rating completed (4+)

@@ -36,7 +36,9 @@ After the container app has been launched once:
 - **Logic for iPad** — Audio Units → Gerov
 - **AUM**, Cubasis, BeatMaker, and other AUv3 hosts
 
-The in-plugin preset menu matches the desktop factory presets (Default, JJ Cale Vocal, Cajun Moon Vocal, JJ Dark Vocal, JJ Dark Vocal (Up), Octave Width, Deep Baritone).
+The in-plugin preset menu matches the desktop factory presets (Default, Stereo Width, JJ Cajun Moon, JJ Lies, JJ Dark Vocal, Octave Width, Deep Baritone, Slapback Twang).
+
+Website and support: [docs/](docs/) (GitHub Pages) · [Support / issues](https://github.com/petergerov/jj-breeze-auv3/issues) · Sister app [Gig Songbook](https://gigsongbook.com)
 
 ## Project layout
 
