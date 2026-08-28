@@ -111,19 +111,20 @@
 		522A2BB71BB434B76A29EE59 /* PitchShifter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PitchShifter.h; sourceTree = "<group>"; };
 		53A9A110752E02A7D7BF2607 /* PurchaseProducts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PurchaseProducts.swift; sourceTree = "<group>"; };
 		586C4A7A12DD85EA12D6C15F /* jj-loop.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "jj-loop.mp3"; sourceTree = "<group>"; };
-		588ADE91EAA26EED1756FDC7 /* JJBreezeExtension.appex */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = "wrapper.app-extension"; path = JJBreezeExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		588ADE91EAA26EED1756FDC7 /* JJBreezeExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = JJBreezeExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		6404B139982ABE69DDAF5C9E /* JJBreezeAUProcessHelper.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = JJBreezeAUProcessHelper.hpp; sourceTree = "<group>"; };
 		6A0ACB420958ACD682378701 /* PaywallView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaywallView.swift; sourceTree = "<group>"; };
 		71303BD80C2F950040DBE6B2 /* JJBreezeParameterAddresses.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JJBreezeParameterAddresses.h; sourceTree = "<group>"; };
 		76E145400C0136DBB4463897 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		8223D075BB2D5B34F46874A2 /* CrossPlatform.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CrossPlatform.swift; sourceTree = "<group>"; };
-		8A76BA4C36E301B32430929F /* JJBreeze.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = JJBreeze.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		8A76BA4C36E301B32430929F /* jj-breeze.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "jj-breeze.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		918D7CB7528A7731B982A290 /* TypeAliases.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypeAliases.swift; sourceTree = "<group>"; };
 		91E7613A8B4F7469062B1726 /* SimplePlayEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimplePlayEngine.swift; sourceTree = "<group>"; };
 		946409BBC5C86A2BC77DF935 /* Warmth.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Warmth.h; sourceTree = "<group>"; };
 		946ECA942F270301932389BB /* AudioUnitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioUnitViewController.swift; sourceTree = "<group>"; };
 		98AE28A3395799AC3A29091F /* ExceptionCatcher.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ExceptionCatcher.h; sourceTree = "<group>"; };
 		9DDAA7B8A767965D3000AED5 /* JJBreezeAudioUnit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JJBreezeAudioUnit.swift; sourceTree = "<group>"; };
+		9DFD5C153041DFE600654786 /* Products.storekit */ = {isa = PBXFileReference; lastKnownFileType = text; name = Products.storekit; path = Configuration/Products.storekit; sourceTree = "<group>"; };
 		A66071388B657E1299D72EF0 /* ParameterSpecBase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParameterSpecBase.swift; sourceTree = "<group>"; };
 		A897FB2ECFB558E030AAC069 /* JJBreezeMainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JJBreezeMainView.swift; sourceTree = "<group>"; };
 		A93437D1E47CAB8E9A53DB60 /* JJBreezeApp-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "JJBreezeApp-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -194,7 +195,7 @@
 		30A64E374703D832D3048BCC /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				8A76BA4C36E301B32430929F /* JJBreeze.app */,
+				8A76BA4C36E301B32430929F /* jj-breeze.app */,
 				588ADE91EAA26EED1756FDC7 /* JJBreezeExtension.appex */,
 			);
 			name = Products;
@@ -300,6 +301,7 @@
 		D904FBAAF80FC497A0B56E99 = {
 			isa = PBXGroup;
 			children = (
+				9DFD5C153041DFE600654786 /* Products.storekit */,
 				391127A38256B355BE1E248F /* JJBreeze */,
 				05C1496AD87351C7EB96C41F /* JJBreezeExtension */,
 				10FDDBB749A47BCE262BCC0B /* loop */,
@@ -353,7 +355,7 @@
 			packageProductDependencies = (
 			);
 			productName = JJBreeze;
-			productReference = 8A76BA4C36E301B32430929F /* JJBreeze.app */;
+			productReference = 8A76BA4C36E301B32430929F /* jj-breeze.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -553,10 +555,26 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = JJBreezeExtension/JJBreezeExtension.entitlements;
 				GENERATE_INFOPLIST_FILE = NO;
-				HEADER_SEARCH_PATHS = "$(SRCROOT)/JJBreezeExtension/DSP $(SRCROOT)/JJBreezeExtension/Parameters $(SRCROOT)/JJBreezeExtension/Common/DSP";
+				HEADER_SEARCH_PATHS = (
+					"$(SRCROOT)/JJBreezeExtension/DSP",
+					"$(SRCROOT)/JJBreezeExtension/Parameters",
+					"$(SRCROOT)/JJBreezeExtension/Common/DSP",
+				);
 				INFOPLIST_FILE = JJBreezeExtension/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
-				OTHER_LDFLAGS = "-framework AudioToolbox -framework AVFoundation -framework CoreAudioKit";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0.0;
+				OTHER_LDFLAGS = (
+					"-framework",
+					AudioToolbox,
+					"-framework",
+					AVFoundation,
+					"-framework",
+					CoreAudioKit,
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.gerov.jjbreeze.AUv3;
 				PRODUCT_MODULE_NAME = JJBreezeExtension;
 				PRODUCT_NAME = JJBreezeExtension;
@@ -565,7 +583,11 @@
 				SWIFT_OBJC_BRIDGING_HEADER = "JJBreezeExtension/Common/JJBreeze-Bridging-Header.h";
 				SWIFT_OBJC_INTEROP_MODE = objcxx;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/JJBreezeExtension/DSP $(SRCROOT)/JJBreezeExtension/Parameters $(SRCROOT)/JJBreezeExtension/Common/DSP";
+				USER_HEADER_SEARCH_PATHS = (
+					"$(SRCROOT)/JJBreezeExtension/DSP",
+					"$(SRCROOT)/JJBreezeExtension/Parameters",
+					"$(SRCROOT)/JJBreezeExtension/Common/DSP",
+				);
 			};
 			name = Debug;
 		};
@@ -581,10 +603,25 @@
 				CODE_SIGN_ENTITLEMENTS = JJBreeze/JJBreeze.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GENERATE_INFOPLIST_FILE = NO;
-				HEADER_SEARCH_PATHS = "$(SRCROOT)/JJBreezeExtension/DSP $(SRCROOT)/JJBreezeExtension/Parameters $(SRCROOT)/JJBreezeExtension/Common/DSP";
+				HEADER_SEARCH_PATHS = (
+					"$(SRCROOT)/JJBreezeExtension/DSP",
+					"$(SRCROOT)/JJBreezeExtension/Parameters",
+					"$(SRCROOT)/JJBreezeExtension/Common/DSP",
+				);
 				INFOPLIST_FILE = JJBreeze/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				OTHER_LDFLAGS = "-framework AudioToolbox -framework AVFoundation -framework CoreAudioKit";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0.0;
+				OTHER_LDFLAGS = (
+					"-framework",
+					AudioToolbox,
+					"-framework",
+					AVFoundation,
+					"-framework",
+					CoreAudioKit,
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.gerov.jjbreeze;
 				PRODUCT_NAME = "jj-breeze";
 				SDKROOT = iphoneos;
@@ -593,7 +630,11 @@
 				SWIFT_OBJC_BRIDGING_HEADER = "JJBreeze/Common/JJBreezeApp-Bridging-Header.h";
 				SWIFT_OBJC_INTEROP_MODE = objcxx;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/JJBreezeExtension/DSP $(SRCROOT)/JJBreezeExtension/Parameters $(SRCROOT)/JJBreezeExtension/Common/DSP";
+				USER_HEADER_SEARCH_PATHS = (
+					"$(SRCROOT)/JJBreezeExtension/DSP",
+					"$(SRCROOT)/JJBreezeExtension/Parameters",
+					"$(SRCROOT)/JJBreezeExtension/Common/DSP",
+				);
 			};
 			name = Release;
 		};
@@ -606,10 +647,26 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = JJBreezeExtension/JJBreezeExtension.entitlements;
 				GENERATE_INFOPLIST_FILE = NO;
-				HEADER_SEARCH_PATHS = "$(SRCROOT)/JJBreezeExtension/DSP $(SRCROOT)/JJBreezeExtension/Parameters $(SRCROOT)/JJBreezeExtension/Common/DSP";
+				HEADER_SEARCH_PATHS = (
+					"$(SRCROOT)/JJBreezeExtension/DSP",
+					"$(SRCROOT)/JJBreezeExtension/Parameters",
+					"$(SRCROOT)/JJBreezeExtension/Common/DSP",
+				);
 				INFOPLIST_FILE = JJBreezeExtension/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
-				OTHER_LDFLAGS = "-framework AudioToolbox -framework AVFoundation -framework CoreAudioKit";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0.0;
+				OTHER_LDFLAGS = (
+					"-framework",
+					AudioToolbox,
+					"-framework",
+					AVFoundation,
+					"-framework",
+					CoreAudioKit,
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.gerov.jjbreeze.AUv3;
 				PRODUCT_MODULE_NAME = JJBreezeExtension;
 				PRODUCT_NAME = JJBreezeExtension;
@@ -618,7 +675,11 @@
 				SWIFT_OBJC_BRIDGING_HEADER = "JJBreezeExtension/Common/JJBreeze-Bridging-Header.h";
 				SWIFT_OBJC_INTEROP_MODE = objcxx;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/JJBreezeExtension/DSP $(SRCROOT)/JJBreezeExtension/Parameters $(SRCROOT)/JJBreezeExtension/Common/DSP";
+				USER_HEADER_SEARCH_PATHS = (
+					"$(SRCROOT)/JJBreezeExtension/DSP",
+					"$(SRCROOT)/JJBreezeExtension/Parameters",
+					"$(SRCROOT)/JJBreezeExtension/Common/DSP",
+				);
 			};
 			name = Release;
 		};
@@ -634,10 +695,25 @@
 				CODE_SIGN_ENTITLEMENTS = JJBreeze/JJBreeze.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GENERATE_INFOPLIST_FILE = NO;
-				HEADER_SEARCH_PATHS = "$(SRCROOT)/JJBreezeExtension/DSP $(SRCROOT)/JJBreezeExtension/Parameters $(SRCROOT)/JJBreezeExtension/Common/DSP";
+				HEADER_SEARCH_PATHS = (
+					"$(SRCROOT)/JJBreezeExtension/DSP",
+					"$(SRCROOT)/JJBreezeExtension/Parameters",
+					"$(SRCROOT)/JJBreezeExtension/Common/DSP",
+				);
 				INFOPLIST_FILE = JJBreeze/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				OTHER_LDFLAGS = "-framework AudioToolbox -framework AVFoundation -framework CoreAudioKit";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0.0;
+				OTHER_LDFLAGS = (
+					"-framework",
+					AudioToolbox,
+					"-framework",
+					AVFoundation,
+					"-framework",
+					CoreAudioKit,
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.gerov.jjbreeze;
 				PRODUCT_NAME = "jj-breeze";
 				SDKROOT = iphoneos;
@@ -646,7 +722,11 @@
 				SWIFT_OBJC_BRIDGING_HEADER = "JJBreeze/Common/JJBreezeApp-Bridging-Header.h";
 				SWIFT_OBJC_INTEROP_MODE = objcxx;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/JJBreezeExtension/DSP $(SRCROOT)/JJBreezeExtension/Parameters $(SRCROOT)/JJBreezeExtension/Common/DSP";
+				USER_HEADER_SEARCH_PATHS = (
+					"$(SRCROOT)/JJBreezeExtension/DSP",
+					"$(SRCROOT)/JJBreezeExtension/Parameters",
+					"$(SRCROOT)/JJBreezeExtension/Common/DSP",
+				);
 			};
 			name = Debug;
 		};
