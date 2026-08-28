@@ -7,6 +7,8 @@ struct JJBreezeMainView: View {
     @State private var linkPitch = false
     @State private var linkDelay = false
     @State private var isBypassed = false
+    @State private var showPaywall = false
+    @Bindable private var entitlement = EntitlementService.shared
 
     // Rack-panel geometry — matches the desktop design's headerHeight/
     // earWidth/footerStripHeight constants, scaled down for a
@@ -55,9 +57,22 @@ struct JJBreezeMainView: View {
         }
         .onAppear {
             isBypassed = audioUnit?.shouldBypassEffect ?? false
+            Task {
+                await entitlement.refresh()
+                audioUnit?.applyLicenseFromStore()
+            }
         }
         .onChange(of: isBypassed) { _, newValue in
             audioUnit?.shouldBypassEffect = newValue
+        }
+        .onReceive(NotificationCenter.default.publisher(for: .jjBreezeAccessChanged)) { _ in
+            audioUnit?.applyLicenseFromStore()
+        }
+        .sheet(isPresented: $showPaywall) {
+            PaywallView(entitlement: entitlement, showsCloseWhenAllowed: true) {
+                showPaywall = false
+            }
+            .presentationDetents([.large])
         }
     }
 
@@ -128,6 +143,12 @@ struct JJBreezeMainView: View {
             }
 
             PresetBar(audioUnit: audioUnit)
+
+            if entitlement.accessState.bannerText != nil {
+                AccessBanner(state: entitlement.accessState) {
+                    showPaywall = true
+                }
+            }
         }
     }
 

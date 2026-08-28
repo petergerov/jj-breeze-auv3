@@ -52,6 +52,9 @@ public:
     bool isBypassed() const { return mBypassed; }
     void setBypass(bool shouldBypass) { mBypassed = shouldBypass; }
 
+    bool isLicensed() const { return mLicensed; }
+    void setLicensed(bool licensed) { mLicensed = licensed; }
+
     void setParameter(AUParameterAddress address, AUValue value)
     {
         switch (address)
@@ -116,7 +119,7 @@ public:
         if (! mInitialized || inputBuffers.empty() || outputBuffers.empty())
             return;
 
-        if (mBypassed)
+        if (mBypassed || ! mLicensed)
         {
             float peak = 0.f;
             for (size_t channel = 0; channel < outputBuffers.size(); ++channel)
@@ -292,6 +295,7 @@ private:
     int mInputChannelCount = 2;
     int mOutputChannelCount = 2;
     bool mBypassed = false;
+    bool mLicensed = false;
     bool mInitialized = false;
     AUAudioFrameCount mMaxFramesToRender = 1024;
 

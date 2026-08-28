@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		049A836BC52C8DB53A48130C /* PurchaseProducts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53A9A110752E02A7D7BF2607 /* PurchaseProducts.swift */; };
+		05325034838ECE621353CC71 /* EntitlementService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EDB0DAB0E2988158B77E2C0 /* EntitlementService.swift */; };
 		10232BB3EF84E6F1F5248298 /* JJBreezeMainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A897FB2ECFB558E030AAC069 /* JJBreezeMainView.swift */; };
 		1158C54131B09A8C1F4B247C /* AudioUnitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 946ECA942F270301932389BB /* AudioUnitViewController.swift */; };
 		2294E80C833703653129697C /* AudioUnitHostModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45656FA18688DB43EA835191 /* AudioUnitHostModel.swift */; };
@@ -17,10 +19,12 @@
 		305E76B571CD98216A8FB2A6 /* CrossPlatform.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8223D075BB2D5B34F46874A2 /* CrossPlatform.swift */; };
 		34DBBFA1818B08A0F0769D56 /* jj-loop.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 586C4A7A12DD85EA12D6C15F /* jj-loop.mp3 */; };
 		3A8BCB34084E2F87DA04BD3C /* GearTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1784B45FC635D0F32462A79D /* GearTheme.swift */; };
+		3D372198A81C634491355667 /* PaywallView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A0ACB420958ACD682378701 /* PaywallView.swift */; };
 		4103E9655FD0E5B197ACE387 /* ExceptionCatcher.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EE4704D1E097ABA9198640F /* ExceptionCatcher.m */; };
 		451BAB7B7700407F4BB9C399 /* String+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24FF480129D499AE6023B1EC /* String+Utils.swift */; };
 		46B9EED5266F9A68A9266F81 /* JJBreezeExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 588ADE91EAA26EED1756FDC7 /* JJBreezeExtension.appex */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		479928A32083DC104BDFBBD8 /* Presets.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA3A0CEBC026D7B52D5B843F /* Presets.swift */; };
+		4843D73FD2A794535A3A4F5B /* UnlockStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47ED36506290733211AFE175 /* UnlockStore.swift */; };
 		4866C3D85822C0E962A5F20A /* JJBreezeMainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A897FB2ECFB558E030AAC069 /* JJBreezeMainView.swift */; };
 		4876C7F33CA1BC0FEA5A9DD5 /* LedToggle.swift in Sources */ = {isa = PBXBuildFile; fileRef = AADFF4467066854CF5F45A2F /* LedToggle.swift */; };
 		4EFA39C859122E1B2E7AD5FB /* UserPresetStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 321D7561D243BAA6E1501A3C /* UserPresetStore.swift */; };
@@ -31,6 +35,7 @@
 		7A178FA5DEB19815C3757C09 /* ParameterSpecBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = A66071388B657E1299D72EF0 /* ParameterSpecBase.swift */; };
 		849B60974E63655042B97A2A /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15B68F6CE2E7514230DCF1B5 /* ContentView.swift */; };
 		865DA5FE5E53AF42734C5AB1 /* LevelMeterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D65B5E99E873ECA533F0A2CE /* LevelMeterView.swift */; };
+		8A3B2E07912AE54F6BC57FB1 /* PaywallView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A0ACB420958ACD682378701 /* PaywallView.swift */; };
 		8D7B7D052ECDD936CE4F4EC2 /* SimplePlayEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91E7613A8B4F7469062B1726 /* SimplePlayEngine.swift */; };
 		91100E19AF06F0EC967DA375 /* Parameters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 128E35FC6D6CD7116A9B70FC /* Parameters.swift */; };
 		91816DB9CC5EA3C00C7EE3F0 /* LedToggle.swift in Sources */ = {isa = PBXBuildFile; fileRef = AADFF4467066854CF5F45A2F /* LedToggle.swift */; };
@@ -42,10 +47,13 @@
 		B5C7E64F36E6BF8EFEA95318 /* GearTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1784B45FC635D0F32462A79D /* GearTheme.swift */; };
 		BF12EFDA11A6D3D6B0E45C29 /* RackPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FCE1C61941CBE7229B8D31F /* RackPanel.swift */; };
 		C0C1FAED8270F6210683D9A3 /* JJBreezeAudioUnit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DDAA7B8A767965D3000AED5 /* JJBreezeAudioUnit.swift */; };
+		C47A3B53DDAA2C9C2CF03DF4 /* UnlockStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47ED36506290733211AFE175 /* UnlockStore.swift */; };
 		CBEA7E04A9BDA04890DA702F /* LevelMeterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D65B5E99E873ECA533F0A2CE /* LevelMeterView.swift */; };
 		D4CF2E26116AD90D37290C6D /* Presets.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA3A0CEBC026D7B52D5B843F /* Presets.swift */; };
 		D71E4CA426B982B48564B189 /* CrossPlatform.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8223D075BB2D5B34F46874A2 /* CrossPlatform.swift */; };
+		DB7003861515A3FBABDB85E1 /* PurchaseProducts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53A9A110752E02A7D7BF2607 /* PurchaseProducts.swift */; };
 		DF84A93B5A0F207872D83686 /* PresetBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C901A2B4BFE1C304676D87B /* PresetBar.swift */; };
+		E104C724B386660F43B9FEFD /* EntitlementService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EDB0DAB0E2988158B77E2C0 /* EntitlementService.swift */; };
 		E31C23FA145262EA59B74A10 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 76E145400C0136DBB4463897 /* Assets.xcassets */; };
 		E7588310DED18128C75D1514 /* RackPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FCE1C61941CBE7229B8D31F /* RackPanel.swift */; };
 		E8CE42EB3BD2AB7D49960A2C /* String+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24FF480129D499AE6023B1EC /* String+Utils.swift */; };
@@ -90,6 +98,7 @@
 		128E35FC6D6CD7116A9B70FC /* Parameters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Parameters.swift; sourceTree = "<group>"; };
 		15B68F6CE2E7514230DCF1B5 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		1784B45FC635D0F32462A79D /* GearTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GearTheme.swift; sourceTree = "<group>"; };
+		1EDB0DAB0E2988158B77E2C0 /* EntitlementService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntitlementService.swift; sourceTree = "<group>"; };
 		1FCE1C61941CBE7229B8D31F /* RackPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RackPanel.swift; sourceTree = "<group>"; };
 		24FF480129D499AE6023B1EC /* String+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Utils.swift"; sourceTree = "<group>"; };
 		321D7561D243BAA6E1501A3C /* UserPresetStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserPresetStore.swift; sourceTree = "<group>"; };
@@ -98,14 +107,17 @@
 		3C901A2B4BFE1C304676D87B /* PresetBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresetBar.swift; sourceTree = "<group>"; };
 		4066A829C2CCFE6240EDD21B /* KnobView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KnobView.swift; sourceTree = "<group>"; };
 		45656FA18688DB43EA835191 /* AudioUnitHostModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioUnitHostModel.swift; sourceTree = "<group>"; };
+		47ED36506290733211AFE175 /* UnlockStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnlockStore.swift; sourceTree = "<group>"; };
 		522A2BB71BB434B76A29EE59 /* PitchShifter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PitchShifter.h; sourceTree = "<group>"; };
+		53A9A110752E02A7D7BF2607 /* PurchaseProducts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PurchaseProducts.swift; sourceTree = "<group>"; };
 		586C4A7A12DD85EA12D6C15F /* jj-loop.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "jj-loop.mp3"; sourceTree = "<group>"; };
-		588ADE91EAA26EED1756FDC7 /* JJBreezeExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = JJBreezeExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		588ADE91EAA26EED1756FDC7 /* JJBreezeExtension.appex */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = "wrapper.app-extension"; path = JJBreezeExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		6404B139982ABE69DDAF5C9E /* JJBreezeAUProcessHelper.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = JJBreezeAUProcessHelper.hpp; sourceTree = "<group>"; };
+		6A0ACB420958ACD682378701 /* PaywallView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaywallView.swift; sourceTree = "<group>"; };
 		71303BD80C2F950040DBE6B2 /* JJBreezeParameterAddresses.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JJBreezeParameterAddresses.h; sourceTree = "<group>"; };
 		76E145400C0136DBB4463897 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		8223D075BB2D5B34F46874A2 /* CrossPlatform.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CrossPlatform.swift; sourceTree = "<group>"; };
-		8A76BA4C36E301B32430929F /* jj-breeze.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "jj-breeze.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		8A76BA4C36E301B32430929F /* JJBreeze.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = JJBreeze.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		918D7CB7528A7731B982A290 /* TypeAliases.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypeAliases.swift; sourceTree = "<group>"; };
 		91E7613A8B4F7469062B1726 /* SimplePlayEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimplePlayEngine.swift; sourceTree = "<group>"; };
 		946409BBC5C86A2BC77DF935 /* Warmth.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Warmth.h; sourceTree = "<group>"; };
@@ -171,6 +183,7 @@
 				4066A829C2CCFE6240EDD21B /* KnobView.swift */,
 				AADFF4467066854CF5F45A2F /* LedToggle.swift */,
 				D65B5E99E873ECA533F0A2CE /* LevelMeterView.swift */,
+				6A0ACB420958ACD682378701 /* PaywallView.swift */,
 				3C901A2B4BFE1C304676D87B /* PresetBar.swift */,
 				1FCE1C61941CBE7229B8D31F /* RackPanel.swift */,
 				0B17617621083B0BA4D8AE26 /* Skew.swift */,
@@ -181,7 +194,7 @@
 		30A64E374703D832D3048BCC /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				8A76BA4C36E301B32430929F /* jj-breeze.app */,
+				8A76BA4C36E301B32430929F /* JJBreeze.app */,
 				588ADE91EAA26EED1756FDC7 /* JJBreezeExtension.appex */,
 			);
 			name = Products;
@@ -204,9 +217,12 @@
 		51E0D38E6F6C1681A53A0057 /* Parameters */ = {
 			isa = PBXGroup;
 			children = (
+				1EDB0DAB0E2988158B77E2C0 /* EntitlementService.swift */,
 				71303BD80C2F950040DBE6B2 /* JJBreezeParameterAddresses.h */,
 				128E35FC6D6CD7116A9B70FC /* Parameters.swift */,
 				FA3A0CEBC026D7B52D5B843F /* Presets.swift */,
+				53A9A110752E02A7D7BF2607 /* PurchaseProducts.swift */,
+				47ED36506290733211AFE175 /* UnlockStore.swift */,
 				321D7561D243BAA6E1501A3C /* UserPresetStore.swift */,
 			);
 			path = Parameters;
@@ -337,7 +353,7 @@
 			packageProductDependencies = (
 			);
 			productName = JJBreeze;
-			productReference = 8A76BA4C36E301B32430929F /* jj-breeze.app */;
+			productReference = 8A76BA4C36E301B32430929F /* JJBreeze.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -398,6 +414,7 @@
 			files = (
 				1158C54131B09A8C1F4B247C /* AudioUnitViewController.swift in Sources */,
 				D71E4CA426B982B48564B189 /* CrossPlatform.swift in Sources */,
+				E104C724B386660F43B9FEFD /* EntitlementService.swift in Sources */,
 				3A8BCB34084E2F87DA04BD3C /* GearTheme.swift in Sources */,
 				93E36A0D4464715F15A40E33 /* JJBreezeAudioUnit.swift in Sources */,
 				4866C3D85822C0E962A5F20A /* JJBreezeMainView.swift in Sources */,
@@ -407,11 +424,14 @@
 				2FA3AEC62A46DACA30A0A521 /* ObservableAUParameter.swift in Sources */,
 				73181DC8DD030B3C69C47979 /* ParameterSpecBase.swift in Sources */,
 				FA8FEFDBEDFF1F5F56E7937C /* Parameters.swift in Sources */,
+				8A3B2E07912AE54F6BC57FB1 /* PaywallView.swift in Sources */,
 				25A3D82A44289E58344A5468 /* PresetBar.swift in Sources */,
 				479928A32083DC104BDFBBD8 /* Presets.swift in Sources */,
+				049A836BC52C8DB53A48130C /* PurchaseProducts.swift in Sources */,
 				E7588310DED18128C75D1514 /* RackPanel.swift in Sources */,
 				A26E51CB26014CEBB154FFEA /* Skew.swift in Sources */,
 				451BAB7B7700407F4BB9C399 /* String+Utils.swift in Sources */,
+				C47A3B53DDAA2C9C2CF03DF4 /* UnlockStore.swift in Sources */,
 				A4449EBFD7FDF9D3B8A41E14 /* UserPresetStore.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -424,6 +444,7 @@
 				5C23139C4DE4DD88CBFE2134 /* AudioUnitViewModel.swift in Sources */,
 				849B60974E63655042B97A2A /* ContentView.swift in Sources */,
 				305E76B571CD98216A8FB2A6 /* CrossPlatform.swift in Sources */,
+				05325034838ECE621353CC71 /* EntitlementService.swift in Sources */,
 				4103E9655FD0E5B197ACE387 /* ExceptionCatcher.m in Sources */,
 				B5C7E64F36E6BF8EFEA95318 /* GearTheme.swift in Sources */,
 				2810E6EF9D447024F22DE543 /* JJBreezeApp.swift in Sources */,
@@ -435,14 +456,17 @@
 				AC1243E59A30631D2602D488 /* ObservableAUParameter.swift in Sources */,
 				7A178FA5DEB19815C3757C09 /* ParameterSpecBase.swift in Sources */,
 				91100E19AF06F0EC967DA375 /* Parameters.swift in Sources */,
+				3D372198A81C634491355667 /* PaywallView.swift in Sources */,
 				DF84A93B5A0F207872D83686 /* PresetBar.swift in Sources */,
 				D4CF2E26116AD90D37290C6D /* Presets.swift in Sources */,
+				DB7003861515A3FBABDB85E1 /* PurchaseProducts.swift in Sources */,
 				BF12EFDA11A6D3D6B0E45C29 /* RackPanel.swift in Sources */,
 				8D7B7D052ECDD936CE4F4EC2 /* SimplePlayEngine.swift in Sources */,
 				5A9BC327EE68189A8E2D8FB0 /* Skew.swift in Sources */,
 				E8CE42EB3BD2AB7D49960A2C /* String+Utils.swift in Sources */,
 				E935535C4451E249A58E8C4D /* StringHelpers.swift in Sources */,
 				7965DF6E9862C7D3EF2863FB /* TypeAliases.swift in Sources */,
+				4843D73FD2A794535A3A4F5B /* UnlockStore.swift in Sources */,
 				4EFA39C859122E1B2E7AD5FB /* UserPresetStore.swift in Sources */,
 				FCBFF3F0E7C7506EC2EB6CD8 /* ViewControllerRepresentable.swift in Sources */,
 			);
@@ -528,44 +552,20 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = JJBreezeExtension/JJBreezeExtension.entitlements;
-				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = NO;
-				HEADER_SEARCH_PATHS = (
-					"$(SRCROOT)/JJBreezeExtension/DSP",
-					"$(SRCROOT)/JJBreezeExtension/Parameters",
-					"$(SRCROOT)/JJBreezeExtension/Common/DSP",
-				);
+				HEADER_SEARCH_PATHS = "$(SRCROOT)/JJBreezeExtension/DSP $(SRCROOT)/JJBreezeExtension/Parameters $(SRCROOT)/JJBreezeExtension/Common/DSP";
 				INFOPLIST_FILE = JJBreezeExtension/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@executable_path/../../Frameworks",
-				);
-				MARKETING_VERSION = 1.0.0;
-				OTHER_LDFLAGS = (
-					"-framework",
-					AudioToolbox,
-					"-framework",
-					AVFoundation,
-					"-framework",
-					CoreAudioKit,
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				OTHER_LDFLAGS = "-framework AudioToolbox -framework AVFoundation -framework CoreAudioKit";
 				PRODUCT_BUNDLE_IDENTIFIER = com.gerov.jjbreeze.AUv3;
 				PRODUCT_MODULE_NAME = JJBreezeExtension;
 				PRODUCT_NAME = JJBreezeExtension;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
-				SUPPORTS_MACCATALYST = NO;
-				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_OBJC_BRIDGING_HEADER = "JJBreezeExtension/Common/JJBreeze-Bridging-Header.h";
 				SWIFT_OBJC_INTEROP_MODE = objcxx;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = (
-					"$(SRCROOT)/JJBreezeExtension/DSP",
-					"$(SRCROOT)/JJBreezeExtension/Parameters",
-					"$(SRCROOT)/JJBreezeExtension/Common/DSP",
-				);
+				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/JJBreezeExtension/DSP $(SRCROOT)/JJBreezeExtension/Parameters $(SRCROOT)/JJBreezeExtension/Common/DSP";
 			};
 			name = Debug;
 		};
@@ -580,42 +580,20 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = JJBreeze/JJBreeze.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = NO;
-				HEADER_SEARCH_PATHS = (
-					"$(SRCROOT)/JJBreezeExtension/DSP",
-					"$(SRCROOT)/JJBreezeExtension/Parameters",
-					"$(SRCROOT)/JJBreezeExtension/Common/DSP",
-				);
+				HEADER_SEARCH_PATHS = "$(SRCROOT)/JJBreezeExtension/DSP $(SRCROOT)/JJBreezeExtension/Parameters $(SRCROOT)/JJBreezeExtension/Common/DSP";
 				INFOPLIST_FILE = JJBreeze/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
-				MARKETING_VERSION = 1.0.0;
-				OTHER_LDFLAGS = (
-					"-framework",
-					AudioToolbox,
-					"-framework",
-					AVFoundation,
-					"-framework",
-					CoreAudioKit,
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_LDFLAGS = "-framework AudioToolbox -framework AVFoundation -framework CoreAudioKit";
 				PRODUCT_BUNDLE_IDENTIFIER = com.gerov.jjbreeze;
 				PRODUCT_NAME = "jj-breeze";
 				SDKROOT = iphoneos;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
-				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_OBJC_BRIDGING_HEADER = "JJBreeze/Common/JJBreezeApp-Bridging-Header.h";
 				SWIFT_OBJC_INTEROP_MODE = objcxx;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = (
-					"$(SRCROOT)/JJBreezeExtension/DSP",
-					"$(SRCROOT)/JJBreezeExtension/Parameters",
-					"$(SRCROOT)/JJBreezeExtension/Common/DSP",
-				);
+				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/JJBreezeExtension/DSP $(SRCROOT)/JJBreezeExtension/Parameters $(SRCROOT)/JJBreezeExtension/Common/DSP";
 			};
 			name = Release;
 		};
@@ -627,44 +605,20 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = JJBreezeExtension/JJBreezeExtension.entitlements;
-				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = NO;
-				HEADER_SEARCH_PATHS = (
-					"$(SRCROOT)/JJBreezeExtension/DSP",
-					"$(SRCROOT)/JJBreezeExtension/Parameters",
-					"$(SRCROOT)/JJBreezeExtension/Common/DSP",
-				);
+				HEADER_SEARCH_PATHS = "$(SRCROOT)/JJBreezeExtension/DSP $(SRCROOT)/JJBreezeExtension/Parameters $(SRCROOT)/JJBreezeExtension/Common/DSP";
 				INFOPLIST_FILE = JJBreezeExtension/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@executable_path/../../Frameworks",
-				);
-				MARKETING_VERSION = 1.0.0;
-				OTHER_LDFLAGS = (
-					"-framework",
-					AudioToolbox,
-					"-framework",
-					AVFoundation,
-					"-framework",
-					CoreAudioKit,
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				OTHER_LDFLAGS = "-framework AudioToolbox -framework AVFoundation -framework CoreAudioKit";
 				PRODUCT_BUNDLE_IDENTIFIER = com.gerov.jjbreeze.AUv3;
 				PRODUCT_MODULE_NAME = JJBreezeExtension;
 				PRODUCT_NAME = JJBreezeExtension;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
-				SUPPORTS_MACCATALYST = NO;
-				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_OBJC_BRIDGING_HEADER = "JJBreezeExtension/Common/JJBreeze-Bridging-Header.h";
 				SWIFT_OBJC_INTEROP_MODE = objcxx;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = (
-					"$(SRCROOT)/JJBreezeExtension/DSP",
-					"$(SRCROOT)/JJBreezeExtension/Parameters",
-					"$(SRCROOT)/JJBreezeExtension/Common/DSP",
-				);
+				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/JJBreezeExtension/DSP $(SRCROOT)/JJBreezeExtension/Parameters $(SRCROOT)/JJBreezeExtension/Common/DSP";
 			};
 			name = Release;
 		};
@@ -679,47 +633,20 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = JJBreeze/JJBreeze.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 1;
-				ENABLE_APP_SANDBOX = YES;
-				ENABLE_HARDENED_RUNTIME = YES;
-				ENABLE_OUTGOING_NETWORK_CONNECTIONS = YES;
-				ENABLE_RESOURCE_ACCESS_AUDIO_INPUT = YES;
 				GENERATE_INFOPLIST_FILE = NO;
-				HEADER_SEARCH_PATHS = (
-					"$(SRCROOT)/JJBreezeExtension/DSP",
-					"$(SRCROOT)/JJBreezeExtension/Parameters",
-					"$(SRCROOT)/JJBreezeExtension/Common/DSP",
-				);
+				HEADER_SEARCH_PATHS = "$(SRCROOT)/JJBreezeExtension/DSP $(SRCROOT)/JJBreezeExtension/Parameters $(SRCROOT)/JJBreezeExtension/Common/DSP";
 				INFOPLIST_FILE = JJBreeze/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
-				MARKETING_VERSION = 1.0.0;
-				OTHER_LDFLAGS = (
-					"-framework",
-					AudioToolbox,
-					"-framework",
-					AVFoundation,
-					"-framework",
-					CoreAudioKit,
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_LDFLAGS = "-framework AudioToolbox -framework AVFoundation -framework CoreAudioKit";
 				PRODUCT_BUNDLE_IDENTIFIER = com.gerov.jjbreeze;
 				PRODUCT_NAME = "jj-breeze";
-				REGISTER_APP_GROUPS = YES;
 				SDKROOT = iphoneos;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
-				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_OBJC_BRIDGING_HEADER = "JJBreeze/Common/JJBreezeApp-Bridging-Header.h";
 				SWIFT_OBJC_INTEROP_MODE = objcxx;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = (
-					"$(SRCROOT)/JJBreezeExtension/DSP",
-					"$(SRCROOT)/JJBreezeExtension/Parameters",
-					"$(SRCROOT)/JJBreezeExtension/Common/DSP",
-				);
+				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/JJBreezeExtension/DSP $(SRCROOT)/JJBreezeExtension/Parameters $(SRCROOT)/JJBreezeExtension/Common/DSP";
 			};
 			name = Debug;
 		};

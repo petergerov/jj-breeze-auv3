@@ -67,6 +67,7 @@ public class JJBreezeAudioUnit: AUAudioUnit, @unchecked Sendable {
         inputBus.allocateRenderResources(self.maximumFramesToRender)
         kernel.setMusicalContextBlock(self.musicalContextBlock)
         kernel.initialize(Int32(inputChannelCount), Int32(outputChannelCount), outputBus!.format.sampleRate)
+        applyLicenseFromStore()
         processHelper?.setChannelCount(inputChannelCount, outputChannelCount)
         try super.allocateRenderResources()
     }
@@ -265,6 +266,17 @@ public class JJBreezeAudioUnit: AUAudioUnit, @unchecked Sendable {
         #endif
         currentPreset = presetList.first
         loadedSnapshot = currentParameterSnapshot()
+        applyLicenseFromStore()
+    }
+
+    /// Sync DSP license gate from App Group cache (updated by EntitlementService).
+    public func applyLicenseFromStore() {
+        kernel.setLicensed(UnlockStore.cachedEffectAllowed)
+    }
+
+    public func refreshLicenseFromStore() async {
+        await EntitlementService.shared.refresh()
+        applyLicenseFromStore()
     }
 
     func applyFactoryPreset(_ number: Int) {

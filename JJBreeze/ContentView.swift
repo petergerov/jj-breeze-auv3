@@ -2,8 +2,38 @@ import SwiftUI
 
 struct ContentView: View {
     let hostModel: AudioUnitHostModel
+    @Bindable private var entitlement = EntitlementService.shared
+    @State private var showPaywall = false
 
     var body: some View {
+        ZStack {
+            mainStack
+            if !entitlement.isEffectAllowed {
+                dryPassNotice
+            }
+        }
+        .background(Color.black)
+        .preferredColorScheme(.dark)
+        .task {
+            await entitlement.loadProducts()
+            await entitlement.refresh()
+            if !entitlement.isEffectAllowed {
+                showPaywall = true
+            }
+        }
+        .onReceive(NotificationCenter.default.publisher(for: .jjBreezeAccessChanged)) { _ in
+            if entitlement.isEffectAllowed {
+                showPaywall = false
+            }
+        }
+        .fullScreenCover(isPresented: $showPaywall) {
+            PaywallView(entitlement: entitlement, showsCloseWhenAllowed: true) {
+                showPaywall = false
+            }
+        }
+    }
+
+    private var mainStack: some View {
         VStack(spacing: 0) {
             header
             editor
@@ -18,28 +48,67 @@ struct ContentView: View {
             }
             transport
         }
-        .background(Color.black)
-        .preferredColorScheme(.dark)
         .task {
             await hostModel.start()
         }
     }
 
-    private var header: some View {
-        HStack(alignment: .center, spacing: 12) {
-            Text(hostModel.isPlaying ? "Playing through the effect" : "Standalone player")
-                .font(.caption)
-                .foregroundStyle(.secondary)
+    @ViewBuilder
+    private var dryPassNotice: some View {
+        VStack {
+            HStack {
+                Spacer()
+                Button {
+                    showPaywall = true
+                } label: {
+                    Label("Effect bypassed — tap to unlock", systemImage: "lock.fill")
+                        .font(.caption2.weight(.semibold))
+                        .foregroundStyle(Color(red: 0.88, green: 0.54, blue: 0.24))
+                        .padding(.horizontal, 10)
+                        .padding(.vertical, 6)
+                        .background(Color.black.opacity(0.72))
+                        .clipShape(Capsule())
+                }
+                .padding(8)
+            }
             Spacer()
-            if hostModel.isPlaying {
-                Label("ON AIR", systemImage: "waveform")
-                    .font(.caption.bold())
-                    .foregroundStyle(Color(red: 0.88, green: 0.54, blue: 0.24))
+        }
+    }
+
+    private var header: some View {
+        VStack(spacing: 6) {
+            HStack(alignment: .center, spacing: 12) {
+                Text(headerStatus)
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+                Spacer()
+                if hostModel.isPlaying {
+                    Label("ON AIR", systemImage: "waveform")
+                        .font(.caption.bold())
+                        .foregroundStyle(Color(red: 0.88, green: 0.54, blue: 0.24))
+                }
+                if !entitlement.isEffectAllowed {
+                    Button("Unlock") { showPaywall = true }
+                        .font(.caption.bold())
+                        .foregroundStyle(Color(red: 0.88, green: 0.54, blue: 0.24))
+                }
+            }
+            if let banner = entitlement.accessState.bannerText {
+                AccessBanner(state: entitlement.accessState) {
+                    showPaywall = true
+                }
             }
         }
         .padding(.horizontal, 16)
         .padding(.vertical, 10)
         .background(Color(red: 0.08, green: 0.08, blue: 0.09))
+    }
+
+    private var headerStatus: String {
+        if !entitlement.isEffectAllowed {
+            return hostModel.isPlaying ? "Playing dry (trial / unlock required)" : "Standalone player — effect bypassed"
+        }
+        return hostModel.isPlaying ? "Playing through the effect" : "Standalone player"
     }
 
     @ViewBuilder

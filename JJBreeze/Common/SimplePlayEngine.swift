@@ -77,6 +77,8 @@ public class SimplePlayEngine {
         lastError = nil
         if breeze.parameterTree == nil {
             breeze.setupParameterTree(JJBreezeParameterSpecs.createAUParameterTree())
+        } else {
+            breeze.applyLicenseFromStore()
         }
         guard let tree = breeze.observableParameterTree else {
             lastError = "Effect parameters failed to load."

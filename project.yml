@@ -108,5 +108,6 @@ schemes:
     run:
       config: Debug
       askForAppToLaunch: false
+      storeKitConfiguration: Configuration/Products.storekit
     archive:
       config: Release
