@@ -23,8 +23,114 @@ Before the first upload, bump the public version from `0.1.0` to **`1.0.0`** (Bu
 | Platforms | iPhone and iPad (iOS 17+) |
 | Category | **Music** |
 | Secondary | Entertainment |
-| Price | set in Pricing (Free or Paid) |
+| Price | **Free** (monetization via In-App Purchases — see below) |
 | Copyright | `2026 Gerov` |
+
+---
+
+## In-App Purchases (required)
+
+**Yes — you need In-App Purchases.** The App Store download is **free**. The $2.99 charge is a **Non-Consumable IAP**, not the app price. You do **not** need Subscriptions, Consumables, or Non-Renewing Subscriptions.
+
+Product IDs must match the code in `JJBreezeExtension/Parameters/PurchaseProducts.swift` **exactly**.
+
+### Before you start
+
+1. **Apple Developer Program** active (Team `C9LBGZNZ6P`).
+2. [App Store Connect](https://appstoreconnect.apple.com) → **Agreements, Tax, and Banking** → accept **Paid Apps Agreement** (required even for the $0 trial IAP).
+3. App record exists with Bundle ID **`com.gerov.jjbreeze`**.
+
+### Step 1 — App price: Free
+
+1. App Store Connect → **Apps** → **jj-breeze**
+2. **Pricing and Availability**
+3. Set price to **Free** (not $2.99)
+
+The unlock is sold only through IAP.
+
+### Step 2 — Create In-App Purchases
+
+1. Same app → **Monetization** (or **Features**) → **In-App Purchases**
+2. Click **+** → **Non-Consumable** — create **two** products (trial + unlock)
+
+### Step 3 — Trial IAP ($0)
+
+| Field | Value |
+|---|---|
+| Reference name (internal) | `7-day Trial` |
+| **Product ID** | `com.gerov.jjbreeze.trial` |
+| Type | Non-Consumable |
+| Price | **$0.00** (Tier 0 / Free) |
+
+**Localization — English (U.S.):**
+
+| Field | Text |
+|---|---|
+| Display name | `7-day Trial` |
+| Description | `Seven days of full access to jj-breeze. After 7 days, unlock with a one-time purchase to keep the effect.` |
+
+Apple Guideline 3.1.1 expects the display name to reflect the trial length (e.g. **7-day Trial**). The app starts the 7-day period from the IAP purchase date.
+
+### Step 4 — Unlock IAP ($2.99)
+
+| Field | Value |
+|---|---|
+| Reference name (internal) | `jj-breeze Unlock` |
+| **Product ID** | `com.gerov.jjbreeze.unlock` |
+| Type | Non-Consumable |
+| Price | **$2.99** (US Tier 3 — pick your base country) |
+| Family Sharing | Optional (On is fine for a one-time unlock) |
+
+**Localization — English (U.S.):**
+
+| Field | Text |
+|---|---|
+| Display name | `jj-breeze Unlock` |
+| Description | `Permanent unlock. Use jj-breeze in the app and in GarageBand, Logic for iPad, AUM, and other AUv3 hosts. One-time purchase — no subscription.` |
+
+### Step 5 — Submit IAPs for review
+
+Each IAP must reach **Ready to Submit**:
+
+1. Price tier set
+2. At least one localization (English)
+3. **Review screenshot** if prompted (screenshot of the in-app paywall is enough)
+4. Submit IAPs **with the app version** (e.g. 1.0.0) — IAP review is tied to the binary
+
+### Step 6 — App Group (Developer Portal)
+
+Unlock state is shared between the container app and the AUv3 extension via **`group.com.gerov.jjbreeze`**.
+
+1. [developer.apple.com](https://developer.apple.com) → **Certificates, Identifiers & Profiles**
+2. **Identifiers** → **`com.gerov.jjbreeze`** → enable **App Groups** → add **`group.com.gerov.jjbreeze`**
+3. Repeat for **`com.gerov.jjbreeze.AUv3`**
+4. In Xcode: regenerate provisioning profiles (Signing & Capabilities on both targets)
+
+Without App Group, IAP still works, but GarageBand may not see unlock until the main app has been opened once.
+
+### Step 7 — Sandbox testing
+
+1. App Store Connect → **Users and Access** → **Sandbox** → **Testers** → create a sandbox Apple ID
+2. On device: **Settings → App Store → Sandbox Account** (sign in with sandbox ID)
+3. Install a build from Xcode (Simulator can use **Configuration/Products.storekit** via the jj-breeze scheme)
+4. Open app → **Start 7-day free trial** → confirm $0 purchase
+5. Test **Unlock** and **Restore purchases**
+6. After trial expires (or use a fresh sandbox account), confirm audio is **dry/bypassed** until unlock
+
+### IAP quick reference
+
+| Product ID | Price | Purpose |
+|---|---|---|
+| `com.gerov.jjbreeze.trial` | $0 | Starts 7-day full access |
+| `com.gerov.jjbreeze.unlock` | $2.99 | Permanent unlock |
+
+### Common mistakes
+
+- Setting the **app price** to $2.99 instead of using IAP
+- Product ID typo (must be **`com.gerov.jjbreeze.trial`**, not `trial7d`)
+- IAP left in **Missing Metadata** — blocks app review
+- Testing purchases with your **real** Apple ID instead of a **Sandbox** tester
+- Forgetting **Paid Apps Agreement** — IAP will not work in production
 
 ---
 
@@ -33,7 +139,7 @@ Before the first upload, bump the public version from `0.1.0` to **`1.0.0`** (Bu
 Rotates without a new binary. Leave blank if unused.
 
 ```
-A stereo micro-pitch widener with vibrato and a warmth stage. Open this app and tap Play, or load: jj-breeze in GarageBand, Logic for iPad, or AUM.
+7 days free, then $2.99 once — no subscription. Stereo vocal widener for GarageBand, Logic for iPad, and AUM.
 ```
 
 ---
@@ -42,6 +148,9 @@ A stereo micro-pitch widener with vibrato and a warmth stage. Open this app and 
 
 ```
 jj-breeze is a stereo micro-pitch widener with vibrato and a warmth tone stage. It is an Audio Unit (AUv3) effect for iPhone and iPad.
+
+PRICING
+Free download. Start a 7-day trial in the app, then unlock permanently for a one-time purchase ($2.99 in the U.S. — price varies by region). No subscription.
 
 Open the app, tap Play, and listen to a built-in demo through the effect. Turn knobs, enable sections, and try factory presets. After you have launched the app once, the same plug-in is available in GarageBand, Logic for iPad, AUM, and other AUv3 hosts as: jj-breeze.
 
@@ -56,7 +165,7 @@ SECTIONS
 Each section has an on/off switch. Turning a section off removes it from the sound without wiping the knobs.
 
 FACTORY PRESETS
-Default, JJ Cale Vocal, Cajun Moon Vocal, JJ Dark Vocal, JJ Dark Vocal (Up), Octave Width, Deep Baritone.
+Default, Stereo Width, JJ Cajun Moon, JJ Lies, JJ Dark Vocal, Octave Width, Deep Baritone, Slapback Twang.
 
 IN A DAW
 1. Install and open jj-breeze once (this registers the Audio Unit).
@@ -76,6 +185,9 @@ jj-breeze is an original effect. It is not affiliated with any third-party plug-
 ```
 jj-breeze ist ein stereo Micro-Pitch-Widener mit Vibrato und einer Warmth-Stufe. Es ist ein Audio-Unit-Effekt (AUv3) für iPhone und iPad.
 
+PREIS
+Kostenloser Download. 7-Tage-Test in der App, danach einmaliger Kauf (Dauer-Freischaltung). Kein Abo.
+
 App öffnen, Play tippen, Demo-Ton durch den Effekt hören. Regler drehen, Sektionen einschalten, Factory-Presets laden. Nach dem ersten Start erscheint dasselbe Plug-in in GarageBand, Logic für iPad, AUM und anderen AUv3-Hosts als jj-breeze.
 
 WAS ES TUT
@@ -89,7 +201,7 @@ SEKTIONEN
 Pro Sektion gibt es einen An/Aus-Schalter. Aus schaltet den Beitrag zum Sound, die Regler bleiben erhalten.
 
 FACTORY-PRESETS
-Default, JJ Cale Vocal, Cajun Moon Vocal, JJ Dark Vocal, JJ Dark Vocal (Up), Octave Width, Deep Baritone.
+Default, Stereo Width, JJ Cajun Moon, JJ Lies, JJ Dark Vocal, Octave Width, Deep Baritone, Slapback Twang.
 
 IN EINER DAW
 1. jj-breeze einmal installieren und öffnen (registriert die Audio Unit).
@@ -125,7 +237,7 @@ auv3,audio unit,widener,pitch shifter,vibrato,waerme,gesang,stereo,effekt,chorus
 ## What’s New (version 1.0.0)
 
 ```
-First release. Stereo micro-pitch widener, vibrato, and warmth as an AUv3, with a built-in host so you can play a demo and edit the effect in-app. Seven factory presets. Works in GarageBand, Logic for iPad, AUM, and other Audio Unit hosts after you open this app once.
+First release. Stereo micro-pitch widener, vibrato, and warmth as an AUv3, with a built-in host. 7-day free trial, then one-time unlock. Factory presets included. Works in GarageBand, Logic for iPad, AUM, and other Audio Unit hosts after you open this app once.
 ```
 
 ---
@@ -159,16 +271,24 @@ Paste into App Store Connect → App Review Information.
 ```
 This is an Audio Unit v3 (AUv3) audio effect. The container app is a working host, not an empty shell.
 
+MONETIZATION (In-App Purchases)
+The app is free. Two non-consumable IAPs:
+• com.gerov.jjbreeze.trial ($0) — starts 7-day trial
+• com.gerov.jjbreeze.unlock ($2.99) — permanent unlock
+
+To review purchases: launch app → Start 7-day free trial → Play demo (effect audible). Restore purchases and Unlock buttons are on the paywall. After trial expires, audio passes through dry until unlock; the editor remains usable.
+
 HOW TO REVIEW (no GarageBand required)
 
 1. Launch “jj-breeze”.
-2. Wait until the analog-style editor appears (jj-breeze). If you see “Audio Unit failed to load”, force-quit and reopen once so iOS can register the extension.
-3. Leave the source on “Demo Loop”.
-4. You should see an amber hint: “Tap Play to hear the effect.” Tap Play (orange). You should hear plucked notes through the effect. The header shows ON AIR.
-5. Turn Shift knobs (Pitch L/R, Mix). The sound should change.
-6. Enable Vibrato and Warmth with the section LEDs and move their Mix knobs.
-7. Open the preset menu (under the title) and load “Cajun Moon Vocal” or “Deep Baritone”.
-8. Tap Stop.
+2. Paywall appears on first launch — tap “Start 7-day free trial” and confirm the $0 StoreKit sheet.
+3. Wait until the analog-style editor appears. If you see “Audio Unit failed to load”, force-quit and reopen once.
+4. Leave the source on “Demo Loop”.
+5. Tap Play (orange). You should hear plucked notes through the effect.
+6. Turn Shift knobs (Pitch L/R, Mix). The sound should change.
+7. Enable Vibrato and Warmth with the section LEDs and move their Mix knobs.
+8. Open the preset menu and load “JJ Cajun Moon” or “Deep Baritone”.
+9. Tap Stop.
 
 The knobs are silent until Play is running. That is expected: this is an effect, not a synth. Demo Loop is the default source.
 
@@ -187,7 +307,7 @@ IDENTITY
 MICROPHONE
 The host can switch source to “Microphone” to hear live input. This is optional. Review with Demo Loop; you do not need to grant mic access. The Audio Unit itself does not require the microphone when hosted in GarageBand or Logic.
 
-There is no account, no ads, no tracking, and no network requirement.
+There is no account, no ads, and no tracking. StoreKit handles payments through Apple; we do not receive or store payment details.
 ```
 
 **Sign-in required:** No  
@@ -310,12 +430,15 @@ App icon: 1024×1024, no alpha, no rounded-corner mask (App Store rounds it).
 ```
 Privacy Policy — jj-breeze (iOS)
 
-Last updated: 25 August 2026
+Last updated: 28 August 2026
 
 jj-breeze is an Audio Unit (AUv3) effect published by Gerov.
 
 Data collection
 We do not collect, sell, or share personal data. The app has no account, no analytics, no advertising, and no crash reporter that sends information to us.
+
+In-app purchases
+jj-breeze offers a free 7-day trial and a one-time unlock purchase, both processed entirely by Apple via StoreKit. We do not handle or store payment information. Apple’s privacy policy applies to all transactions: https://www.apple.com/legal/privacy/
 
 Microphone
 The optional “Microphone” mode in the companion host processes audio on the device so you can hear the effect on live input. Microphone audio is not recorded to disk by this app and is not uploaded. You can use Demo Loop instead and deny microphone permission.
@@ -350,7 +473,7 @@ Apple often rejects Audio Unit apps for these. This project is set up to avoid t
 
 ## Third-party names
 
-Preset names (JJ Cale Vocal, Cajun Moon Vocal) describe a *sound*, not an endorsement. The public description states the product is not affiliated with third-party vendors or artists.
+Preset names (e.g. JJ Cajun Moon) describe a *sound*, not an endorsement. The public description states the product is not affiliated with third-party vendors or artists.
 
 Do **not** put Soundtoys, MicroShift, Stillwell, or artist names in the **subtitle, keywords, or screenshots**. Keep competitor names out of promotional text.
 
@@ -361,7 +484,12 @@ If Legal asks you to rename presets before 1.0, change them in `JJBreezeExtensio
 ## Submit checklist
 
 - [ ] App record in App Store Connect, bundle ID `com.gerov.jjbreeze`
-- [ ] Paid/Free Apps agreement accepted
+- [ ] **Paid Apps Agreement** accepted
+- [ ] App price set to **Free** (not $2.99)
+- [ ] IAP **`com.gerov.jjbreeze.trial`** ($0, Non-Consumable) — Ready to Submit
+- [ ] IAP **`com.gerov.jjbreeze.unlock`** ($2.99, Non-Consumable) — Ready to Submit
+- [ ] App Group **`group.com.gerov.jjbreeze`** on app + extension IDs
+- [ ] Sandbox tester created; trial + unlock tested on device
 - [ ] Version **1.0.0**, unique build number
 - [ ] Support URL live
 - [ ] Privacy Policy URL live (text above)
