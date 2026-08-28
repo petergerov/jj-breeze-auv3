@@ -30,14 +30,23 @@ Before the first upload, bump the public version from `0.1.0` to **`1.0.0`** (Bu
 
 ## In-App Purchases (required)
 
-**Yes — you need In-App Purchases.** The App Store download is **free**. The $2.99 charge is a **Non-Consumable IAP**, not the app price. You do **not** need Subscriptions, Consumables, or Non-Renewing Subscriptions.
+**Yes — you need one In-App Purchase.** The App Store download is **free**. Monetization matches **Gig Songbook**: a silent **7-day trial from first launch** (no $0 IAP, no confirm sheet), then a one-time **Non-Consumable** unlock.
 
-Product IDs must match the code in `JJBreezeExtension/Parameters/PurchaseProducts.swift` **exactly**.
+You do **not** need Subscriptions, Consumables, Non-Renewing Subscriptions, or a second “trial” IAP.
+
+Product ID must match `JJBreezeExtension/Parameters/PurchaseProducts.swift` **exactly**.
+
+### How the trial works (in the app)
+
+1. First launch records an install date (App Group + UserDefaults).
+2. Days 1–7: full effect, no paywall, no StoreKit sheet.
+3. After 7 days: audio is dry/bypassed; paywall offers unlock + restore.
+4. Banner can show days remaining during the trial (optional early unlock).
 
 ### Before you start
 
 1. **Apple Developer Program** active (Team `C9LBGZNZ6P`).
-2. [App Store Connect](https://appstoreconnect.apple.com) → **Agreements, Tax, and Banking** → accept **Paid Apps Agreement** (required even for the $0 trial IAP).
+2. [App Store Connect](https://appstoreconnect.apple.com) → **Agreements, Tax, and Banking** → accept **Paid Apps Agreement**.
 3. App record exists with Bundle ID **`com.gerov.jjbreeze`**.
 
 ### Step 1 — App price: Free
@@ -46,32 +55,14 @@ Product IDs must match the code in `JJBreezeExtension/Parameters/PurchaseProduct
 2. **Pricing and Availability**
 3. Set price to **Free** (not $2.99)
 
-The unlock is sold only through IAP.
-
-### Step 2 — Create In-App Purchases
+### Step 2 — Create one In-App Purchase
 
 1. Same app → **Monetization** (or **Features**) → **In-App Purchases**
-2. Click **+** → **Non-Consumable** — create **two** products (trial + unlock)
+2. Click **+** → **Non-Consumable** — create **one** product only
 
-### Step 3 — Trial IAP ($0)
+If you already created `com.gerov.jjbreeze.trial` ($0), **do not ship it** — remove it from the version or leave it unused. The binary no longer references that product ID.
 
-| Field | Value |
-|---|---|
-| Reference name (internal) | `7-day Trial` |
-| **Product ID** | `com.gerov.jjbreeze.trial` |
-| Type | Non-Consumable |
-| Price | **$0.00** (Tier 0 / Free) |
-
-**Localization — English (U.S.):**
-
-| Field | Text |
-|---|---|
-| Display name | `7-day Trial` |
-| Description | `Seven days of full access to jj-breeze. After 7 days, unlock with a one-time purchase to keep the effect.` |
-
-Apple Guideline 3.1.1 expects the display name to reflect the trial length (e.g. **7-day Trial**). The app starts the 7-day period from the IAP purchase date.
-
-### Step 4 — Unlock IAP ($2.99)
+### Step 3 — Unlock IAP ($2.99)
 
 | Field | Value |
 |---|---|
@@ -86,51 +77,50 @@ Apple Guideline 3.1.1 expects the display name to reflect the trial length (e.g.
 | Field | Text |
 |---|---|
 | Display name | `jj-breeze Unlock` |
-| Description | `Permanent unlock. Use jj-breeze in the app and in GarageBand, Logic for iPad, AUM, and other AUv3 hosts. One-time purchase — no subscription.` |
+| Description | `Permanent unlock after the free 7-day trial from first launch. Use jj-breeze in the app and in GarageBand, Logic for iPad, AUM, and other AUv3 hosts. One-time purchase — no subscription.` |
 
-### Step 5 — Submit IAPs for review
+### Step 4 — Submit IAP for review
 
-Each IAP must reach **Ready to Submit**:
+The IAP must reach **Ready to Submit**:
 
 1. Price tier set
 2. At least one localization (English)
-3. **Review screenshot** if prompted (screenshot of the in-app paywall is enough)
-4. Submit IAPs **with the app version** (e.g. 1.0.0) — IAP review is tied to the binary
+3. **Review screenshot** if prompted (paywall screenshot)
+4. Submit with the app version (e.g. 1.0.0)
 
-### Step 6 — App Group (Developer Portal)
+### Step 5 — App Group (Developer Portal)
 
-Unlock state is shared between the container app and the AUv3 extension via **`group.com.gerov.jjbreeze`**.
+Install date and unlock cache are shared with the AUv3 via **`group.com.gerov.jjbreeze`**.
 
 1. [developer.apple.com](https://developer.apple.com) → **Certificates, Identifiers & Profiles**
 2. **Identifiers** → **`com.gerov.jjbreeze`** → enable **App Groups** → add **`group.com.gerov.jjbreeze`**
 3. Repeat for **`com.gerov.jjbreeze.AUv3`**
-4. In Xcode: regenerate provisioning profiles (Signing & Capabilities on both targets)
+4. In Xcode: regenerate provisioning profiles
 
-Without App Group, IAP still works, but GarageBand may not see unlock until the main app has been opened once.
+### Step 6 — Sandbox testing
 
-### Step 7 — Sandbox testing
-
-1. App Store Connect → **Users and Access** → **Sandbox** → **Testers** → create a sandbox Apple ID
-2. On device: **Settings → App Store → Sandbox Account** (sign in with sandbox ID)
-3. Install a build from Xcode (Simulator can use **Configuration/Products.storekit** via the jj-breeze scheme)
-4. Open app → **Start 7-day free trial** → confirm $0 purchase
-5. Test **Unlock** and **Restore purchases**
-6. After trial expires (or use a fresh sandbox account), confirm audio is **dry/bypassed** until unlock
+1. App Store Connect → **Users and Access** → **Sandbox** → **Testers**
+2. On device: **Settings → App Store → Sandbox Account**
+3. Install from Xcode (`Configuration/Products.storekit` is on the jj-breeze scheme)
+4. Open app → **Play immediately** (no purchase sheet)
+5. Tap **Unlock** (optional, mid-trial) or wait until trial ends → purchase / restore
+6. After expiry, confirm audio is dry until unlock
 
 ### IAP quick reference
 
 | Product ID | Price | Purpose |
 |---|---|---|
-| `com.gerov.jjbreeze.trial` | $0 | Starts 7-day full access |
 | `com.gerov.jjbreeze.unlock` | $2.99 | Permanent unlock |
+| ~~`com.gerov.jjbreeze.trial`~~ | — | **Removed** — trial is install-date based |
 
 ### Common mistakes
 
 - Setting the **app price** to $2.99 instead of using IAP
-- Product ID typo (must be **`com.gerov.jjbreeze.trial`**, not `trial7d`)
-- IAP left in **Missing Metadata** — blocks app review
-- Testing purchases with your **real** Apple ID instead of a **Sandbox** tester
-- Forgetting **Paid Apps Agreement** — IAP will not work in production
+- Creating a second $0 “trial” IAP (not used by this binary)
+- Product ID typo (must be **`com.gerov.jjbreeze.unlock`**)
+- IAP left in **Missing Metadata**
+- Testing with your **real** Apple ID instead of Sandbox
+- Forgetting **Paid Apps Agreement**
 
 ---
 
@@ -150,7 +140,7 @@ Rotates without a new binary. Leave blank if unused.
 jj-breeze is a stereo micro-pitch widener with vibrato and a warmth tone stage. It is an Audio Unit (AUv3) effect for iPhone and iPad.
 
 PRICING
-Free download. Start a 7-day trial in the app, then unlock permanently for a one-time purchase ($2.99 in the U.S. — price varies by region). No subscription.
+Free download. Full effect for 7 days from first launch (no signup). Then unlock permanently for a one-time purchase ($2.99 in the U.S. — price varies by region). No subscription.
 
 Open the app, tap Play, and listen to a built-in demo through the effect. Turn knobs, enable sections, and try factory presets. After you have launched the app once, the same plug-in is available in GarageBand, Logic for iPad, AUM, and other AUv3 hosts as: jj-breeze.
 
@@ -272,16 +262,16 @@ Paste into App Store Connect → App Review Information.
 This is an Audio Unit v3 (AUv3) audio effect. The container app is a working host, not an empty shell.
 
 MONETIZATION (In-App Purchases)
-The app is free. Two non-consumable IAPs:
-• com.gerov.jjbreeze.trial ($0) — starts 7-day trial
+The app is free. Trial is automatic for 7 days from first launch (install date) — no $0 IAP and no confirm sheet on open.
+One non-consumable IAP:
 • com.gerov.jjbreeze.unlock ($2.99) — permanent unlock
 
-To review purchases: launch app → Start 7-day free trial → Play demo (effect audible). Restore purchases and Unlock buttons are on the paywall. After trial expires, audio passes through dry until unlock; the editor remains usable.
+To review: launch app → Play demo immediately (effect audible). Optional: tap Unlock mid-trial. After 7 days (or with install date moved back in a debug build), audio is dry until unlock; Restore Purchases and Unlock are on the paywall. The editor remains usable.
 
 HOW TO REVIEW (no GarageBand required)
 
 1. Launch “jj-breeze”.
-2. Paywall appears on first launch — tap “Start 7-day free trial” and confirm the $0 StoreKit sheet.
+2. No paywall on first launch — go straight to the editor.
 3. Wait until the analog-style editor appears. If you see “Audio Unit failed to load”, force-quit and reopen once.
 4. Leave the source on “Demo Loop”.
 5. Tap Play (orange). You should hear plucked notes through the effect.
@@ -438,7 +428,7 @@ Data collection
 We do not collect, sell, or share personal data. The app has no account, no analytics, no advertising, and no crash reporter that sends information to us.
 
 In-app purchases
-jj-breeze offers a free 7-day trial and a one-time unlock purchase, both processed entirely by Apple via StoreKit. We do not handle or store payment information. Apple’s privacy policy applies to all transactions: https://www.apple.com/legal/privacy/
+jj-breeze offers a free 7-day trial from first launch (stored on device) and a one-time unlock purchase processed by Apple via StoreKit. We do not handle or store payment information. Apple’s privacy policy applies to all transactions: https://www.apple.com/legal/privacy/
 
 Microphone
 The optional “Microphone” mode in the companion host processes audio on the device so you can hear the effect on live input. Microphone audio is not recorded to disk by this app and is not uploaded. You can use Demo Loop instead and deny microphone permission.
@@ -486,10 +476,11 @@ If Legal asks you to rename presets before 1.0, change them in `JJBreezeExtensio
 - [ ] App record in App Store Connect, bundle ID `com.gerov.jjbreeze`
 - [ ] **Paid Apps Agreement** accepted
 - [ ] App price set to **Free** (not $2.99)
-- [ ] IAP **`com.gerov.jjbreeze.trial`** ($0, Non-Consumable) — Ready to Submit
 - [ ] IAP **`com.gerov.jjbreeze.unlock`** ($2.99, Non-Consumable) — Ready to Submit
+- [ ] Do **not** require `com.gerov.jjbreeze.trial` (removed; install-date trial)
 - [ ] App Group **`group.com.gerov.jjbreeze`** on app + extension IDs
-- [ ] Sandbox tester created; trial + unlock tested on device
+- [ ] Sandbox tester created; unlock + restore tested on device
+- [ ] First launch: Play works with no purchase sheet
 - [ ] Version **1.0.0**, unique build number
 - [ ] Support URL live
 - [ ] Privacy Policy URL live (text above)

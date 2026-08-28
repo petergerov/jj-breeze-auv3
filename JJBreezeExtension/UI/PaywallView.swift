@@ -20,14 +20,14 @@ struct PaywallView: View {
                 .italic()
                 .foregroundStyle(.white)
 
-            Text("Stereo micro-pitch widener with vibrato and warmth.")
+            Text(headline)
                 .font(.subheadline)
                 .foregroundStyle(.secondary)
                 .multilineTextAlignment(.center)
                 .padding(.horizontal, 8)
 
             VStack(alignment: .leading, spacing: 10) {
-                bullet("7 days full access — free")
+                bullet("7 days free from first launch — no signup")
                 bullet("Then unlock once — no subscription")
                 bullet("Works in GarageBand, Logic for iPad, and AUM")
             }
@@ -45,37 +45,13 @@ struct PaywallView: View {
             }
 
             VStack(spacing: 12) {
-                if entitlement.accessState == .trialNotStarted {
-                    Button {
-                        Task { await entitlement.startTrial() }
-                    } label: {
-                        Text("Start 7-day free trial")
-                            .frame(maxWidth: .infinity)
-                    }
-                    .buttonStyle(.borderedProminent)
-                    .tint(Color(red: 0.88, green: 0.54, blue: 0.24))
-                    .disabled(entitlement.isPurchasing || entitlement.trialProduct == nil)
+                Button {
+                    Task { await entitlement.purchaseUnlock() }
+                } label: {
+                    Text("Unlock forever — \(unlockLabel)")
+                        .frame(maxWidth: .infinity)
                 }
-
-                Group {
-                    if entitlement.accessState == .trialNotStarted {
-                        Button {
-                            Task { await entitlement.purchaseUnlock() }
-                        } label: {
-                            Text("Unlock forever — \(unlockLabel)")
-                                .frame(maxWidth: .infinity)
-                        }
-                        .buttonStyle(.bordered)
-                    } else {
-                        Button {
-                            Task { await entitlement.purchaseUnlock() }
-                        } label: {
-                            Text(unlockLabel)
-                                .frame(maxWidth: .infinity)
-                        }
-                        .buttonStyle(.borderedProminent)
-                    }
-                }
+                .buttonStyle(.borderedProminent)
                 .tint(Color(red: 0.88, green: 0.54, blue: 0.24))
                 .disabled(entitlement.isPurchasing || entitlement.unlockProduct == nil)
 
@@ -95,10 +71,16 @@ struct PaywallView: View {
 
             Spacer(minLength: 0)
 
-            if showsCloseWhenAllowed, entitlement.isEffectAllowed, let onDismiss {
-                Button("Continue") { onDismiss() }
-                    .font(.footnote)
-                    .padding(.bottom, 8)
+            if showsCloseWhenAllowed {
+                if case .unlocked = entitlement.accessState {
+                    Button("Continue") { onDismiss?() }
+                        .font(.footnote)
+                        .padding(.bottom, 8)
+                } else {
+                    Button("Not now") { onDismiss?() }
+                        .font(.footnote)
+                        .padding(.bottom, 8)
+                }
             }
         }
         .padding(.vertical, 24)
@@ -108,10 +90,21 @@ struct PaywallView: View {
             await entitlement.loadProducts()
             await entitlement.refresh()
         }
-        .onChange(of: entitlement.isEffectAllowed) { _, allowed in
-            if allowed, showsCloseWhenAllowed {
+        .onChange(of: entitlement.accessState) { _, state in
+            if case .unlocked = state, showsCloseWhenAllowed {
                 onDismiss?()
             }
+        }
+    }
+
+    private var headline: String {
+        switch entitlement.accessState {
+        case .trialExpired:
+            return "Your free trial has ended. Unlock to keep Shift, Vibrato, and Warmth."
+        case .trialActive:
+            return "Enjoying the trial? Unlock once to keep the effect forever."
+        case .unlocked:
+            return "You’re unlocked. Thanks for supporting jj-breeze."
         }
     }
 
@@ -144,7 +137,7 @@ struct AccessBanner: View {
                 if case .unlocked = state {
                     EmptyView()
                 } else {
-                    Button(state == .trialNotStarted ? "Start trial" : "Unlock", action: onUnlock)
+                    Button("Unlock", action: onUnlock)
                         .font(.system(size: 10, weight: .bold))
                         .foregroundStyle(GearTheme.accent)
                 }

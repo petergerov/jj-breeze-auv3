@@ -5,27 +5,12 @@
   ],
   "products" : [
     {
-      "displayPrice" : "0.00",
-      "familyShareable" : false,
-      "internalID" : "6670000001",
-      "localizations" : [
-        {
-          "description" : "Seven days of full access to jj-breeze.",
-          "displayName" : "7-day Trial",
-          "locale" : "en_US"
-        }
-      ],
-      "productID" : "com.gerov.jjbreeze.trial",
-      "referenceName" : "7-day Trial",
-      "type" : "NonConsumable"
-    },
-    {
       "displayPrice" : "2.99",
       "familyShareable" : true,
       "internalID" : "6670000002",
       "localizations" : [
         {
-          "description" : "Permanent unlock for jj-breeze on all your devices.",
+          "description" : "Permanent unlock for jj-breeze on all your devices. Seven days free from first launch.",
           "displayName" : "jj-breeze Unlock",
           "locale" : "en_US"
         }

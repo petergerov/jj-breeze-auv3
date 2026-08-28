@@ -1,17 +1,14 @@
 import Foundation
 
 enum PurchaseProducts {
-    /// $0 non-consumable — Apple trial naming convention (Guideline 3.1.1).
-    static let trial = "com.gerov.jjbreeze.trial"
-    /// One-time unlock ($2.99 in App Store Connect).
+    /// One-time unlock ($2.99). Trial is install-date based — no $0 IAP.
     static let unlock = "com.gerov.jjbreeze.unlock"
+    /// Same pattern as Gig Songbook stem promo: days from first launch.
     static let trialDurationDays = 7
-
-    static let all: Set<String> = [trial, unlock]
+    static var trialDuration: TimeInterval { TimeInterval(trialDurationDays) * 24 * 60 * 60 }
 }
 
 enum AccessState: Equatable, Sendable {
-    case trialNotStarted
     case trialActive(daysRemaining: Int)
     case trialExpired
     case unlocked
@@ -19,18 +16,16 @@ enum AccessState: Equatable, Sendable {
     var isEffectAllowed: Bool {
         switch self {
         case .unlocked, .trialActive: true
-        case .trialNotStarted, .trialExpired: false
+        case .trialExpired: false
         }
     }
 
     var bannerText: String? {
         switch self {
-        case .trialNotStarted:
-            return "Start your 7-day free trial."
         case .trialActive(let days):
             if days <= 0 { return "Trial ends today — unlock to keep the effect." }
             let unit = days == 1 ? "day" : "days"
-            return "\(days) \(unit) left in your trial."
+            return "\(days) \(unit) left in your free trial."
         case .trialExpired:
             return "Trial ended — unlock jj-breeze to hear the effect again."
         case .unlocked:

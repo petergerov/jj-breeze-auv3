@@ -6,8 +6,7 @@ import StoreKit
 final class EntitlementService {
     static let shared = EntitlementService()
 
-    private(set) var accessState: AccessState = UnlockStore.cachedAccessState
-    private(set) var trialProduct: Product?
+    private(set) var accessState: AccessState
     private(set) var unlockProduct: Product?
     private(set) var isLoadingProducts = false
     private(set) var isPurchasing = false
@@ -18,75 +17,39 @@ final class EntitlementService {
     var isEffectAllowed: Bool { accessState.isEffectAllowed }
 
     private init() {
+        UnlockStore.ensureInstallDate()
+        accessState = UnlockStore.computeAccessState(hasUnlock: false)
+        UnlockStore.write(accessState: accessState)
+
         updatesTask = Task { @MainActor [weak self] in
             for await result in Transaction.updates {
                 guard let self else { continue }
-                if case .verified(let transaction) = result {
+                if let transaction = Self.matchingUnlock(from: result) {
                     await transaction.finish()
                     await self.refresh()
                 }
             }
         }
+        Task { await refresh() }
+        Task { await loadProducts() }
     }
 
     func refresh() async {
-        var hasUnlock = false
-        var trialPurchaseDate: Date?
-
-        for await result in Transaction.currentEntitlements {
-            guard case .verified(let transaction) = result else { continue }
-            switch transaction.productID {
-            case PurchaseProducts.unlock:
-                hasUnlock = true
-            case PurchaseProducts.trial:
-                trialPurchaseDate = transaction.purchaseDate
-            default:
-                break
-            }
-        }
-
-        let next: AccessState
-        if hasUnlock {
-            next = .unlocked
-        } else if let start = trialPurchaseDate {
-            let end = Calendar.current.date(
-                byAdding: .day,
-                value: PurchaseProducts.trialDurationDays,
-                to: start
-            ) ?? start
-            if Date() < end {
-                let days = Calendar.current.dateComponents([.day], from: Calendar.current.startOfDay(for: Date()), to: Calendar.current.startOfDay(for: end)).day ?? 0
-                next = .trialActive(daysRemaining: max(0, days))
-            } else {
-                next = .trialExpired
-            }
-        } else {
-            next = .trialNotStarted
-        }
-
-        apply(next)
+        let hasUnlock = await hasUnlockEntitlement()
+        apply(UnlockStore.computeAccessState(hasUnlock: hasUnlock))
     }
 
     func loadProducts() async {
-        guard trialProduct == nil || unlockProduct == nil else { return }
+        guard unlockProduct == nil else { return }
         isLoadingProducts = true
         defer { isLoadingProducts = false }
         do {
-            let products = try await Product.products(for: [PurchaseProducts.trial, PurchaseProducts.unlock])
-            trialProduct = products.first { $0.id == PurchaseProducts.trial }
+            let products = try await Product.products(for: [PurchaseProducts.unlock])
             unlockProduct = products.first { $0.id == PurchaseProducts.unlock }
-            lastError = nil
+            lastError = unlockProduct == nil ? "Unlock product not available yet." : nil
         } catch {
             lastError = error.localizedDescription
         }
-    }
-
-    func startTrial() async {
-        guard let trialProduct else {
-            lastError = "Trial is not available yet. Check your connection and try again."
-            return
-        }
-        await purchase(trialProduct)
     }
 
     func purchaseUnlock() async {
@@ -94,29 +57,15 @@ final class EntitlementService {
             lastError = "Unlock is not available yet. Check your connection and try again."
             return
         }
-        await purchase(unlockProduct)
-    }
-
-    func restorePurchases() async {
         isPurchasing = true
         defer { isPurchasing = false }
         do {
-            try await AppStore.sync()
-            await refresh()
-            lastError = accessState.isEffectAllowed ? nil : "No purchases found for this Apple ID."
-        } catch {
-            lastError = error.localizedDescription
-        }
-    }
+            // Plain purchase() — shared with the AUv3 extension where UIApplication.shared is unavailable.
+            let result = try await unlockProduct.purchase()
 
-    private func purchase(_ product: Product) async {
-        isPurchasing = true
-        defer { isPurchasing = false }
-        do {
-            let result = try await product.purchase()
             switch result {
             case .success(let verification):
-                if case .verified(let transaction) = verification {
+                if let transaction = Self.matchingUnlock(from: verification) {
                     await transaction.finish()
                     await refresh()
                     lastError = nil
@@ -133,9 +82,52 @@ final class EntitlementService {
         }
     }
 
+    func restorePurchases() async {
+        isPurchasing = true
+        defer { isPurchasing = false }
+        do {
+            try await AppStore.sync()
+            await refresh()
+            if case .unlocked = accessState {
+                lastError = nil
+            } else {
+                lastError = "No purchases found for this Apple ID."
+            }
+        } catch {
+            lastError = error.localizedDescription
+        }
+    }
+
+    private func hasUnlockEntitlement() async -> Bool {
+        if let latest = await Transaction.latest(for: PurchaseProducts.unlock),
+           Self.matchingUnlock(from: latest) != nil {
+            return true
+        }
+        for await result in Transaction.currentEntitlements {
+            if Self.matchingUnlock(from: result) != nil { return true }
+        }
+        return false
+    }
+
     private func apply(_ state: AccessState) {
+        guard state != accessState else { return }
         accessState = state
         UnlockStore.write(accessState: state)
         NotificationCenter.default.post(name: .jjBreezeAccessChanged, object: nil)
+    }
+
+    private static func matchingUnlock(
+        from result: VerificationResult<StoreKit.Transaction>
+    ) -> StoreKit.Transaction? {
+        let transaction: StoreKit.Transaction
+        switch result {
+        case .verified(let t):
+            transaction = t
+        case .unverified:
+            return nil
+        }
+        guard transaction.productID == PurchaseProducts.unlock else { return nil }
+        guard transaction.revocationDate == nil else { return nil }
+        return transaction
     }
 }

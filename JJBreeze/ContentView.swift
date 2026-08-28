@@ -17,12 +17,13 @@ struct ContentView: View {
         .task {
             await entitlement.loadProducts()
             await entitlement.refresh()
-            if !entitlement.isEffectAllowed {
+            // Only prompt when the install trial has ended — never on first launch.
+            if case .trialExpired = entitlement.accessState {
                 showPaywall = true
             }
         }
         .onReceive(NotificationCenter.default.publisher(for: .jjBreezeAccessChanged)) { _ in
-            if entitlement.isEffectAllowed {
+            if case .unlocked = entitlement.accessState {
                 showPaywall = false
             }
         }
@@ -93,7 +94,7 @@ struct ContentView: View {
                         .foregroundStyle(Color(red: 0.88, green: 0.54, blue: 0.24))
                 }
             }
-            if let banner = entitlement.accessState.bannerText {
+            if entitlement.accessState.bannerText != nil {
                 AccessBanner(state: entitlement.accessState) {
                     showPaywall = true
                 }
@@ -106,7 +107,7 @@ struct ContentView: View {
 
     private var headerStatus: String {
         if !entitlement.isEffectAllowed {
-            return hostModel.isPlaying ? "Playing dry (trial / unlock required)" : "Standalone player — effect bypassed"
+            return hostModel.isPlaying ? "Playing dry (unlock required)" : "Standalone player — effect bypassed"
         }
         return hostModel.isPlaying ? "Playing through the effect" : "Standalone player"
     }
