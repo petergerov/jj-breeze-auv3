@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>jj-breeze — That close, doubled vocal for iPhone &amp; iPad</title>
+  <meta name="description" content="The laid-back doubled vocal: close to the mic, a second voice a few cents off, a darker top. An AUv3 for iPhone and iPad — GarageBand, Logic for iPad, AUM." />
+  <meta name="keywords" content="auv3, audio unit, widener, pitch shifter, vibrato, warmth, vocal, stereo, effect, garageband, logic" />
+  <link rel="icon" href="AppIcon.png" />
+  <link rel="apple-touch-icon" href="AppIcon.png" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="jj-breeze — That close, doubled vocal" />
+  <meta property="og:description" content="Laid-back. A little late. Never a big chorus. An AUv3 for iPhone and iPad." />
+  <meta property="og:image" content="AppIcon.png" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="jj-breeze — That close, doubled vocal" />
+  <meta name="twitter:description" content="The easy doubled voice: a few cents, a little delay, a darker finish. AUv3 for iPhone and iPad." />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "jj-breeze",
+    "applicationCategory": "MusicApplication",
+    "operatingSystem": "iOS",
+    "description": "Laid-back doubled vocal insert: micro-pitch, delay, vibrato, and a warmth stage. Audio Unit (AUv3) for iPhone and iPad.",
+    "featureList": [
+      "Independent Pitch L/R (±1 octave) and Delay L/R (0–250 ms)",
+      "Focus crossover so the low end can stay dry",
+      "Delay-based vibrato in parallel with Shift",
+      "Warmth stage: Body, Tone, Drive",
+      "Factory presets and a built-in demo host",
+      "Works in GarageBand, Logic for iPad, AUM, and other AUv3 hosts"
+    ]
+  }
+  </script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:       #ffffff;
+      --bg2:      #f5f5f7;
+      --bg3:      #fafafa;
+      --text:     #1d1d1f;
+      --secondary:#6e6e73;
+      --border:   #d2d2d7;
+      --accent:   #0066cc;
+      --accent2:  #0077ed;
+      --muted:    #86868b;
+      --radius:   12px;
+      --radius-lg:20px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Helvetica Neue", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 40px;
+      height: 52px;
+      background: rgba(255,255,255,0.82);
+      backdrop-filter: blur(20px) saturate(180%);
+      -webkit-backdrop-filter: blur(20px) saturate(180%);
+      border-bottom: 1px solid rgba(0,0,0,0.08);
+    }
+    .nav-logo {
+      display: flex; align-items: center; gap: 8px;
+      font-size: 0.95rem; font-weight: 600; color: var(--text);
+      text-decoration: none;
+    }
+    .nav-logo img { width: 28px; height: 28px; border-radius: 6px; }
+    .nav-links { display: flex; gap: 32px; }
+    .nav-link {
+      color: var(--secondary); text-decoration: none;
+      font-size: 0.82rem; font-weight: 500; letter-spacing: 0.01em;
+      transition: color .15s;
+    }
+    .nav-link:hover { color: var(--text); }
+    .nav-cta {
+      font-size: 0.82rem; font-weight: 500;
+      color: var(--accent); text-decoration: none;
+      transition: color .15s;
+    }
+    .nav-cta:hover { color: var(--accent2); }
+
+    .container { max-width: 980px; margin: 0 auto; padding: 0 24px; }
+
+    .hero {
+      padding: 120px 24px 80px;
+      text-align: center;
+    }
+    .hero-eyebrow {
+      display: inline-block;
+      font-size: 0.75rem; font-weight: 600;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 20px;
+    }
+    .hero h1 {
+      font-size: clamp(2.4rem, 5vw, 4rem);
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      line-height: 1.08;
+      color: var(--text);
+      max-width: 760px;
+      margin: 0 auto 20px;
+    }
+    .hero h1 em { font-style: normal; color: var(--accent); }
+    .hero p {
+      font-size: 1.1rem;
+      color: var(--secondary);
+      max-width: 540px;
+      margin: 20px auto 20px;
+      line-height: 1.6;
+    }
+    .hero-actions { display: flex; gap: 12px; justify-content: center; align-items: center; flex-wrap: wrap; }
+    .btn-primary {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--text); color: #fff;
+      font-size: 0.88rem; font-weight: 600;
+      padding: 12px 22px;
+      border-radius: 980px;
+      text-decoration: none;
+      transition: opacity .15s;
+    }
+    .btn-primary:hover { opacity: 0.85; }
+    .btn-secondary {
+      display: inline-flex; align-items: center; gap: 6px;
+      color: var(--accent);
+      font-size: 0.88rem; font-weight: 500;
+      text-decoration: none;
+      transition: color .15s;
+    }
+    .btn-secondary:hover { color: var(--accent2); }
+    .btn-secondary::after { content: " →"; }
+    .hero-img {
+      margin-top: 40px;
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: 0 24px 80px rgba(0,0,0,0.12), 0 4px 16px rgba(0,0,0,0.06);
+      max-width: 420px;
+      margin-left: auto;
+      margin-right: auto;
+      cursor: pointer;
+      border: 1px solid var(--border);
+    }
+    .hero-img img { width: 100%; display: block; }
+    .hero-trust {
+      font-size: 0.78rem; color: var(--muted);
+      margin: 32px auto 0; text-align: center;
+      letter-spacing: 0.02em;
+    }
+
+    .section-eyebrow {
+      font-size: 0.72rem; font-weight: 600;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--accent); margin-bottom: 12px;
+    }
+    .section-title {
+      font-size: clamp(1.6rem, 3vw, 2.4rem);
+      font-weight: 700; letter-spacing: -0.025em;
+      color: var(--text); margin-bottom: 14px;
+    }
+    .section-sub {
+      font-size: 1rem; color: var(--secondary);
+      max-width: 520px; line-height: 1.6;
+    }
+    .sound-note {
+      font-size: 0.78rem; color: var(--muted);
+      margin-top: 28px; max-width: 560px; line-height: 1.55;
+    }
+    .sound-section { padding: 80px 0; }
+
+    hr.divider {
+      border: none; border-top: 1px solid var(--border);
+      margin: 0;
+    }
+
+    .steps-section { background: var(--bg2); padding: 80px 0; }
+    .steps-inner { max-width: 980px; margin: 0 auto; padding: 0 24px; }
+    .steps-header { margin-bottom: 52px; }
+    .steps-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+      background: var(--border);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+    }
+    .step {
+      background: var(--bg);
+      padding: 36px 32px;
+    }
+    .step-num {
+      font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em;
+      color: var(--secondary); margin-bottom: 16px;
+    }
+    .step-icon { font-size: 1.6rem; margin-bottom: 12px; display: block; }
+    .step h3 { font-size: 1rem; font-weight: 600; margin-bottom: 8px; }
+    .step p { font-size: 0.88rem; color: var(--secondary); line-height: 1.6; }
+
+    .shots-section { padding: 80px 0; }
+    .shots-header { max-width: 980px; margin: 0 auto 40px; padding: 0 24px; }
+    .shots-scroll {
+      display: flex; gap: 16px;
+      overflow-x: auto;
+      padding: 0 24px 20px;
+      scroll-snap-type: x mandatory;
+      scrollbar-width: none;
+      max-width: 1200px;
+      margin: 0 auto;
+      justify-content: center;
+    }
+    .shots-scroll::-webkit-scrollbar { display: none; }
+    .shot {
+      flex: 0 0 280px;
+      scroll-snap-align: start;
+      border-radius: var(--radius);
+      overflow: hidden;
+      border: 1px solid var(--border);
+      background: var(--bg2);
+      cursor: pointer;
+      transition: transform .2s, box-shadow .2s;
+    }
+    .shot:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 36px rgba(0,0,0,0.1);
+    }
+    .shot img { width: 100%; display: block; }
+    .shot-label {
+      padding: 10px 14px;
+      font-size: 0.78rem; font-weight: 500; color: var(--secondary);
+      border-top: 1px solid var(--border);
+    }
+
+    .features-section { background: var(--bg2); padding: 80px 0; }
+    .features-header { margin-bottom: 52px; }
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+      background: var(--border);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+    }
+    .feature {
+      background: var(--bg);
+      padding: 32px 28px;
+    }
+    .feature-icon { font-size: 1.4rem; margin-bottom: 14px; display: block; }
+    .feature h3 {
+      font-size: 0.95rem; font-weight: 600;
+      margin-bottom: 8px; color: var(--text);
+    }
+    .feature p { font-size: 0.85rem; color: var(--secondary); line-height: 1.65; }
+    .feature ul {
+      margin-top: 12px;
+      padding-left: 18px;
+      font-size: 0.82rem; color: var(--secondary);
+      line-height: 1.7;
+    }
+
+    .presets-section { padding: 80px 0; }
+    .preset-list {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2px;
+      background: var(--border);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      margin-top: 40px;
+    }
+    .preset {
+      background: var(--bg);
+      padding: 24px 28px;
+    }
+    .preset h3 { font-size: 0.95rem; font-weight: 600; margin-bottom: 6px; }
+    .preset p { font-size: 0.85rem; color: var(--secondary); line-height: 1.6; }
+
+    .hosts-section { background: var(--bg2); padding: 80px 0; }
+    .hosts-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+      background: var(--border);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      margin-top: 40px;
+    }
+    .host-card {
+      background: var(--bg);
+      padding: 32px 28px;
+    }
+    .host-card h3 { font-size: 0.95rem; font-weight: 600; margin-bottom: 8px; }
+    .host-card p { font-size: 0.85rem; color: var(--secondary); line-height: 1.65; }
+
+    .quote-section {
+      padding: 80px 24px;
+      text-align: center;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+    .quote {
+      font-size: clamp(1.2rem, 2.5vw, 1.8rem);
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      color: var(--secondary);
+      max-width: 640px;
+      margin: 0 auto;
+      line-height: 1.4;
+    }
+    .quote em { font-style: normal; color: var(--text); }
+
+    .cta-section {
+      background: var(--text);
+      color: #fff;
+      padding: 80px 24px;
+      text-align: center;
+    }
+    .cta-section h2 {
+      font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+      font-weight: 700; letter-spacing: -0.03em;
+      margin-bottom: 14px;
+    }
+    .cta-section p { font-size: 1rem; opacity: 0.6; margin-bottom: 36px; }
+    .btn-cta {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: #fff; color: var(--text);
+      font-size: 0.88rem; font-weight: 600;
+      padding: 13px 24px; border-radius: 980px;
+      text-decoration: none;
+      transition: opacity .15s;
+    }
+    .btn-cta:hover { opacity: 0.88; }
+
+    footer {
+      padding: 40px 24px;
+      border-top: 1px solid var(--border);
+      display: flex; flex-direction: column; align-items: center;
+      gap: 16px; text-align: center;
+    }
+    .footer-logo {
+      display: flex; align-items: center; gap: 8px;
+      font-size: 0.9rem; font-weight: 600; color: var(--text);
+      text-decoration: none;
+    }
+    .footer-logo img { width: 22px; height: 22px; border-radius: 5px; }
+    .footer-links { display: flex; gap: 24px; flex-wrap: wrap; justify-content: center; }
+    .footer-links a {
+      font-size: 0.78rem; color: var(--secondary);
+      text-decoration: none; transition: color .15s;
+    }
+    .footer-links a:hover { color: var(--text); }
+    footer p { font-size: 0.75rem; color: var(--secondary); }
+
+    .lightbox {
+      display: none; position: fixed; inset: 0; z-index: 200;
+      background: rgba(0,0,0,0.72);
+      backdrop-filter: blur(12px);
+      align-items: center; justify-content: center;
+    }
+    .lightbox.open { display: flex; }
+    .lb-inner { position: relative; max-width: 720px; width: 90%; max-height: 90vh; }
+    .lb-inner img {
+      width: 100%; max-height: 82vh; object-fit: contain;
+      border-radius: var(--radius-lg); display: block; background: #111;
+    }
+    .lb-close {
+      position: absolute; top: -40px; right: 0;
+      background: none; border: none; color: #fff;
+      font-size: 1.6rem; cursor: pointer; opacity: 0.7;
+      line-height: 1;
+    }
+    .lb-close:hover { opacity: 1; }
+    .lb-label {
+      text-align: center; color: rgba(255,255,255,0.6);
+      font-size: 0.78rem; margin-top: 12px;
+    }
+
+    @media (max-width: 700px) {
+      nav { padding: 0 20px; }
+      .nav-links { display: none; }
+      .steps-grid, .features-grid, .hosts-grid, .preset-list { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="#">
+    <img src="AppIcon.png" alt="jj-breeze" />
+    jj-breeze
+  </a>
+  <div class="nav-links">
+    <a href="#the-vocal" class="nav-link">The vocal</a>
+    <a href="#how-it-works" class="nav-link">How it works</a>
+    <a href="#sections" class="nav-link">Sections</a>
+    <a href="#presets" class="nav-link">Presets</a>
+    <a href="#hosts" class="nav-link">In your DAW</a>
+  </div>
+  <a href="#get" class="nav-cta js-store">Get the app</a>
+</nav>
+
+<section class="hero">
+  <span class="hero-eyebrow">AUv3 · iPhone &amp; iPad · GarageBand · Logic · AUM</span>
+  <h1>That close, <em>doubled</em> vocal.</h1>
+  <p>You know the one. Laid-back, a little late, never shiny. A second voice a few cents off — not a chorus, not a slap in your face. jj-breeze is the insert for that sound.</p>
+  <div class="hero-actions">
+    <a href="#get" class="btn-primary js-store">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+      Download on the App Store
+    </a>
+    <a href="#the-vocal" class="btn-secondary">Hear the idea</a>
+  </div>
+  <div class="hero-img" onclick="openLightbox()">
+    <img src="images/plugin.jpg" alt="jj-breeze editor in a host: Shift, Vibrato, and Warmth" />
+  </div>
+  <p class="hero-trust">Open the app and tap Play &nbsp;·&nbsp; Then load the same plug-in in your host as jj-breeze</p>
+</section>
+
+<hr class="divider" />
+
+<section class="sound-section" id="the-vocal">
+  <div class="steps-inner">
+    <div class="steps-header">
+      <div class="section-eyebrow">The sound it was built for</div>
+      <h2 class="section-title">Three shapes of the same voice</h2>
+      <p class="section-sub">Close to the mic. A guitar in the room. A double that doesn’t announce itself. Load a preset and you’re in that neighborhood — original patches, not copies of any record.</p>
+    </div>
+    <div class="steps-grid">
+      <div class="step">
+        <div class="step-num">The breeze</div>
+        <span class="step-icon">◇</span>
+        <h3>Easy. Always been there.</h3>
+        <p>Matching pitch, short delays, a darker top. The namesake — that unhurried doubled voice the whole plug-in is named for. Start on <strong>Default</strong>.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">Cajun Moon</div>
+        <span class="step-icon">☾</span>
+        <h3>Darker. Slow swirl.</h3>
+        <p>The same close vocal, rolled off and moving just enough. Warmth on, vibrato low and lazy. Load <strong>JJ Cajun Moon</strong>.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">Lies</div>
+        <span class="step-icon">↗</span>
+        <h3>One side lifts.</h3>
+        <p>Left stays put. Right jumps +470 cents. Asymmetric, a little ghosted. Load <strong>JJ Lies</strong>.</p>
+      </div>
+    </div>
+    <p class="sound-note">jj-breeze is an original effect. Preset names point at a <em>feel</em>, not a recreation of any recording, and the plug-in is not affiliated with any artist, label, or third-party vendor.</p>
+  </div>
+</section>
+
+<hr class="divider" />
+
+<section class="steps-section" id="how-it-works">
+  <div class="steps-inner">
+    <div class="steps-header">
+      <div class="section-eyebrow">Simple by design</div>
+      <h2 class="section-title">Up and running in 3 steps</h2>
+      <p class="section-sub">The companion app is a real host, not an empty wrapper. Hear the effect before you open a DAW.</p>
+    </div>
+    <div class="steps-grid">
+      <div class="step">
+        <div class="step-num">01</div>
+        <span class="step-icon">▶</span>
+        <h3>Open and tap Play</h3>
+        <p>Install jj-breeze and launch it once. Leave the source on <strong>Demo Loop</strong> and tap Play. You hear the effect immediately — turn knobs, flip section LEDs, load a preset.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">02</div>
+        <span class="step-icon">🎛</span>
+        <h3>Load it in your host</h3>
+        <p>That first launch registers the Audio Unit. In <strong>GarageBand</strong>, <strong>Logic for iPad</strong>, <strong>AUM</strong>, and other AUv3 hosts it appears as <strong>jj-breeze</strong> (manufacturer Gerov).</p>
+      </div>
+      <div class="step">
+        <div class="step-num">03</div>
+        <span class="step-icon">◎</span>
+        <h3>Pick a preset — or one section</h3>
+        <p>Each section has its own on/off. Turn Vibrato and Warmth off for a clean slap or octave; leave them on for a darker, moving vocal. Knobs stay put when a section is off.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider" />
+
+<section class="shots-section" id="screenshots">
+  <div class="shots-header">
+    <div class="section-eyebrow">In a host</div>
+    <h2 class="section-title">Analog panel. Three columns.</h2>
+    <p class="section-sub">Shift, Vibrato, and Warmth side by side. Tap the screenshot for a larger view.</p>
+  </div>
+  <div class="shots-scroll">
+    <div class="shot" onclick="openLightbox()">
+      <img src="images/plugin.jpg" alt="jj-breeze running as an AUv3 in a host" />
+      <div class="shot-label">jj-breeze in a host</div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider" />
+
+<section class="features-section" id="sections">
+  <div class="container">
+    <div class="features-header">
+      <div class="section-eyebrow">Shift · Vibrato · Warmth</div>
+      <h2 class="section-title">One insert, three jobs</h2>
+      <p class="section-sub">Shift and Vibrato blend in parallel from the dry signal. Warmth is the last pass on the sum. Turning one up does not eat the others.</p>
+    </div>
+    <div class="features-grid">
+      <div class="feature">
+        <span class="feature-icon">⟷</span>
+        <h3>Shift</h3>
+        <p>The core. Each side gets its own pitch and its own delay tap. Same-sign pitch stays mono-compatible. Opposite signs is classic micro-shift width. <strong>Focus</strong> is a crossover: below it stays dry; only the band above is shifted and delayed.</p>
+        <ul>
+          <li>Pitch L / R — −1200 to +1200 cents</li>
+          <li>Delay L / R — 0 to 250 ms (short width or slap)</li>
+          <li>Focus — 20 Hz to 10 kHz</li>
+          <li>Mix — dry/wet for this section only</li>
+        </ul>
+      </div>
+      <div class="feature">
+        <span class="feature-icon">∿</span>
+        <h3>Vibrato</h3>
+        <p>A slow, continuous pitch wobble from a swept short delay — not a second copy of Shift’s static detune. It runs in parallel with Shift, from dry, so Mix here never steals from Shift Mix.</p>
+        <ul>
+          <li>Rate — 0.1 to 8 Hz (slow vocal swirl ~1.2 Hz)</li>
+          <li>Depth — 0 to 8 ms of delay sweep</li>
+          <li>Mix — hint of movement, or a real vibrato</li>
+        </ul>
+      </div>
+      <div class="feature">
+        <span class="feature-icon">◎</span>
+        <h3>Warmth</h3>
+        <p>The last tone stage on the fully summed signal: chest, darkness, then gentle saturation. Not another doubler. Leave it off when you want an open, twangy top.</p>
+        <ul>
+          <li>Body — low-shelf at 150 Hz, up to +6 dB</li>
+          <li>Tone — low-pass, 500 Hz to 12 kHz</li>
+          <li>Drive — soft tanh after the filter</li>
+          <li>Mix — how much of the warmed signal you hear</li>
+        </ul>
+      </div>
+      <div class="feature">
+        <span class="feature-icon">⊕</span>
+        <h3>Focus keeps the low end</h3>
+        <p>Raise Focus to keep width off the bass. Drop it toward 20–25 Hz when a big pitch change or a slap should cover the full band. Mix only blends; Focus decides what gets processed.</p>
+      </div>
+      <div class="feature">
+        <span class="feature-icon">↔</span>
+        <h3>Link Pitch and Delay</h3>
+        <p>On iOS, link L and R so one drag keeps the offset. Double-tap a knob for its default. Tap the LED readout to type a value. Vertical drag is coarse; horizontal is fine.</p>
+      </div>
+      <div class="feature">
+        <span class="feature-icon">○</span>
+        <h3>Section on/off</h3>
+        <p>Each LED bypasses that section without wiping knobs. DSP keeps running so switching back is click-free. Global Power in the header is a full dry bypass.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider" />
+
+<section class="presets-section" id="presets">
+  <div class="container">
+    <div class="section-eyebrow">Factory presets</div>
+    <h2 class="section-title">Start from a sound, not a blank panel</h2>
+    <p class="section-sub">Same recall in the in-plugin menu and in the host. Save your own on the device.</p>
+    <div class="preset-list">
+      <div class="preset">
+        <h3>Default</h3>
+        <p>The breeze: matching +300 cents, short delays, all three sections on. The easy doubled voice.</p>
+      </div>
+      <div class="preset">
+        <h3>Stereo Width</h3>
+        <p>Opposite-sign pitch for a classic wide micro-shift, still with a light swirl and warmth.</p>
+      </div>
+      <div class="preset">
+        <h3>JJ Cajun Moon</h3>
+        <p>The dark, rolling one. Matching pitch, lazy vibrato, Warmth on. Start here for that late vocal.</p>
+      </div>
+      <div class="preset">
+        <h3>JJ Lies</h3>
+        <p>One side stays. The other lifts +470 cents. The ghost in the right channel.</p>
+      </div>
+      <div class="preset">
+        <h3>JJ Dark Vocal</h3>
+        <p>Matching −300 cents, Focus down, a darker Tone and a little vibrato.</p>
+      </div>
+      <div class="preset">
+        <h3>Octave Width</h3>
+        <p>Pitch L −1200, Pitch R at 0. Reads like an octave pedal across the stereo field.</p>
+      </div>
+      <div class="preset">
+        <h3>Deep Baritone</h3>
+        <p>Pitch −700 cents with Body and Drive for a low, growly voice. No vibrato.</p>
+      </div>
+      <div class="preset">
+        <h3>Slapback Twang</h3>
+        <p>Pitch at 0, Delay 110 / 115 ms, Focus down. One bright repeat, nothing else.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider" />
+
+<section class="hosts-section" id="hosts">
+  <div class="container">
+    <div class="section-eyebrow">Audio Unit</div>
+    <h2 class="section-title">Where it shows up</h2>
+    <p class="section-sub">Install the app, open it once, then look for <strong>jj-breeze</strong> in any AUv3 host. Type <strong>aufx</strong>, subtype <strong>Jjbz</strong>, manufacturer <strong>Grov</strong>.</p>
+    <div class="hosts-grid">
+      <div class="host-card">
+        <h3>GarageBand</h3>
+        <p>Audio FX → Audio Unit Extensions → jj-breeze. Works on an Audio Recorder track or any audio track.</p>
+      </div>
+      <div class="host-card">
+        <h3>Logic for iPad</h3>
+        <p>Audio Units → Gerov → jj-breeze. Same editor, same presets as the standalone app.</p>
+      </div>
+      <div class="host-card">
+        <h3>AUM and others</h3>
+        <p>AUM, Cubasis, BeatMaker, and other AUv3 hosts list it as jj-breeze. Open the companion app once if it does not appear yet.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="quote-section">
+  <p class="quote">Close to the mic. A second voice a few cents off. <em>Never a chorus.</em></p>
+</div>
+
+<section class="cta-section" id="get">
+  <h2>Put that vocal on your track.</h2>
+  <p>iPhone and iPad · iOS 17+ · No account. Open the app, tap Play, then load the same effect in your DAW.</p>
+  <a href="#get" class="btn-cta js-store">
+    <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+    Download on the App Store
+  </a>
+</section>
+
+<footer>
+  <a class="footer-logo" href="#">
+    <img src="AppIcon.png" alt="jj-breeze" />
+    jj-breeze
+  </a>
+  <div class="footer-links">
+    <a href="https://github.com/petergerov/jj-breeze-auv3">GitHub</a>
+    <a href="privacy.html">Privacy Policy</a>
+    <a href="mailto:peter@gerov.com">Support</a>
+    <a href="https://gigsongbook.com">Gig Songbook</a>
+  </div>
+  <p>© 2026 Gerov. An original effect — not affiliated with any recording artist or third-party plug-in.</p>
+</footer>
+
+<div class="lightbox" id="lightbox" onclick="if(event.target===this)closeLightbox()">
+  <div class="lb-inner">
+    <button class="lb-close" type="button" onclick="closeLightbox()">×</button>
+    <img id="lightbox-img" src="images/plugin.jpg" alt="jj-breeze in a host" />
+    <div class="lb-label">jj-breeze in a host</div>
+  </div>
+</div>
+
+<script>
+  // When the App Store listing exists, set this to the HTTPS URL
+  // (e.g. https://apps.apple.com/app/idXXXXXXXXX). Leave empty until then.
+  const APP_STORE_URL = "";
+
+  function openLightbox() {
+    document.getElementById("lightbox").classList.add("open");
+    document.body.style.overflow = "hidden";
+  }
+  function closeLightbox() {
+    document.getElementById("lightbox").classList.remove("open");
+    document.body.style.overflow = "";
+  }
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "Escape") closeLightbox();
+  });
+
+  (function () {
+    if (!APP_STORE_URL) return;
+    var href = APP_STORE_URL;
+    var isApple = /iPhone|iPad|iPod|Macintosh/.test(navigator.userAgent);
+    if (isApple) href = href.replace("https://apps.apple.com", "itms-apps://apps.apple.com");
+    document.querySelectorAll(".js-store").forEach(function (a) {
+      a.href = href;
+    });
+  })();
+</script>
+
+</body>
+</html>
