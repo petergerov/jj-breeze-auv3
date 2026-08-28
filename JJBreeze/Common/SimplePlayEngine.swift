@@ -41,7 +41,7 @@ public class SimplePlayEngine {
         reset()
         configureSession(for: .loop)
 
-        // Do not instantiate aufx/Jjbz/Grov here. That is the AUv3 appex; loading your
+        // Do not instantiate aufx/Jjb3/Grov here. That is the AUv3 appex; loading your
         // own extension from the containing app fails on device even when GarageBand works.
         // The standalone player uses a private in-process subclass instead.
         var local = AudioComponentDescription()

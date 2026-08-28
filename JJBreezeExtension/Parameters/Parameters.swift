@@ -79,7 +79,7 @@ extension ParameterSpec {
 
 enum AudioUnitIdentity {
     static let type = "aufx"
-    static let subtype = "Jjbz"
+    static let subtype = "Jjb3"
     static let manufacturer = "Grov"
     static let componentName = "Gerov: jj-breeze"
 }

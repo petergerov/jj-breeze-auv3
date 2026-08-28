@@ -17,7 +17,7 @@ class AudioUnitHostModel {
     }
 
     let type = "aufx"
-    let subType = "Jjbz"
+    let subType = "Jjb3"
     let manufacturer = "Grov"
 
     private var didStart = false

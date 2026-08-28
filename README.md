@@ -26,7 +26,7 @@ open JJBreeze.xcodeproj
 2. Set your Development Team on both **JJBreeze** and **JJBreezeExtension**.
 3. Run on an iPhone, iPad, or simulator.
 
-Installing the app registers **Gerov: jj-breeze** (`aufx` / `Jjbz` / `Grov`) as an Audio Unit effect.
+Installing the app registers **Gerov: jj-breeze** (`aufx` / `Jjb3` / `Grov`) as an Audio Unit effect.
 
 ## In a DAW
 

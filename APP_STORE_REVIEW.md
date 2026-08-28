@@ -18,7 +18,7 @@ Before the first upload, bump the public version from `0.1.0` to **`1.0.0`** (Bu
 | SKU | `jj-breeze-ios` |
 | Primary language | English (U.S.) |
 | Team ID | `C9LBGZNZ6P` |
-| Apple Audio Unit | type `aufx`, subtype `Jjbz`, manufacturer `Grov` |
+| Apple Audio Unit | type `aufx`, subtype `Jjb3`, manufacturer `Grov` |
 | Name in hosts | **jj-breeze** |
 | Platforms | iPhone and iPad (iOS 17+) |
 | Category | **Music** |
@@ -292,7 +292,7 @@ OPTIONAL: GARAGEBAND (iPad)
 IDENTITY
 • Bundle ID: com.gerov.jjbreeze
 • Extension: com.gerov.jjbreeze.AUv3
-• AU: aufx / Jjbz / Grov — listed as “jj-breeze”
+• AU: aufx / Jjb3 / Grov — listed as “jj-breeze”
 
 MICROPHONE
 The host can switch source to “Microphone” to hear live input. This is optional. Review with Demo Loop; you do not need to grant mic access. The Audio Unit itself does not require the microphone when hosted in GarageBand or Logic.
