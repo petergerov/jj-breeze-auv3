@@ -64,7 +64,7 @@ struct ContentView: View {
                 } label: {
                     Label("Effect bypassed — tap to unlock", systemImage: "lock.fill")
                         .font(.caption2.weight(.semibold))
-                        .foregroundStyle(Color(red: 0.88, green: 0.54, blue: 0.24))
+                        .foregroundStyle(GearTheme.accent)
                         .padding(.horizontal, 10)
                         .padding(.vertical, 6)
                         .background(Color.black.opacity(0.72))
@@ -86,12 +86,12 @@ struct ContentView: View {
                 if hostModel.isPlaying {
                     Label("ON AIR", systemImage: "waveform")
                         .font(.caption.bold())
-                        .foregroundStyle(Color(red: 0.88, green: 0.54, blue: 0.24))
+                        .foregroundStyle(GearTheme.accent)
                 }
                 if !entitlement.isEffectAllowed {
                     Button("Unlock") { showPaywall = true }
                         .font(.caption.bold())
-                        .foregroundStyle(Color(red: 0.88, green: 0.54, blue: 0.24))
+                        .foregroundStyle(GearTheme.accent)
                 }
             }
             if entitlement.accessState.bannerText != nil {
@@ -160,7 +160,7 @@ struct ContentView: View {
                     .frame(minWidth: 100)
             }
             .buttonStyle(.borderedProminent)
-            .tint(Color(red: 0.88, green: 0.54, blue: 0.24))
+            .tint(GearTheme.accent)
             .disabled(hostModel.viewModel.viewController == nil || hostModel.isLoading)
         }
         .padding(12)

@@ -111,38 +111,30 @@ struct JJBreezeMainView: View {
 
     // MARK: - Header
 
+    // One row: wordmark, preset selector, IN/OUT meters, power switch. The
+    // preset selector is the only flexible item, so it takes whatever width
+    // the wordmark, meters and switch leave; the strapline that used to sit
+    // under the wordmark moved to versionFooter so this stays a single line.
     private var header: some View {
         VStack(spacing: 8) {
-            HStack(alignment: .center, spacing: 12) {
-                VStack(alignment: .leading, spacing: 1) {
-                    Text("j.j.breeze")
-                        .font(.custom("Georgia-BoldItalic", size: 20))
-                        .foregroundStyle(GearTheme.textLight)
-                        .lineLimit(1)
-                        .minimumScaleFactor(0.7)
-                    Text("STEREO MICRO-PITCH WIDENER")
-                        .font(.system(size: 9, weight: .bold))
-                        .tracking(1.4)
-                        .foregroundStyle(GearTheme.textMuted)
-                        .lineLimit(1)
-                        .minimumScaleFactor(0.6)
-                }
+            HStack(alignment: .center, spacing: 10) {
+                Text("j.j.breeze")
+                    .font(.custom("Georgia-BoldItalic", size: 20))
+                    .foregroundStyle(GearTheme.textLight)
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.7)
+                    .layoutPriority(1)
 
-                Spacer(minLength: 8)
+                PresetBar(audioUnit: audioUnit)
+                    .frame(minWidth: 96)
 
                 LevelMeterView(audioUnit: audioUnit)
+                    .layoutPriority(1)
 
-                HStack(spacing: 6) {
-                    Text("POWER")
-                        .font(.system(size: 10, weight: .bold))
-                        .tracking(1.2)
-                        .foregroundStyle(GearTheme.accent)
-                    BypassToggle(isBypassed: $isBypassed)
-                        .frame(width: 22, height: 38)
-                }
+                BypassToggle(isBypassed: $isBypassed)
+                    .frame(width: 22, height: 38)
+                    .layoutPriority(1)
             }
-
-            PresetBar(audioUnit: audioUnit)
 
             if entitlement.accessState.bannerText != nil {
                 AccessBanner(state: entitlement.accessState) {
@@ -153,8 +145,11 @@ struct JJBreezeMainView: View {
     }
 
     private var versionFooter: some View {
-        Text(appVersionString)
-            .font(.system(size: 9))
+        Text("STEREO MICRO-PITCH WIDENER  ·  \(appVersionString)")
+            .font(.system(size: 9, weight: .semibold))
+            .tracking(0.8)
+            .lineLimit(1)
+            .minimumScaleFactor(0.7)
             .foregroundStyle(GearTheme.textMuted.opacity(0.55))
             .frame(maxWidth: .infinity)
     }

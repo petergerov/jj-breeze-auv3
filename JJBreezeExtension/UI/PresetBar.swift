@@ -1,73 +1,51 @@
 import AudioToolbox
 import SwiftUI
 
+/// The header's preset control: one selector that opens a dropdown holding
+/// the whole preset workflow — factory list, user list (swipe a row left to
+/// delete or rename it) and a "Save As…" entry — so the panel header needs
+/// no separate save/manage/step buttons beside it.
 struct PresetBar: View {
     let audioUnit: JJBreezeAudioUnit?
 
     @State private var title = "Default"
+    @State private var currentNumber: Int?
     @State private var userPresets: [AUAudioUnitPreset] = []
+    @State private var showPicker = false
     @State private var showSave = false
-    @State private var showManage = false
     @State private var saveName = ""
+    @State private var renameTarget: AUAudioUnitPreset?
+    @State private var renameText = ""
+    // A sheet can't be raised while the dropdown is still up, so "Save As…"
+    // and Rename only mark what to do and close the popover; the actual
+    // sheet is presented from the popover's onDismiss below.
+    @State private var pendingSave = false
+    @State private var pendingRename: AUAudioUnitPreset?
     @State private var errorMessage: String?
 
     var body: some View {
-        HStack(spacing: 6) {
-            stepButton(systemName: "chevron.left") {
-                audioUnit?.stepPreset(by: -1)
-            }
-
-            Menu {
-                Section("Factory") {
-                    ForEach(FactoryPresets.all, id: \.number) { preset in
-                        Button(preset.name) {
-                            selectFactory(preset.number)
-                        }
-                    }
-                }
-                Section("User") {
-                    if userPresets.isEmpty {
-                        Text("No user presets")
-                    } else {
-                        ForEach(userPresets, id: \.number) { preset in
-                            Button(preset.name) {
-                                select(preset)
-                            }
-                        }
-                    }
-                }
-            } label: {
-                HStack(spacing: 6) {
-                    DirtyDot(audioUnit: audioUnit)
-                    Text(title)
-                        .font(.system(size: 12, weight: .semibold))
-                        .lineLimit(1)
-                    Image(systemName: "chevron.down")
-                        .font(.system(size: 10, weight: .bold))
-                }
-                .foregroundStyle(GearTheme.accent)
-                .padding(.horizontal, 10)
-                .padding(.vertical, 8)
-                .frame(maxWidth: .infinity, minHeight: 44, alignment: .leading)
-                .background(GearTheme.panelFill)
-                .overlay(
-                    RoundedRectangle(cornerRadius: 6)
-                        .stroke(GearTheme.metalDark, lineWidth: 1)
-                )
-            }
-            .id("user-presets-\(userPresets.count)-\(title)")
-
-            stepButton(systemName: "chevron.right") {
-                audioUnit?.stepPreset(by: 1)
-            }
-
-            presetButton("SAVE") {
-                saveName = suggestedSaveName
-                showSave = true
-            }
-            presetButton("MANAGE") {
-                reload()
-                showManage = true
+        Button {
+            reload()
+            showPicker = true
+        } label: {
+            selectorLabel
+        }
+        .buttonStyle(.plain)
+        .disabled(audioUnit == nil)
+        .accessibilityLabel("Preset")
+        .accessibilityValue(title)
+        .popover(isPresented: $showPicker) {
+            presetList
+                .frame(idealWidth: 300, idealHeight: 380)
+                .presentationCompactAdaptation(.popover)
+        }
+        .onChange(of: showPicker) { _, isShown in
+            guard !isShown, pendingSave || pendingRename != nil else { return }
+            Task {
+                // Let the popover finish dismissing first — UIKit drops a
+                // sheet presented while another dismissal is still running.
+                try? await Task.sleep(for: .milliseconds(350))
+                presentPendingSheet()
             }
         }
         .onAppear(perform: reload)
@@ -84,6 +62,24 @@ struct PresetBar: View {
                 onConfirm: { save() }
             )
         }
+        .sheet(isPresented: Binding(
+            get: { renameTarget != nil },
+            set: { if !$0 { renameTarget = nil } }
+        )) {
+            PresetNameSheet(
+                title: "Rename Preset",
+                caption: "The new name replaces this user preset.",
+                name: $renameText,
+                confirmTitle: "Rename",
+                onCancel: { renameTarget = nil },
+                onConfirm: {
+                    if let preset = renameTarget {
+                        rename(preset, to: renameText)
+                    }
+                    renameTarget = nil
+                }
+            )
+        }
         .alert("Preset", isPresented: Binding(
             get: { errorMessage != nil },
             set: { if !$0 { errorMessage = nil } }
@@ -92,23 +88,124 @@ struct PresetBar: View {
         } message: {
             Text(errorMessage ?? "")
         }
-        .sheet(isPresented: $showManage) {
-            PresetManagerSheet(
-                userPresets: userPresets,
-                onLoad: { preset in
-                    select(preset)
-                    showManage = false
-                },
-                onRename: { preset, name in
-                    rename(preset, to: name)
-                },
-                onDelete: { preset in
-                    delete(preset)
+    }
+
+    // MARK: - Selector
+
+    private var selectorLabel: some View {
+        HStack(spacing: 6) {
+            DirtyDot(audioUnit: audioUnit)
+            Text(title)
+                .font(.system(size: 12, weight: .semibold))
+                .lineLimit(1)
+                .truncationMode(.tail)
+            Spacer(minLength: 4)
+            Image(systemName: "chevron.down")
+                .font(.system(size: 10, weight: .bold))
+        }
+        .foregroundStyle(GearTheme.accent)
+        .padding(.horizontal, 10)
+        .frame(maxWidth: .infinity, minHeight: 40)
+        .background(GearTheme.panelFill)
+        .overlay(
+            RoundedRectangle(cornerRadius: 6)
+                .stroke(GearTheme.metalDark, lineWidth: 1)
+        )
+    }
+
+    // MARK: - Dropdown
+
+    private var presetList: some View {
+        List {
+            Section {
+                Button {
+                    pendingSave = true
+                    showPicker = false
+                } label: {
+                    Label("Save As…", systemImage: "square.and.arrow.down")
+                        .font(.system(size: 15, weight: .semibold))
+                        .foregroundStyle(GearTheme.accent)
                 }
-            )
-            .presentationDetents([.medium, .large])
+                .disabled(audioUnit == nil)
+                .listRowBackground(GearTheme.chassisBottom)
+            }
+
+            Section("Factory") {
+                ForEach(FactoryPresets.all, id: \.number) { preset in
+                    presetRow(name: preset.name, isCurrent: currentNumber == preset.number) {
+                        selectFactory(preset.number)
+                    }
+                }
+            }
+
+            Section {
+                if userPresets.isEmpty {
+                    Text("No user presets yet. Turn the knobs, then tap Save As…")
+                        .font(.system(size: 13))
+                        .foregroundStyle(GearTheme.textMuted)
+                        .listRowBackground(GearTheme.chassisBottom)
+                } else {
+                    ForEach(userPresets, id: \.number) { preset in
+                        presetRow(name: preset.name, isCurrent: currentNumber == preset.number) {
+                            select(preset)
+                        }
+                        .swipeActions(edge: .trailing, allowsFullSwipe: true) {
+                            Button("Delete", role: .destructive) {
+                                delete(preset)
+                            }
+                            Button("Rename") {
+                                pendingRename = preset
+                                showPicker = false
+                            }
+                            .tint(GearTheme.accent)
+                        }
+                    }
+                }
+            } header: {
+                Text("User")
+            } footer: {
+                Text("Swipe a user preset left to rename or delete it. Factory presets cannot be changed.")
+                    .font(.system(size: 11))
+            }
+        }
+        .listStyle(.insetGrouped)
+        .environment(\.defaultMinListRowHeight, 34)
+        .scrollContentBackground(.hidden)
+        .background(GearTheme.chassisBottom)
+        .tint(GearTheme.accent)
+    }
+
+    private func presetRow(name: String, isCurrent: Bool, action: @escaping () -> Void) -> some View {
+        Button(action: action) {
+            HStack {
+                Text(name)
+                    .font(.system(size: 15))
+                    .foregroundStyle(GearTheme.textLight)
+                Spacer(minLength: 8)
+                if isCurrent {
+                    Image(systemName: "checkmark")
+                        .font(.system(size: 12, weight: .bold))
+                        .foregroundStyle(GearTheme.accent)
+                }
+            }
+            .contentShape(Rectangle())
+        }
+        .listRowBackground(GearTheme.chassisBottom)
+    }
+
+    private func presentPendingSheet() {
+        if pendingSave {
+            pendingSave = false
+            saveName = suggestedSaveName
+            showSave = true
+        } else if let preset = pendingRename {
+            pendingRename = nil
+            renameText = preset.name
+            renameTarget = preset
         }
     }
+
+    // MARK: - Model
 
     private var suggestedSaveName: String {
         if let current = audioUnit?.currentPreset, current.number < 0 {
@@ -117,46 +214,12 @@ struct PresetBar: View {
         return ""
     }
 
-    private func stepButton(systemName: String, action: @escaping () -> Void) -> some View {
-        Button(action: action) {
-            Image(systemName: systemName)
-                .font(.system(size: 12, weight: .bold))
-                .foregroundStyle(GearTheme.textLight)
-                .frame(width: 44, height: 44)
-                .background(GearTheme.panelFill)
-                .overlay(
-                    RoundedRectangle(cornerRadius: 6)
-                        .stroke(GearTheme.metalDark, lineWidth: 1)
-                )
-        }
-        .buttonStyle(.plain)
-        .disabled(audioUnit == nil)
-        .accessibilityLabel(systemName.contains("left") ? "Previous preset" : "Next preset")
-    }
-
-    private func presetButton(_ title: String, action: @escaping () -> Void) -> some View {
-        Button(action: action) {
-            Text(title)
-                .font(.system(size: 10, weight: .bold))
-                .tracking(0.8)
-                .foregroundStyle(GearTheme.textLight)
-                .padding(.horizontal, 10)
-                .frame(minHeight: 44)
-                .background(GearTheme.panelFill)
-                .overlay(
-                    RoundedRectangle(cornerRadius: 6)
-                        .stroke(GearTheme.metalDark, lineWidth: 1)
-                )
-        }
-        .buttonStyle(.plain)
-        .disabled(audioUnit == nil)
-    }
-
     private func reload() {
         userPresets = (audioUnit?.userPresets ?? []).sorted {
             $0.name.localizedCaseInsensitiveCompare($1.name) == .orderedAscending
         }
         title = audioUnit?.currentPreset?.name ?? "Default"
+        currentNumber = audioUnit?.currentPreset?.number
     }
 
     private func selectFactory(_ number: Int) {
@@ -244,83 +307,6 @@ private struct PresetNameSheet: View {
             }
         }
         .presentationDetents([.height(220), .medium])
-        .tint(GearTheme.accent)
-    }
-}
-
-private struct PresetManagerSheet: View {
-    let userPresets: [AUAudioUnitPreset]
-    let onLoad: (AUAudioUnitPreset) -> Void
-    let onRename: (AUAudioUnitPreset, String) -> Void
-    let onDelete: (AUAudioUnitPreset) -> Void
-
-    @Environment(\.dismiss) private var dismiss
-    @State private var renameTarget: AUAudioUnitPreset?
-    @State private var renameText = ""
-
-    var body: some View {
-        NavigationStack {
-            List {
-                Section {
-                    if userPresets.isEmpty {
-                        Text("No user presets yet. Turn the knobs, then tap SAVE.")
-                            .font(.system(size: 13))
-                            .foregroundStyle(GearTheme.textMuted)
-                    } else {
-                        ForEach(userPresets, id: \.number) { preset in
-                            Button {
-                                onLoad(preset)
-                            } label: {
-                                Text(preset.name)
-                                    .foregroundStyle(GearTheme.textLight)
-                            }
-                            .swipeActions(edge: .trailing, allowsFullSwipe: false) {
-                                Button("Delete", role: .destructive) {
-                                    onDelete(preset)
-                                }
-                                Button("Rename") {
-                                    renameTarget = preset
-                                    renameText = preset.name
-                                }
-                                .tint(GearTheme.accent)
-                            }
-                        }
-                    }
-                } header: {
-                    Text("User presets")
-                } footer: {
-                    Text("Factory presets stay in the menu and cannot be changed. User presets are stored on this device. The standalone player and GarageBand each keep their own list until an App Group is enabled for both targets.")
-                }
-            }
-            .scrollContentBackground(.hidden)
-            .background(GearTheme.chassisBottom)
-            .navigationTitle("Presets")
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .cancellationAction) {
-                    Button("Done") { dismiss() }
-                        .foregroundStyle(GearTheme.accent)
-                }
-            }
-            .sheet(isPresented: Binding(
-                get: { renameTarget != nil },
-                set: { if !$0 { renameTarget = nil } }
-            )) {
-                PresetNameSheet(
-                    title: "Rename Preset",
-                    caption: "The new name replaces this user preset.",
-                    name: $renameText,
-                    confirmTitle: "Rename",
-                    onCancel: { renameTarget = nil },
-                    onConfirm: {
-                        if let preset = renameTarget {
-                            onRename(preset, renameText)
-                        }
-                        renameTarget = nil
-                    }
-                )
-            }
-        }
         .tint(GearTheme.accent)
     }
 }

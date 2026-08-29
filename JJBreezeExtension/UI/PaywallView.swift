@@ -12,7 +12,7 @@ struct PaywallView: View {
 
             Image(systemName: "waveform.circle.fill")
                 .font(.system(size: 56))
-                .foregroundStyle(Color(red: 0.88, green: 0.54, blue: 0.24))
+                .foregroundStyle(GearTheme.accent)
                 .padding(.bottom, 4)
 
             Text("jj-breeze")
@@ -52,7 +52,7 @@ struct PaywallView: View {
                         .frame(maxWidth: .infinity)
                 }
                 .buttonStyle(.borderedProminent)
-                .tint(Color(red: 0.88, green: 0.54, blue: 0.24))
+                .tint(GearTheme.accent)
                 .disabled(entitlement.isPurchasing || entitlement.unlockProduct == nil)
 
                 Button("Restore purchases") {
