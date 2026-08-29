@@ -2,6 +2,22 @@ import SwiftUI
 import AudioToolbox
 import UIKit
 
+/// Max knob diameter for the whole panel, computed once from the panel
+/// width (see JJBreezeMainView.knobDiameter(forPanelWidth:)) and read by
+/// every KnobView. Warmth lays its knobs out two per row rather than three,
+/// so its slots are wider; without a shared cap its knobs would draw
+/// visibly larger than Shift's and Vibrato's.
+private struct KnobDiameterKey: EnvironmentKey {
+    static let defaultValue: CGFloat = 96
+}
+
+extension EnvironmentValues {
+    var knobDiameter: CGFloat {
+        get { self[KnobDiameterKey.self] }
+        set { self[KnobDiameterKey.self] = newValue }
+    }
+}
+
 struct KnobView: View {
     @Bindable var param: ObservableAUParameter
     var caption: String
@@ -17,6 +33,7 @@ struct KnobView: View {
     @State private var showValueEditor = false
     @State private var typedValue = ""
     @State private var showHelp = false
+    @Environment(\.knobDiameter) private var knobDiameter
 
     private var range: SkewedRange {
         SkewedRange(min: param.min, max: param.max, skew: skew, symmetric: symmetric)
@@ -53,8 +70,9 @@ struct KnobView: View {
                 // asked for (or ignores preferredContentSize entirely)
                 // doesn't blow the knobs up to an absurd size — a real
                 // hardware knob doesn't grow just because its rack panel
-                // has more headroom.
-                .frame(minWidth: 44, maxWidth: 96, minHeight: 44, maxHeight: 96)
+                // has more headroom. The cap is shared panel-wide so a row
+                // of two knobs draws them at the same size as a row of three.
+                .frame(minWidth: 44, maxWidth: knobDiameter, minHeight: 44, maxHeight: knobDiameter)
                 .contentShape(Rectangle())
                 .gesture(dragGesture)
                 .simultaneousGesture(TapGesture(count: 2).onEnded(resetToDefault))

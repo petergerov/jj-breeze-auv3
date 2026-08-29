@@ -98,6 +98,7 @@ struct JJBreezeMainView: View {
                 .padding(.horizontal, sideInset)
 
             sectionsLayout(isWide: width >= wideThreshold)
+                .environment(\.knobDiameter, knobDiameter(forPanelWidth: width))
                 .padding(.horizontal, sideInset)
                 .padding(.top, 12)
                 .padding(.bottom, 8)
@@ -162,6 +163,20 @@ struct JJBreezeMainView: View {
     // MARK: - Sections (Shift / Vibrato / Warmth)
 
     private let columnSpacing: CGFloat = 20
+
+    // The knob size every section draws at: the width one knob gets in a
+    // three-across row. Warmth's rows hold two knobs, so its slots are half
+    // a column wide rather than a third — without this shared cap its knobs
+    // would fill those wider slots and read as a bigger pair of controls
+    // than the ones in Shift and Vibrato.
+    private func knobDiameter(forPanelWidth width: CGFloat) -> CGFloat {
+        let content = width - (earWidth + contentGutter) * 2
+        let columnWidth = width >= wideThreshold
+            ? (content - columnSpacing * 2) / 3
+            : content
+        let slot = (columnWidth - knobRowSpacing * 2) / 3
+        return min(96, max(44, slot))
+    }
 
     @ViewBuilder
     private func sectionsLayout(isWide: Bool) -> some View {
