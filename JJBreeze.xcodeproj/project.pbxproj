@@ -1,0 +1,838 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		049A836BC52C8DB53A48130C /* PurchaseProducts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53A9A110752E02A7D7BF2607 /* PurchaseProducts.swift */; };
+		05325034838ECE621353CC71 /* EntitlementService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EDB0DAB0E2988158B77E2C0 /* EntitlementService.swift */; };
+		10232BB3EF84E6F1F5248298 /* JJBreezeMainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A897FB2ECFB558E030AAC069 /* JJBreezeMainView.swift */; };
+		1158C54131B09A8C1F4B247C /* AudioUnitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 946ECA942F270301932389BB /* AudioUnitViewController.swift */; };
+		2294E80C833703653129697C /* AudioUnitHostModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45656FA18688DB43EA835191 /* AudioUnitHostModel.swift */; };
+		22B8FCA58313ACBF479DEC6F /* KnobView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4066A829C2CCFE6240EDD21B /* KnobView.swift */; };
+		25A3D82A44289E58344A5468 /* PresetBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C901A2B4BFE1C304676D87B /* PresetBar.swift */; };
+		2810E6EF9D447024F22DE543 /* JJBreezeApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C09ED05444D7AE59F7E96CB /* JJBreezeApp.swift */; };
+		2FA3AEC62A46DACA30A0A521 /* ObservableAUParameter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A953DF6F6158D606F4149A9A /* ObservableAUParameter.swift */; };
+		305E76B571CD98216A8FB2A6 /* CrossPlatform.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8223D075BB2D5B34F46874A2 /* CrossPlatform.swift */; };
+		34DBBFA1818B08A0F0769D56 /* jj-loop.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 586C4A7A12DD85EA12D6C15F /* jj-loop.mp3 */; };
+		3A8BCB34084E2F87DA04BD3C /* GearTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1784B45FC635D0F32462A79D /* GearTheme.swift */; };
+		3D372198A81C634491355667 /* PaywallView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A0ACB420958ACD682378701 /* PaywallView.swift */; };
+		4103E9655FD0E5B197ACE387 /* ExceptionCatcher.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EE4704D1E097ABA9198640F /* ExceptionCatcher.m */; };
+		451BAB7B7700407F4BB9C399 /* String+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24FF480129D499AE6023B1EC /* String+Utils.swift */; };
+		46B9EED5266F9A68A9266F81 /* JJBreezeExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 588ADE91EAA26EED1756FDC7 /* JJBreezeExtension.appex */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		479928A32083DC104BDFBBD8 /* Presets.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA3A0CEBC026D7B52D5B843F /* Presets.swift */; };
+		4843D73FD2A794535A3A4F5B /* UnlockStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47ED36506290733211AFE175 /* UnlockStore.swift */; };
+		4866C3D85822C0E962A5F20A /* JJBreezeMainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A897FB2ECFB558E030AAC069 /* JJBreezeMainView.swift */; };
+		4876C7F33CA1BC0FEA5A9DD5 /* LedToggle.swift in Sources */ = {isa = PBXBuildFile; fileRef = AADFF4467066854CF5F45A2F /* LedToggle.swift */; };
+		4EFA39C859122E1B2E7AD5FB /* UserPresetStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 321D7561D243BAA6E1501A3C /* UserPresetStore.swift */; };
+		5A9BC327EE68189A8E2D8FB0 /* Skew.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B17617621083B0BA4D8AE26 /* Skew.swift */; };
+		5C23139C4DE4DD88CBFE2134 /* AudioUnitViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1EDB6165CC7CAF75B7FCFB6 /* AudioUnitViewModel.swift */; };
+		73181DC8DD030B3C69C47979 /* ParameterSpecBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = A66071388B657E1299D72EF0 /* ParameterSpecBase.swift */; };
+		7965DF6E9862C7D3EF2863FB /* TypeAliases.swift in Sources */ = {isa = PBXBuildFile; fileRef = 918D7CB7528A7731B982A290 /* TypeAliases.swift */; };
+		7A178FA5DEB19815C3757C09 /* ParameterSpecBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = A66071388B657E1299D72EF0 /* ParameterSpecBase.swift */; };
+		849B60974E63655042B97A2A /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15B68F6CE2E7514230DCF1B5 /* ContentView.swift */; };
+		865DA5FE5E53AF42734C5AB1 /* LevelMeterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D65B5E99E873ECA533F0A2CE /* LevelMeterView.swift */; };
+		8A3B2E07912AE54F6BC57FB1 /* PaywallView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A0ACB420958ACD682378701 /* PaywallView.swift */; };
+		8D7B7D052ECDD936CE4F4EC2 /* SimplePlayEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91E7613A8B4F7469062B1726 /* SimplePlayEngine.swift */; };
+		91100E19AF06F0EC967DA375 /* Parameters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 128E35FC6D6CD7116A9B70FC /* Parameters.swift */; };
+		91816DB9CC5EA3C00C7EE3F0 /* LedToggle.swift in Sources */ = {isa = PBXBuildFile; fileRef = AADFF4467066854CF5F45A2F /* LedToggle.swift */; };
+		93E36A0D4464715F15A40E33 /* JJBreezeAudioUnit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DDAA7B8A767965D3000AED5 /* JJBreezeAudioUnit.swift */; };
+		A26E51CB26014CEBB154FFEA /* Skew.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B17617621083B0BA4D8AE26 /* Skew.swift */; };
+		A4449EBFD7FDF9D3B8A41E14 /* UserPresetStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 321D7561D243BAA6E1501A3C /* UserPresetStore.swift */; };
+		AC1243E59A30631D2602D488 /* ObservableAUParameter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A953DF6F6158D606F4149A9A /* ObservableAUParameter.swift */; };
+		B332E29006E90C2A008E35C0 /* KnobView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4066A829C2CCFE6240EDD21B /* KnobView.swift */; };
+		B5C7E64F36E6BF8EFEA95318 /* GearTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1784B45FC635D0F32462A79D /* GearTheme.swift */; };
+		BF12EFDA11A6D3D6B0E45C29 /* RackPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FCE1C61941CBE7229B8D31F /* RackPanel.swift */; };
+		C0C1FAED8270F6210683D9A3 /* JJBreezeAudioUnit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DDAA7B8A767965D3000AED5 /* JJBreezeAudioUnit.swift */; };
+		C47A3B53DDAA2C9C2CF03DF4 /* UnlockStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47ED36506290733211AFE175 /* UnlockStore.swift */; };
+		CBEA7E04A9BDA04890DA702F /* LevelMeterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D65B5E99E873ECA533F0A2CE /* LevelMeterView.swift */; };
+		D4CF2E26116AD90D37290C6D /* Presets.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA3A0CEBC026D7B52D5B843F /* Presets.swift */; };
+		D71E4CA426B982B48564B189 /* CrossPlatform.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8223D075BB2D5B34F46874A2 /* CrossPlatform.swift */; };
+		DB7003861515A3FBABDB85E1 /* PurchaseProducts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53A9A110752E02A7D7BF2607 /* PurchaseProducts.swift */; };
+		DF84A93B5A0F207872D83686 /* PresetBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C901A2B4BFE1C304676D87B /* PresetBar.swift */; };
+		E104C724B386660F43B9FEFD /* EntitlementService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EDB0DAB0E2988158B77E2C0 /* EntitlementService.swift */; };
+		E31C23FA145262EA59B74A10 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 76E145400C0136DBB4463897 /* Assets.xcassets */; };
+		E7588310DED18128C75D1514 /* RackPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FCE1C61941CBE7229B8D31F /* RackPanel.swift */; };
+		E8CE42EB3BD2AB7D49960A2C /* String+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24FF480129D499AE6023B1EC /* String+Utils.swift */; };
+		E935535C4451E249A58E8C4D /* StringHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B0591E55E3CCC71E8D84ABD /* StringHelpers.swift */; };
+		FA8FEFDBEDFF1F5F56E7937C /* Parameters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 128E35FC6D6CD7116A9B70FC /* Parameters.swift */; };
+		FCBFF3F0E7C7506EC2EB6CD8 /* ViewControllerRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A02B661F17625E9FBF5EE49 /* ViewControllerRepresentable.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		4AFD6FB51293BACF78EA6F86 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C6C899E43F6FE8C2683BD19A /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 71159F903BF5C1FDFD33638D;
+			remoteInfo = JJBreezeExtension;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		3C5BF8ED61E8974F232CC69F /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				46B9EED5266F9A68A9266F81 /* JJBreezeExtension.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		0380F94AA440C1EA12401EAB /* JJBreeze-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "JJBreeze-Bridging-Header.h"; sourceTree = "<group>"; };
+		0542CAB568DC0D73D67DB387 /* JJBreezeDSPKernel.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = JJBreezeDSPKernel.hpp; sourceTree = "<group>"; };
+		0A02B661F17625E9FBF5EE49 /* ViewControllerRepresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerRepresentable.swift; sourceTree = "<group>"; };
+		0B17617621083B0BA4D8AE26 /* Skew.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Skew.swift; sourceTree = "<group>"; };
+		0C09ED05444D7AE59F7E96CB /* JJBreezeApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JJBreezeApp.swift; sourceTree = "<group>"; };
+		0EE4704D1E097ABA9198640F /* ExceptionCatcher.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ExceptionCatcher.m; sourceTree = "<group>"; };
+		0F90F9CCBDE88CF72FCC7664 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		126093B7E0EA65A22EA140A4 /* JJBreeze.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = JJBreeze.entitlements; sourceTree = "<group>"; };
+		128E35FC6D6CD7116A9B70FC /* Parameters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Parameters.swift; sourceTree = "<group>"; };
+		15B68F6CE2E7514230DCF1B5 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		1784B45FC635D0F32462A79D /* GearTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GearTheme.swift; sourceTree = "<group>"; };
+		1EDB0DAB0E2988158B77E2C0 /* EntitlementService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntitlementService.swift; sourceTree = "<group>"; };
+		1FCE1C61941CBE7229B8D31F /* RackPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RackPanel.swift; sourceTree = "<group>"; };
+		24FF480129D499AE6023B1EC /* String+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Utils.swift"; sourceTree = "<group>"; };
+		321D7561D243BAA6E1501A3C /* UserPresetStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserPresetStore.swift; sourceTree = "<group>"; };
+		37E651BD22ADC6FCEB0283C4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		3B0591E55E3CCC71E8D84ABD /* StringHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringHelpers.swift; sourceTree = "<group>"; };
+		3C901A2B4BFE1C304676D87B /* PresetBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresetBar.swift; sourceTree = "<group>"; };
+		4066A829C2CCFE6240EDD21B /* KnobView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KnobView.swift; sourceTree = "<group>"; };
+		45656FA18688DB43EA835191 /* AudioUnitHostModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioUnitHostModel.swift; sourceTree = "<group>"; };
+		47ED36506290733211AFE175 /* UnlockStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnlockStore.swift; sourceTree = "<group>"; };
+		522A2BB71BB434B76A29EE59 /* PitchShifter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PitchShifter.h; sourceTree = "<group>"; };
+		53A9A110752E02A7D7BF2607 /* PurchaseProducts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PurchaseProducts.swift; sourceTree = "<group>"; };
+		586C4A7A12DD85EA12D6C15F /* jj-loop.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "jj-loop.mp3"; sourceTree = "<group>"; };
+		588ADE91EAA26EED1756FDC7 /* JJBreezeExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = JJBreezeExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		6404B139982ABE69DDAF5C9E /* JJBreezeAUProcessHelper.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = JJBreezeAUProcessHelper.hpp; sourceTree = "<group>"; };
+		6A0ACB420958ACD682378701 /* PaywallView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaywallView.swift; sourceTree = "<group>"; };
+		71303BD80C2F950040DBE6B2 /* JJBreezeParameterAddresses.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JJBreezeParameterAddresses.h; sourceTree = "<group>"; };
+		76E145400C0136DBB4463897 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		8223D075BB2D5B34F46874A2 /* CrossPlatform.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CrossPlatform.swift; sourceTree = "<group>"; };
+		8A76BA4C36E301B32430929F /* jj-breeze.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "jj-breeze.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		918D7CB7528A7731B982A290 /* TypeAliases.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypeAliases.swift; sourceTree = "<group>"; };
+		91E7613A8B4F7469062B1726 /* SimplePlayEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimplePlayEngine.swift; sourceTree = "<group>"; };
+		946409BBC5C86A2BC77DF935 /* Warmth.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Warmth.h; sourceTree = "<group>"; };
+		946ECA942F270301932389BB /* AudioUnitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioUnitViewController.swift; sourceTree = "<group>"; };
+		98AE28A3395799AC3A29091F /* ExceptionCatcher.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ExceptionCatcher.h; sourceTree = "<group>"; };
+		9DDAA7B8A767965D3000AED5 /* JJBreezeAudioUnit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JJBreezeAudioUnit.swift; sourceTree = "<group>"; };
+		9DFD5C153041DFE600654786 /* Products.storekit */ = {isa = PBXFileReference; lastKnownFileType = text; name = Products.storekit; path = Configuration/Products.storekit; sourceTree = "<group>"; };
+		A66071388B657E1299D72EF0 /* ParameterSpecBase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParameterSpecBase.swift; sourceTree = "<group>"; };
+		A897FB2ECFB558E030AAC069 /* JJBreezeMainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JJBreezeMainView.swift; sourceTree = "<group>"; };
+		A93437D1E47CAB8E9A53DB60 /* JJBreezeApp-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "JJBreezeApp-Bridging-Header.h"; sourceTree = "<group>"; };
+		A953DF6F6158D606F4149A9A /* ObservableAUParameter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservableAUParameter.swift; sourceTree = "<group>"; };
+		AADFF4467066854CF5F45A2F /* LedToggle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LedToggle.swift; sourceTree = "<group>"; };
+		AE33C83C4E4BAF31F474C5BF /* JJBreezeBufferedAudioBus.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = JJBreezeBufferedAudioBus.hpp; sourceTree = "<group>"; };
+		C1EDB6165CC7CAF75B7FCFB6 /* AudioUnitViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioUnitViewModel.swift; sourceTree = "<group>"; };
+		D37147F81EF3D39490932C14 /* DSPCommon.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DSPCommon.h; sourceTree = "<group>"; };
+		D65B5E99E873ECA533F0A2CE /* LevelMeterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelMeterView.swift; sourceTree = "<group>"; };
+		EB10926AB2297DEE56C600CC /* JJBreezeExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = JJBreezeExtension.entitlements; sourceTree = "<group>"; };
+		EE97EDC214E7780923FB2476 /* ModulatedDelay.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ModulatedDelay.h; sourceTree = "<group>"; };
+		FA3A0CEBC026D7B52D5B843F /* Presets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Presets.swift; sourceTree = "<group>"; };
+		FDC0FE49DF05A0A7DCB61848 /* Biquad.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Biquad.hpp; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXGroup section */
+		05C1496AD87351C7EB96C41F /* JJBreezeExtension */ = {
+			isa = PBXGroup;
+			children = (
+				7A487E5C1C2F0FB1C660BA3C /* Common */,
+				5AB90F9C6A59D791F9ED8F29 /* DSP */,
+				51E0D38E6F6C1681A53A0057 /* Parameters */,
+				26BA60A57F42EAE01C8F957A /* UI */,
+				0F90F9CCBDE88CF72FCC7664 /* Info.plist */,
+				EB10926AB2297DEE56C600CC /* JJBreezeExtension.entitlements */,
+			);
+			path = JJBreezeExtension;
+			sourceTree = "<group>";
+		};
+		0E04017995A5102D974011D7 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				98AE28A3395799AC3A29091F /* ExceptionCatcher.h */,
+				0EE4704D1E097ABA9198640F /* ExceptionCatcher.m */,
+				A93437D1E47CAB8E9A53DB60 /* JJBreezeApp-Bridging-Header.h */,
+				91E7613A8B4F7469062B1726 /* SimplePlayEngine.swift */,
+				3B0591E55E3CCC71E8D84ABD /* StringHelpers.swift */,
+				918D7CB7528A7731B982A290 /* TypeAliases.swift */,
+				0A02B661F17625E9FBF5EE49 /* ViewControllerRepresentable.swift */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
+		10FDDBB749A47BCE262BCC0B /* loop */ = {
+			isa = PBXGroup;
+			children = (
+				586C4A7A12DD85EA12D6C15F /* jj-loop.mp3 */,
+			);
+			path = loop;
+			sourceTree = "<group>";
+		};
+		26BA60A57F42EAE01C8F957A /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				1784B45FC635D0F32462A79D /* GearTheme.swift */,
+				A897FB2ECFB558E030AAC069 /* JJBreezeMainView.swift */,
+				4066A829C2CCFE6240EDD21B /* KnobView.swift */,
+				AADFF4467066854CF5F45A2F /* LedToggle.swift */,
+				D65B5E99E873ECA533F0A2CE /* LevelMeterView.swift */,
+				6A0ACB420958ACD682378701 /* PaywallView.swift */,
+				3C901A2B4BFE1C304676D87B /* PresetBar.swift */,
+				1FCE1C61941CBE7229B8D31F /* RackPanel.swift */,
+				0B17617621083B0BA4D8AE26 /* Skew.swift */,
+			);
+			path = UI;
+			sourceTree = "<group>";
+		};
+		30A64E374703D832D3048BCC /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				8A76BA4C36E301B32430929F /* jj-breeze.app */,
+				588ADE91EAA26EED1756FDC7 /* JJBreezeExtension.appex */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		391127A38256B355BE1E248F /* JJBreeze */ = {
+			isa = PBXGroup;
+			children = (
+				0E04017995A5102D974011D7 /* Common */,
+				AB91673492C054368F900BAA /* Model */,
+				76E145400C0136DBB4463897 /* Assets.xcassets */,
+				15B68F6CE2E7514230DCF1B5 /* ContentView.swift */,
+				37E651BD22ADC6FCEB0283C4 /* Info.plist */,
+				126093B7E0EA65A22EA140A4 /* JJBreeze.entitlements */,
+				0C09ED05444D7AE59F7E96CB /* JJBreezeApp.swift */,
+			);
+			path = JJBreeze;
+			sourceTree = "<group>";
+		};
+		51E0D38E6F6C1681A53A0057 /* Parameters */ = {
+			isa = PBXGroup;
+			children = (
+				1EDB0DAB0E2988158B77E2C0 /* EntitlementService.swift */,
+				71303BD80C2F950040DBE6B2 /* JJBreezeParameterAddresses.h */,
+				128E35FC6D6CD7116A9B70FC /* Parameters.swift */,
+				FA3A0CEBC026D7B52D5B843F /* Presets.swift */,
+				53A9A110752E02A7D7BF2607 /* PurchaseProducts.swift */,
+				47ED36506290733211AFE175 /* UnlockStore.swift */,
+				321D7561D243BAA6E1501A3C /* UserPresetStore.swift */,
+			);
+			path = Parameters;
+			sourceTree = "<group>";
+		};
+		56AE98FF7F2097B220A61BDA /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				946ECA942F270301932389BB /* AudioUnitViewController.swift */,
+				A953DF6F6158D606F4149A9A /* ObservableAUParameter.swift */,
+			);
+			path = UI;
+			sourceTree = "<group>";
+		};
+		5AB90F9C6A59D791F9ED8F29 /* DSP */ = {
+			isa = PBXGroup;
+			children = (
+				FDC0FE49DF05A0A7DCB61848 /* Biquad.hpp */,
+				D37147F81EF3D39490932C14 /* DSPCommon.h */,
+				0542CAB568DC0D73D67DB387 /* JJBreezeDSPKernel.hpp */,
+				EE97EDC214E7780923FB2476 /* ModulatedDelay.h */,
+				522A2BB71BB434B76A29EE59 /* PitchShifter.h */,
+				946409BBC5C86A2BC77DF935 /* Warmth.h */,
+			);
+			path = DSP;
+			sourceTree = "<group>";
+		};
+		7A487E5C1C2F0FB1C660BA3C /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				9C0C78467D3303C705C9599B /* Audio Unit */,
+				A0BB3DF58FA1CCA006CD3F91 /* DSP */,
+				7EC9D978853469D805D11A22 /* Parameters */,
+				56AE98FF7F2097B220A61BDA /* UI */,
+				F632CF3B226F0A5C70ABCC70 /* Utility */,
+				0380F94AA440C1EA12401EAB /* JJBreeze-Bridging-Header.h */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
+		7EC9D978853469D805D11A22 /* Parameters */ = {
+			isa = PBXGroup;
+			children = (
+				A66071388B657E1299D72EF0 /* ParameterSpecBase.swift */,
+			);
+			path = Parameters;
+			sourceTree = "<group>";
+		};
+		9C0C78467D3303C705C9599B /* Audio Unit */ = {
+			isa = PBXGroup;
+			children = (
+				9DDAA7B8A767965D3000AED5 /* JJBreezeAudioUnit.swift */,
+			);
+			path = "Audio Unit";
+			sourceTree = "<group>";
+		};
+		A0BB3DF58FA1CCA006CD3F91 /* DSP */ = {
+			isa = PBXGroup;
+			children = (
+				6404B139982ABE69DDAF5C9E /* JJBreezeAUProcessHelper.hpp */,
+				AE33C83C4E4BAF31F474C5BF /* JJBreezeBufferedAudioBus.hpp */,
+			);
+			path = DSP;
+			sourceTree = "<group>";
+		};
+		AB91673492C054368F900BAA /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				45656FA18688DB43EA835191 /* AudioUnitHostModel.swift */,
+				C1EDB6165CC7CAF75B7FCFB6 /* AudioUnitViewModel.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		D904FBAAF80FC497A0B56E99 = {
+			isa = PBXGroup;
+			children = (
+				9DFD5C153041DFE600654786 /* Products.storekit */,
+				391127A38256B355BE1E248F /* JJBreeze */,
+				05C1496AD87351C7EB96C41F /* JJBreezeExtension */,
+				10FDDBB749A47BCE262BCC0B /* loop */,
+				30A64E374703D832D3048BCC /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		F632CF3B226F0A5C70ABCC70 /* Utility */ = {
+			isa = PBXGroup;
+			children = (
+				8223D075BB2D5B34F46874A2 /* CrossPlatform.swift */,
+				24FF480129D499AE6023B1EC /* String+Utils.swift */,
+			);
+			path = Utility;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		71159F903BF5C1FDFD33638D /* JJBreezeExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 6AC0ADEA45593E8BAA5D01F6 /* Build configuration list for PBXNativeTarget "JJBreezeExtension" */;
+			buildPhases = (
+				654EF26A8BCA0323482DC9FE /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = JJBreezeExtension;
+			packageProductDependencies = (
+			);
+			productName = JJBreezeExtension;
+			productReference = 588ADE91EAA26EED1756FDC7 /* JJBreezeExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+		78D695595FED7FD2EFA26290 /* JJBreeze */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = FC8E2100A47EAD6E43B1C378 /* Build configuration list for PBXNativeTarget "JJBreeze" */;
+			buildPhases = (
+				7DD9975A510A1A8448F49B6C /* Sources */,
+				3EBC71EE38D276B81547E0B9 /* Resources */,
+				3C5BF8ED61E8974F232CC69F /* Embed Foundation Extensions */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				21F259B9533D9A8B6B1BFDFC /* PBXTargetDependency */,
+			);
+			name = JJBreeze;
+			packageProductDependencies = (
+			);
+			productName = JJBreeze;
+			productReference = 8A76BA4C36E301B32430929F /* jj-breeze.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		C6C899E43F6FE8C2683BD19A /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 1600;
+				TargetAttributes = {
+					71159F903BF5C1FDFD33638D = {
+						DevelopmentTeam = C9LBGZNZ6P;
+						ProvisioningStyle = Automatic;
+					};
+					78D695595FED7FD2EFA26290 = {
+						DevelopmentTeam = C9LBGZNZ6P;
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = B3EF4F9381C8F15FB43BA7F5 /* Build configuration list for PBXProject "JJBreeze" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				en,
+			);
+			mainGroup = D904FBAAF80FC497A0B56E99;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			productRefGroup = 30A64E374703D832D3048BCC /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				78D695595FED7FD2EFA26290 /* JJBreeze */,
+				71159F903BF5C1FDFD33638D /* JJBreezeExtension */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		3EBC71EE38D276B81547E0B9 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E31C23FA145262EA59B74A10 /* Assets.xcassets in Resources */,
+				34DBBFA1818B08A0F0769D56 /* jj-loop.mp3 in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		654EF26A8BCA0323482DC9FE /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1158C54131B09A8C1F4B247C /* AudioUnitViewController.swift in Sources */,
+				D71E4CA426B982B48564B189 /* CrossPlatform.swift in Sources */,
+				E104C724B386660F43B9FEFD /* EntitlementService.swift in Sources */,
+				3A8BCB34084E2F87DA04BD3C /* GearTheme.swift in Sources */,
+				93E36A0D4464715F15A40E33 /* JJBreezeAudioUnit.swift in Sources */,
+				4866C3D85822C0E962A5F20A /* JJBreezeMainView.swift in Sources */,
+				B332E29006E90C2A008E35C0 /* KnobView.swift in Sources */,
+				91816DB9CC5EA3C00C7EE3F0 /* LedToggle.swift in Sources */,
+				CBEA7E04A9BDA04890DA702F /* LevelMeterView.swift in Sources */,
+				2FA3AEC62A46DACA30A0A521 /* ObservableAUParameter.swift in Sources */,
+				73181DC8DD030B3C69C47979 /* ParameterSpecBase.swift in Sources */,
+				FA8FEFDBEDFF1F5F56E7937C /* Parameters.swift in Sources */,
+				8A3B2E07912AE54F6BC57FB1 /* PaywallView.swift in Sources */,
+				25A3D82A44289E58344A5468 /* PresetBar.swift in Sources */,
+				479928A32083DC104BDFBBD8 /* Presets.swift in Sources */,
+				049A836BC52C8DB53A48130C /* PurchaseProducts.swift in Sources */,
+				E7588310DED18128C75D1514 /* RackPanel.swift in Sources */,
+				A26E51CB26014CEBB154FFEA /* Skew.swift in Sources */,
+				451BAB7B7700407F4BB9C399 /* String+Utils.swift in Sources */,
+				C47A3B53DDAA2C9C2CF03DF4 /* UnlockStore.swift in Sources */,
+				A4449EBFD7FDF9D3B8A41E14 /* UserPresetStore.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7DD9975A510A1A8448F49B6C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2294E80C833703653129697C /* AudioUnitHostModel.swift in Sources */,
+				5C23139C4DE4DD88CBFE2134 /* AudioUnitViewModel.swift in Sources */,
+				849B60974E63655042B97A2A /* ContentView.swift in Sources */,
+				305E76B571CD98216A8FB2A6 /* CrossPlatform.swift in Sources */,
+				05325034838ECE621353CC71 /* EntitlementService.swift in Sources */,
+				4103E9655FD0E5B197ACE387 /* ExceptionCatcher.m in Sources */,
+				B5C7E64F36E6BF8EFEA95318 /* GearTheme.swift in Sources */,
+				2810E6EF9D447024F22DE543 /* JJBreezeApp.swift in Sources */,
+				C0C1FAED8270F6210683D9A3 /* JJBreezeAudioUnit.swift in Sources */,
+				10232BB3EF84E6F1F5248298 /* JJBreezeMainView.swift in Sources */,
+				22B8FCA58313ACBF479DEC6F /* KnobView.swift in Sources */,
+				4876C7F33CA1BC0FEA5A9DD5 /* LedToggle.swift in Sources */,
+				865DA5FE5E53AF42734C5AB1 /* LevelMeterView.swift in Sources */,
+				AC1243E59A30631D2602D488 /* ObservableAUParameter.swift in Sources */,
+				7A178FA5DEB19815C3757C09 /* ParameterSpecBase.swift in Sources */,
+				91100E19AF06F0EC967DA375 /* Parameters.swift in Sources */,
+				3D372198A81C634491355667 /* PaywallView.swift in Sources */,
+				DF84A93B5A0F207872D83686 /* PresetBar.swift in Sources */,
+				D4CF2E26116AD90D37290C6D /* Presets.swift in Sources */,
+				DB7003861515A3FBABDB85E1 /* PurchaseProducts.swift in Sources */,
+				BF12EFDA11A6D3D6B0E45C29 /* RackPanel.swift in Sources */,
+				8D7B7D052ECDD936CE4F4EC2 /* SimplePlayEngine.swift in Sources */,
+				5A9BC327EE68189A8E2D8FB0 /* Skew.swift in Sources */,
+				E8CE42EB3BD2AB7D49960A2C /* String+Utils.swift in Sources */,
+				E935535C4451E249A58E8C4D /* StringHelpers.swift in Sources */,
+				7965DF6E9862C7D3EF2863FB /* TypeAliases.swift in Sources */,
+				4843D73FD2A794535A3A4F5B /* UnlockStore.swift in Sources */,
+				4EFA39C859122E1B2E7AD5FB /* UserPresetStore.swift in Sources */,
+				FCBFF3F0E7C7506EC2EB6CD8 /* ViewControllerRepresentable.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		21F259B9533D9A8B6B1BFDFC /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 71159F903BF5C1FDFD33638D /* JJBreezeExtension */;
+			targetProxy = 4AFD6FB51293BACF78EA6F86 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		32E7668080CA86C2DB1A0255 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_STYLE = Automatic;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 2;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = C9LBGZNZ6P;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MARKETING_VERSION = 0.1.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 6.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		3F85CB4B215CEF9D789B7D61 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = JJBreezeExtension/JJBreezeExtension.entitlements;
+				CURRENT_PROJECT_VERSION = 4;
+				GENERATE_INFOPLIST_FILE = NO;
+				HEADER_SEARCH_PATHS = (
+					"$(SRCROOT)/JJBreezeExtension/DSP",
+					"$(SRCROOT)/JJBreezeExtension/Parameters",
+					"$(SRCROOT)/JJBreezeExtension/Common/DSP",
+				);
+				INFOPLIST_FILE = JJBreezeExtension/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0.0;
+				OTHER_LDFLAGS = (
+					"-framework",
+					AudioToolbox,
+					"-framework",
+					AVFoundation,
+					"-framework",
+					CoreAudioKit,
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.gerov.jjbreeze.AUv3;
+				PRODUCT_MODULE_NAME = JJBreezeExtension;
+				PRODUCT_NAME = JJBreezeExtension;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "JJBreezeExtension/Common/JJBreeze-Bridging-Header.h";
+				SWIFT_OBJC_INTEROP_MODE = objcxx;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				USER_HEADER_SEARCH_PATHS = (
+					"$(SRCROOT)/JJBreezeExtension/DSP",
+					"$(SRCROOT)/JJBreezeExtension/Parameters",
+					"$(SRCROOT)/JJBreezeExtension/Common/DSP",
+				);
+			};
+			name = Debug;
+		};
+		5C91E36D08563C3526B0E077 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = JJBreeze/JJBreeze.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CURRENT_PROJECT_VERSION = 4;
+				GENERATE_INFOPLIST_FILE = NO;
+				HEADER_SEARCH_PATHS = (
+					"$(SRCROOT)/JJBreezeExtension/DSP",
+					"$(SRCROOT)/JJBreezeExtension/Parameters",
+					"$(SRCROOT)/JJBreezeExtension/Common/DSP",
+				);
+				INFOPLIST_FILE = JJBreeze/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0.0;
+				OTHER_LDFLAGS = (
+					"-framework",
+					AudioToolbox,
+					"-framework",
+					AVFoundation,
+					"-framework",
+					CoreAudioKit,
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.gerov.jjbreeze;
+				PRODUCT_NAME = "jj-breeze";
+				SDKROOT = iphoneos;
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_OBJC_BRIDGING_HEADER = "JJBreeze/Common/JJBreezeApp-Bridging-Header.h";
+				SWIFT_OBJC_INTEROP_MODE = objcxx;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				USER_HEADER_SEARCH_PATHS = (
+					"$(SRCROOT)/JJBreezeExtension/DSP",
+					"$(SRCROOT)/JJBreezeExtension/Parameters",
+					"$(SRCROOT)/JJBreezeExtension/Common/DSP",
+				);
+			};
+			name = Release;
+		};
+		B3B88B55C33DDB8B877F492C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = JJBreezeExtension/JJBreezeExtension.entitlements;
+				CURRENT_PROJECT_VERSION = 4;
+				GENERATE_INFOPLIST_FILE = NO;
+				HEADER_SEARCH_PATHS = (
+					"$(SRCROOT)/JJBreezeExtension/DSP",
+					"$(SRCROOT)/JJBreezeExtension/Parameters",
+					"$(SRCROOT)/JJBreezeExtension/Common/DSP",
+				);
+				INFOPLIST_FILE = JJBreezeExtension/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0.0;
+				OTHER_LDFLAGS = (
+					"-framework",
+					AudioToolbox,
+					"-framework",
+					AVFoundation,
+					"-framework",
+					CoreAudioKit,
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.gerov.jjbreeze.AUv3;
+				PRODUCT_MODULE_NAME = JJBreezeExtension;
+				PRODUCT_NAME = JJBreezeExtension;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "JJBreezeExtension/Common/JJBreeze-Bridging-Header.h";
+				SWIFT_OBJC_INTEROP_MODE = objcxx;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				USER_HEADER_SEARCH_PATHS = (
+					"$(SRCROOT)/JJBreezeExtension/DSP",
+					"$(SRCROOT)/JJBreezeExtension/Parameters",
+					"$(SRCROOT)/JJBreezeExtension/Common/DSP",
+				);
+			};
+			name = Release;
+		};
+		BCA8B5B73E2931A84E32FBEF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = JJBreeze/JJBreeze.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CURRENT_PROJECT_VERSION = 4;
+				GENERATE_INFOPLIST_FILE = NO;
+				HEADER_SEARCH_PATHS = (
+					"$(SRCROOT)/JJBreezeExtension/DSP",
+					"$(SRCROOT)/JJBreezeExtension/Parameters",
+					"$(SRCROOT)/JJBreezeExtension/Common/DSP",
+				);
+				INFOPLIST_FILE = JJBreeze/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0.0;
+				OTHER_LDFLAGS = (
+					"-framework",
+					AudioToolbox,
+					"-framework",
+					AVFoundation,
+					"-framework",
+					CoreAudioKit,
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.gerov.jjbreeze;
+				PRODUCT_NAME = "jj-breeze";
+				SDKROOT = iphoneos;
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_OBJC_BRIDGING_HEADER = "JJBreeze/Common/JJBreezeApp-Bridging-Header.h";
+				SWIFT_OBJC_INTEROP_MODE = objcxx;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				USER_HEADER_SEARCH_PATHS = (
+					"$(SRCROOT)/JJBreezeExtension/DSP",
+					"$(SRCROOT)/JJBreezeExtension/Parameters",
+					"$(SRCROOT)/JJBreezeExtension/Common/DSP",
+				);
+			};
+			name = Debug;
+		};
+		D06FA4C761187FC0F5639EC6 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_STYLE = Automatic;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 2;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = C9LBGZNZ6P;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"DEBUG=1",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MARKETING_VERSION = 0.1.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 6.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		6AC0ADEA45593E8BAA5D01F6 /* Build configuration list for PBXNativeTarget "JJBreezeExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3F85CB4B215CEF9D789B7D61 /* Debug */,
+				B3B88B55C33DDB8B877F492C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		B3EF4F9381C8F15FB43BA7F5 /* Build configuration list for PBXProject "JJBreeze" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D06FA4C761187FC0F5639EC6 /* Debug */,
+				32E7668080CA86C2DB1A0255 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		FC8E2100A47EAD6E43B1C378 /* Build configuration list for PBXNativeTarget "JJBreeze" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				BCA8B5B73E2931A84E32FBEF /* Debug */,
+				5C91E36D08563C3526B0E077 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = C6C899E43F6FE8C2683BD19A /* Project object */;
+}

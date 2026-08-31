@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024">
+<defs>
+  <linearGradient id="plate" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0" stop-color="#68775a"/><stop offset="1" stop-color="#2b3525"/></linearGradient>
+  <radialGradient id="vig" cx="50%" cy="36%" r="78%">
+    <stop offset="45%" stop-color="#000" stop-opacity="0"/><stop offset="100%" stop-color="#000" stop-opacity="0.55"/></radialGradient>
+  <filter id="hammer" x="0" y="0" width="100%" height="100%">
+    <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="3" seed="11" result="n"/>
+    <feColorMatrix in="n" type="saturate" values="0" result="g"/>
+    <feComponentTransfer in="g"><feFuncA type="linear" slope="0.5"/></feComponentTransfer></filter>
+  <radialGradient id="cap" cx="34%" cy="30%" r="78%">
+    <stop offset="0" stop-color="#4a4c48"/><stop offset="1" stop-color="#0b0c0b"/></radialGradient>
+  <linearGradient id="collar" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0" stop-color="#e4e6df"/><stop offset="0.45" stop-color="#9b9f96"/>
+    <stop offset="0.75" stop-color="#30332e"/><stop offset="1" stop-color="#9b9f96"/></linearGradient>
+  <linearGradient id="glass" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0" stop-color="#000" stop-opacity="0.7"/><stop offset="0.55" stop-color="#000" stop-opacity="0.08"/>
+    <stop offset="1" stop-color="#fff" stop-opacity="0.07"/></linearGradient>
+  <radialGradient id="gloss" cx="50%" cy="50%" r="50%">
+    <stop offset="0" stop-color="#fff" stop-opacity="0.30"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></radialGradient>
+</defs>
+<rect width="1024" height="1024" fill="url(#plate)"/>
+<rect width="1024" height="1024" filter="url(#hammer)" opacity="0.30" style="mix-blend-mode:overlay"/>
+<rect width="1024" height="1024" fill="url(#vig)"/>
+<g transform="translate(74,74)"><circle cy="5.1" r="17" fill="#000" opacity="0.4"/>
+  <circle r="17" fill="url(#collar)"/><circle r="17" fill="none" stroke="#000" stroke-opacity="0.5" stroke-width="2"/>
+  <rect x="-13.6" y="-2.7" width="27.2" height="5.4" rx="2.7" fill="#000" fill-opacity="0.62" transform="rotate(-25)"/></g>
+<g transform="translate(950,74)"><circle cy="5.1" r="17" fill="#000" opacity="0.4"/>
+  <circle r="17" fill="url(#collar)"/><circle r="17" fill="none" stroke="#000" stroke-opacity="0.5" stroke-width="2"/>
+  <rect x="-13.6" y="-2.7" width="27.2" height="5.4" rx="2.7" fill="#000" fill-opacity="0.62" transform="rotate(40)"/></g>
+<g transform="translate(74,950)"><circle cy="5.1" r="17" fill="#000" opacity="0.4"/>
+  <circle r="17" fill="url(#collar)"/><circle r="17" fill="none" stroke="#000" stroke-opacity="0.5" stroke-width="2"/>
+  <rect x="-13.6" y="-2.7" width="27.2" height="5.4" rx="2.7" fill="#000" fill-opacity="0.62" transform="rotate(15)"/></g>
+<g transform="translate(950,950)"><circle cy="5.1" r="17" fill="#000" opacity="0.4"/>
+  <circle r="17" fill="url(#collar)"/><circle r="17" fill="none" stroke="#000" stroke-opacity="0.5" stroke-width="2"/>
+  <rect x="-13.6" y="-2.7" width="27.2" height="5.4" rx="2.7" fill="#000" fill-opacity="0.62" transform="rotate(-50)"/></g>
+<rect x="132" y="280" width="760" height="336" rx="40.3" fill="#120d08"/>
+<rect x="182.4" y="330.4" width="71.8" height="96.2" rx="18.7" fill="#74e05c"/>
+<rect x="266.3" y="330.4" width="71.8" height="96.2" rx="18.7" fill="#74e05c"/>
+<rect x="350.2" y="330.4" width="71.8" height="96.2" rx="18.7" fill="#74e05c"/>
+<rect x="434.2" y="330.4" width="71.8" height="96.2" rx="18.7" fill="#74e05c"/>
+<rect x="518.1" y="330.4" width="71.8" height="96.2" rx="18.7" fill="#ffc03a"/>
+<rect x="602.0" y="330.4" width="71.8" height="96.2" rx="18.7" fill="#ffc03a"/>
+<rect x="685.9" y="330.4" width="71.8" height="96.2" rx="18.7" fill="#22301e"/>
+<rect x="769.8" y="330.4" width="71.8" height="96.2" rx="18.7" fill="#22301e"/>
+<rect x="182.4" y="469.4" width="71.8" height="96.2" rx="18.7" fill="#74e05c"/>
+<rect x="266.3" y="469.4" width="71.8" height="96.2" rx="18.7" fill="#74e05c"/>
+<rect x="350.2" y="469.4" width="71.8" height="96.2" rx="18.7" fill="#74e05c"/>
+<rect x="434.2" y="469.4" width="71.8" height="96.2" rx="18.7" fill="#74e05c"/>
+<rect x="518.1" y="469.4" width="71.8" height="96.2" rx="18.7" fill="#22301e"/>
+<rect x="602.0" y="469.4" width="71.8" height="96.2" rx="18.7" fill="#22301e"/>
+<rect x="685.9" y="469.4" width="71.8" height="96.2" rx="18.7" fill="#22301e"/>
+<rect x="769.8" y="469.4" width="71.8" height="96.2" rx="18.7" fill="#22301e"/>
+<rect x="132" y="280" width="760" height="336" rx="40.3" fill="url(#glass)"/>
+<rect x="132" y="280" width="760" height="336" rx="40.3" fill="none" stroke="#9b9f96" stroke-opacity="0.55" stroke-width="4"/>
+<text x="512" y="859" text-anchor="middle" font-family="Georgia, serif" font-weight="bold" font-style="italic" font-size="138" fill="#000" opacity="0.45">J.J.Breeze</text><text x="512" y="852" text-anchor="middle" font-family="Georgia, serif" font-weight="bold" font-style="italic" font-size="138" fill="#f1e9d4">J.J.Breeze</text>
+</svg>

@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024">
+<defs>
+  <linearGradient id="plate" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0" stop-color="#68775a"/><stop offset="1" stop-color="#2b3525"/></linearGradient>
+  <radialGradient id="vig" cx="50%" cy="36%" r="78%">
+    <stop offset="45%" stop-color="#000" stop-opacity="0"/><stop offset="100%" stop-color="#000" stop-opacity="0.55"/></radialGradient>
+  <filter id="hammer" x="0" y="0" width="100%" height="100%">
+    <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="3" seed="11" result="n"/>
+    <feColorMatrix in="n" type="saturate" values="0" result="g"/>
+    <feComponentTransfer in="g"><feFuncA type="linear" slope="0.5"/></feComponentTransfer></filter>
+  <radialGradient id="cap" cx="34%" cy="30%" r="78%">
+    <stop offset="0" stop-color="#4a4c48"/><stop offset="1" stop-color="#0b0c0b"/></radialGradient>
+  <linearGradient id="collar" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0" stop-color="#e4e6df"/><stop offset="0.45" stop-color="#9b9f96"/>
+    <stop offset="0.75" stop-color="#30332e"/><stop offset="1" stop-color="#9b9f96"/></linearGradient>
+  <linearGradient id="glass" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0" stop-color="#000" stop-opacity="0.7"/><stop offset="0.55" stop-color="#000" stop-opacity="0.08"/>
+    <stop offset="1" stop-color="#fff" stop-opacity="0.07"/></linearGradient>
+  <radialGradient id="gloss" cx="50%" cy="50%" r="50%">
+    <stop offset="0" stop-color="#fff" stop-opacity="0.30"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></radialGradient>
+</defs>
+<rect width="1024" height="1024" fill="url(#plate)"/>
+<rect width="1024" height="1024" filter="url(#hammer)" opacity="0.30" style="mix-blend-mode:overlay"/>
+<rect width="1024" height="1024" fill="url(#vig)"/>
+<g transform="translate(74,74)"><circle cy="5.1" r="17" fill="#000" opacity="0.4"/>
+  <circle r="17" fill="url(#collar)"/><circle r="17" fill="none" stroke="#000" stroke-opacity="0.5" stroke-width="2"/>
+  <rect x="-13.6" y="-2.7" width="27.2" height="5.4" rx="2.7" fill="#000" fill-opacity="0.62" transform="rotate(-25)"/></g>
+<g transform="translate(950,74)"><circle cy="5.1" r="17" fill="#000" opacity="0.4"/>
+  <circle r="17" fill="url(#collar)"/><circle r="17" fill="none" stroke="#000" stroke-opacity="0.5" stroke-width="2"/>
+  <rect x="-13.6" y="-2.7" width="27.2" height="5.4" rx="2.7" fill="#000" fill-opacity="0.62" transform="rotate(40)"/></g>
+<g transform="translate(74,950)"><circle cy="5.1" r="17" fill="#000" opacity="0.4"/>
+  <circle r="17" fill="url(#collar)"/><circle r="17" fill="none" stroke="#000" stroke-opacity="0.5" stroke-width="2"/>
+  <rect x="-13.6" y="-2.7" width="27.2" height="5.4" rx="2.7" fill="#000" fill-opacity="0.62" transform="rotate(15)"/></g>
+<g transform="translate(950,950)"><circle cy="5.1" r="17" fill="#000" opacity="0.4"/>
+  <circle r="17" fill="url(#collar)"/><circle r="17" fill="none" stroke="#000" stroke-opacity="0.5" stroke-width="2"/>
+  <rect x="-13.6" y="-2.7" width="27.2" height="5.4" rx="2.7" fill="#000" fill-opacity="0.62" transform="rotate(-50)"/></g>
+<line x1="344.6" y1="582.4" x2="302.7" y2="624.3" stroke="#f1e9d4" stroke-opacity="0.92" stroke-width="8.9" stroke-linecap="round"/>
+<line x1="267.1" y1="494.6" x2="230.5" y2="506.5" stroke="#f1e9d4" stroke-opacity="0.55" stroke-width="5.6" stroke-linecap="round"/>
+<line x1="257.7" y1="374.7" x2="219.6" y2="368.7" stroke="#f1e9d4" stroke-opacity="0.55" stroke-width="5.6" stroke-linecap="round"/>
+<line x1="303.7" y1="263.6" x2="272.5" y2="241.0" stroke="#f1e9d4" stroke-opacity="0.55" stroke-width="5.6" stroke-linecap="round"/>
+<line x1="395.1" y1="185.5" x2="377.6" y2="151.3" stroke="#f1e9d4" stroke-opacity="0.55" stroke-width="5.6" stroke-linecap="round"/>
+<line x1="512.0" y1="178.2" x2="512.0" y2="119.0" stroke="#f1e9d4" stroke-opacity="0.92" stroke-width="8.9" stroke-linecap="round"/>
+<line x1="628.9" y1="185.5" x2="646.4" y2="151.3" stroke="#f1e9d4" stroke-opacity="0.55" stroke-width="5.6" stroke-linecap="round"/>
+<line x1="720.3" y1="263.6" x2="751.5" y2="241.0" stroke="#f1e9d4" stroke-opacity="0.55" stroke-width="5.6" stroke-linecap="round"/>
+<line x1="766.3" y1="374.7" x2="804.4" y2="368.7" stroke="#f1e9d4" stroke-opacity="0.55" stroke-width="5.6" stroke-linecap="round"/>
+<line x1="756.9" y1="494.6" x2="793.5" y2="506.5" stroke="#f1e9d4" stroke-opacity="0.55" stroke-width="5.6" stroke-linecap="round"/>
+<line x1="679.4" y1="582.4" x2="721.3" y2="624.3" stroke="#f1e9d4" stroke-opacity="0.92" stroke-width="8.9" stroke-linecap="round"/>
+<path d="M 323.6 603.4 A 266.4 266.4 0 0 1 370.8 189.1" fill="none" stroke="#e8a33d" stroke-opacity="0.22" stroke-width="23.1" stroke-linecap="round"/>
+<path d="M 323.6 603.4 A 266.4 266.4 0 0 1 370.8 189.1" fill="none" stroke="#e8a33d" stroke-width="10.1" stroke-linecap="round"/>
+<circle cx="512" cy="425.4" r="219.0" fill="#000" opacity="0.45"/>
+<circle cx="512" cy="415" r="219.0" fill="url(#collar)"/>
+<circle cx="512" cy="415" r="188.4" fill="url(#cap)" stroke="#000" stroke-opacity="0.7" stroke-width="4.7"/>
+<ellipse cx="481.9" cy="328.3" rx="98.0" ry="56.5" fill="url(#gloss)"/>
+<rect x="504.6" y="237.9" width="14.8" height="177.1" rx="7.4" fill="#f1e9d4" transform="rotate(-32 512 415)"/>
+<text x="512" y="887" text-anchor="middle" font-family="Georgia, serif" font-weight="bold" font-style="italic" font-size="140" fill="#000" opacity="0.45">J.J.Breeze</text><text x="512" y="880" text-anchor="middle" font-family="Georgia, serif" font-weight="bold" font-style="italic" font-size="140" fill="#f1e9d4">J.J.Breeze</text>
+</svg>

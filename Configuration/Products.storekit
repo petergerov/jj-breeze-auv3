@@ -1,0 +1,41 @@
+{
+  "identifier" : "D4E8F2A1",
+  "nonRenewingSubscriptions" : [
+
+  ],
+  "products" : [
+    {
+      "displayPrice" : "2.99",
+      "familyShareable" : true,
+      "internalID" : "6670000002",
+      "localizations" : [
+        {
+          "description" : "Permanent unlock for jj-breeze on all your devices. Seven days free from first launch.",
+          "displayName" : "jj-breeze Unlock",
+          "locale" : "en_US"
+        }
+      ],
+      "productID" : "com.gerov.jjbreeze.unlock",
+      "referenceName" : "jj-breeze Unlock",
+      "type" : "NonConsumable"
+    }
+  ],
+  "settings" : {
+    "_failTransactionsEnabled" : false,
+    "_storeKitErrors" : [
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "Load Products"
+      }
+    ],
+    "_storeKitErrorsEnabled" : false
+  },
+  "subscriptionGroups" : [
+
+  ],
+  "version" : {
+    "major" : 4,
+    "minor" : 0
+  }
+}

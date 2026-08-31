@@ -1,0 +1,113 @@
+name: JJBreeze
+options:
+  bundleIdPrefix: com.gerov
+  deploymentTarget:
+    iOS: "17.0"
+  createIntermediateGroups: true
+  groupSortPosition: top
+  xcodeVersion: "16.0"
+
+settings:
+  base:
+    SWIFT_VERSION: "6.0"
+    IPHONEOS_DEPLOYMENT_TARGET: "17.0"
+    TARGETED_DEVICE_FAMILY: "1,2"
+    CURRENT_PROJECT_VERSION: "4"
+    MARKETING_VERSION: "1.0.0"
+    DEVELOPMENT_TEAM: C9LBGZNZ6P
+    CODE_SIGN_STYLE: Automatic
+
+targets:
+  JJBreeze:
+    type: application
+    platform: iOS
+    sources:
+      - path: JJBreeze
+      # Same DSP/AU/UI as the appex so the companion app can host in-process
+      # without waiting for iOS to register the extension (fails often on iPad).
+      - path: JJBreezeExtension/DSP
+      - path: JJBreezeExtension/Parameters
+      - path: JJBreezeExtension/UI
+      - path: JJBreezeExtension/Common/Audio Unit
+      - path: JJBreezeExtension/Common/DSP
+      - path: JJBreezeExtension/Common/Parameters
+      - path: JJBreezeExtension/Common/Utility
+      - path: JJBreezeExtension/Common/UI
+        excludes:
+          - AudioUnitViewController.swift
+      - path: loop/jj-loop.mp3
+        type: file
+        buildPhase: resources
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.gerov.jjbreeze
+        PRODUCT_NAME: jj-breeze
+        INFOPLIST_FILE: JJBreeze/Info.plist
+        GENERATE_INFOPLIST_FILE: NO
+        CODE_SIGN_ENTITLEMENTS: JJBreeze/JJBreeze.entitlements
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+        ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME: AccentColor
+        TARGETED_DEVICE_FAMILY: "1,2"
+        SUPPORTS_MACCATALYST: NO
+        SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD: NO
+        LD_RUNPATH_SEARCH_PATHS: "$(inherited) @executable_path/Frameworks"
+        ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES: YES
+        SWIFT_OBJC_BRIDGING_HEADER: JJBreeze/Common/JJBreezeApp-Bridging-Header.h
+        CLANG_ENABLE_MODULES: YES
+        SWIFT_OBJC_INTEROP_MODE: objcxx
+        CLANG_CXX_LANGUAGE_STANDARD: gnu++20
+        CLANG_CXX_LIBRARY: libc++
+        HEADER_SEARCH_PATHS: "$(SRCROOT)/JJBreezeExtension/DSP $(SRCROOT)/JJBreezeExtension/Parameters $(SRCROOT)/JJBreezeExtension/Common/DSP"
+        USER_HEADER_SEARCH_PATHS: "$(SRCROOT)/JJBreezeExtension/DSP $(SRCROOT)/JJBreezeExtension/Parameters $(SRCROOT)/JJBreezeExtension/Common/DSP"
+        OTHER_LDFLAGS: "-framework AudioToolbox -framework AVFoundation -framework CoreAudioKit"
+    dependencies:
+      - target: JJBreezeExtension
+        embed: true
+        codeSign: true
+    scheme:
+      gatherCoverageData: false
+
+  JJBreezeExtension:
+    type: app-extension
+    platform: iOS
+    sources:
+      - path: JJBreezeExtension
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.gerov.jjbreeze.AUv3
+        PRODUCT_NAME: JJBreezeExtension
+        PRODUCT_MODULE_NAME: JJBreezeExtension
+        INFOPLIST_FILE: JJBreezeExtension/Info.plist
+        GENERATE_INFOPLIST_FILE: NO
+        CODE_SIGN_ENTITLEMENTS: JJBreezeExtension/JJBreezeExtension.entitlements
+        SWIFT_OBJC_BRIDGING_HEADER: JJBreezeExtension/Common/JJBreeze-Bridging-Header.h
+        SWIFT_OBJC_INTEROP_MODE: objcxx
+        CLANG_CXX_LANGUAGE_STANDARD: gnu++20
+        CLANG_CXX_LIBRARY: libc++
+        CLANG_ENABLE_MODULES: YES
+        APPLICATION_EXTENSION_API_ONLY: YES
+        SKIP_INSTALL: YES
+        TARGETED_DEVICE_FAMILY: "1,2"
+        LD_RUNPATH_SEARCH_PATHS: "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks"
+        HEADER_SEARCH_PATHS: "$(SRCROOT)/JJBreezeExtension/DSP $(SRCROOT)/JJBreezeExtension/Parameters $(SRCROOT)/JJBreezeExtension/Common/DSP"
+        USER_HEADER_SEARCH_PATHS: "$(SRCROOT)/JJBreezeExtension/DSP $(SRCROOT)/JJBreezeExtension/Parameters $(SRCROOT)/JJBreezeExtension/Common/DSP"
+        OTHER_LDFLAGS: "-framework AudioToolbox -framework AVFoundation -framework CoreAudioKit"
+
+schemes:
+  jj-breeze:
+    build:
+      targets:
+        JJBreeze: all
+        # Do not archive the appex as its own product — that becomes a
+        # generic archive and App Store Connect has no record for it.
+        JJBreezeExtension:
+          - run
+          - test
+          - profile
+          - analyze
+    run:
+      config: Debug
+      askForAppToLaunch: false
+      storeKitConfiguration: Configuration/Products.storekit
+    archive:
+      config: Release
