@@ -10,3 +10,7 @@ DerivedData/
 *.ipa
 *.dSYM.zip
 *.dSYM
+
+# App Store Connect / StoreKit private keys — never commit
+api/
+*.p8
