@@ -2,6 +2,7 @@
 
 Stereo micro-pitch widener, vibrato, and warmth — an Audio Unit (AUv3) for iPhone and iPad. Companion to the desktop [jj-breeze](https://github.com/pgerov/jj-breeze) AU/VST3.
 
+**App Store:** [J.J.Breeze AUv3 Plugin](https://apps.apple.com/app/j-j-breeze-auv3-plugin/id6805087374)  
 **Website:** [petergerov.github.io/jj-breeze-auv3](https://petergerov.github.io/jj-breeze-auv3)  
 **Support:** [GitHub Issues](https://github.com/petergerov/jj-breeze-auv3/issues)  
 **Sister app:** [Gig Songbook](https://gigsongbook.com)
@@ -17,7 +18,7 @@ Stereo micro-pitch widener, vibrato, and warmth — an Audio Unit (AUv3) for iPh
 
 ## Pricing
 
-- App Store download is **free**
+- [App Store](https://apps.apple.com/app/j-j-breeze-auv3-plugin/id6805087374) download is **free**
 - **7-day trial** from first launch (no signup, no $0 IAP)
 - Then one-time unlock: `com.gerov.jjbreeze.unlock` ($2.99 US)
 

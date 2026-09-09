@@ -241,7 +241,7 @@ happily report a 404's error id as if it were a resource.
 
 | | |
 |---|---|
-| app | `6805087374` |
+| app | `6805087374` — live at [apps.apple.com/app/…/id6805087374](https://apps.apple.com/app/j-j-breeze-auv3-plugin/id6805087374) |
 | IAP | `6806311205` |
 | IAP version 1 | `8cb5a168-020e-47ea-b50e-c73e8384f4b3` |
 | version 1.0.0 | `d1dd0c03-9daf-4784-8312-c147bd036064` |
