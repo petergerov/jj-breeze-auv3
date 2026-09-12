@@ -41,7 +41,7 @@ enum FactoryPresets {
                       vibratoRate: 1.2, vibratoDepth: 2.5, vibratoMix: 10,
                       warmthTone: 3500, warmthDrive: 18, warmthBody: 0, warmthMix: 15,
                       shiftOn: true, vibratoOn: true, warmthOn: true),
-        FactoryPreset(number: 2, name: "JJ Cajun Moon",
+        FactoryPreset(number: 2, name: "JJ Moon",
                       pitchL: 300, pitchR: 300, delayL: 27, delayR: 37, focus: 20, mix: 13,
                       vibratoRate: 1.2, vibratoDepth: 3.0, vibratoMix: 15,
                       warmthTone: 3500, warmthDrive: 20, warmthBody: 0, warmthMix: 20,

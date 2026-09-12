@@ -28,7 +28,7 @@ Turn the section **off** to remove it from the output without wiping the knobs. 
 
 ## How to use it
 
-- **Under a vocal** — Rate ~1.2 Hz, Depth around 3 ms, Mix 10–15 %. Present but not the main event. **JJ Cajun Moon** and **JJ Dark Vocal** sit here.
+- **Under a vocal** — Rate ~1.2 Hz, Depth around 3 ms, Mix 10–15 %. Present but not the main event. **JJ Moon** and **JJ Dark Vocal** sit here.
 - **Leave it off** when the trick should read clean: slap, octave, one-sided pitch. **Slapback Twang**, **JJ Lies**, **Octave Width**, and **Deep Baritone** all run with Vibrato off.
 
 If Shift is already doing a large pitch drop, adding Vibrato can sound comic rather than musical. Depth first, then Mix; Rate last.

@@ -4,7 +4,27 @@ Paste-ready listing, privacy answers, and review notes for the iOS/iPadOS Audio 
 
 Use these values in [App Store Connect](https://appstoreconnect.apple.com) for the **container app** `com.gerov.jjbreeze`. The AUv3 (`com.gerov.jjbreeze.AUv3`) is not a separate listing.
 
-Current shipping target: marketing version **`1.0.0`**, build **`4`** (see `JJBreeze/Info.plist`).
+Current shipping target: marketing version **`1.0.1`**, build **`1`** (see `JJBreeze/Info.plist`). **1.0.0** (build 4) is live on the App Store; 1.0.1 is an update, so only the build, the **What’s New** text and any changed screenshots need new values — the rest of this listing carries over untouched.
+
+---
+
+## Shipping an update (1.0.1)
+
+Most of this document is first-release material. For an update to a **live** app only these
+steps apply — the IAP, Content Rights, age rating, privacy answers and URLs stay as approved.
+
+1. Bump the version in **both** `JJBreeze/Info.plist` and `JJBreezeExtension/Info.plist`
+   (`CFBundleShortVersionString` = `1.0.1`, `CFBundleVersion` = `1`) **and** in
+   `project.yml` (`MARKETING_VERSION`, `CURRENT_PROJECT_VERSION`) so a regenerated
+   project keeps the bump. The app and the appex must carry the same pair.
+2. App Store Connect → **jj-breeze** → **+ Version or Platform** → `1.0.1`.
+3. Archive scheme **jj-breeze** (Release, Any iOS Device) → Distribute → App Store Connect.
+4. Attach the new build to the 1.0.1 version, paste **What’s New** (below).
+5. Screenshots only need replacing if the UI in them changed. The 1.0.1 changes are not
+   visible in a still, so the 1.0.0 screenshots stay.
+6. The existing IAP `com.gerov.jjbreeze.unlock` is already approved — do **not** re-add or
+   re-submit it with this version.
+7. **Add for Review** → **Submit**. Automatic release is fine for a bug-fix update.
 
 ---
 
@@ -147,7 +167,7 @@ Do this instead:
    - At least one localization (English)
    - **Review screenshot**: `image/screen/AppReview-IAP-unlock.png` (**640×920**, RGB, no alpha)  
      App Store Connect’s IAP uploader still validates this legacy size even when the tooltip lists modern App Store sizes. Fallbacks: `AppReview-IAP-unlock-1242x2688.png`, or try **Safari**.
-2. Open the **iOS app version** (e.g. **1.0.0**) — not the IAP page.
+2. Open the **iOS app version** (e.g. **1.0.1**) — not the IAP page.
 3. Scroll to **In-App Purchases and Subscriptions** (or **App Store** → version → **In-App Purchases**).
 4. Click **+** / **Select In-App Purchases** → add **`com.gerov.jjbreeze.unlock`**.
 5. Upload the build, fill metadata, then **Add for Review** / **Submit for Review** on the **version**.
@@ -321,7 +341,7 @@ PANEL
 Retro hardware look with two finishes — Field Green and Slate — chosen with a rotary selector. IN/OUT LED meters in the header. Save As… for user presets; swipe to rename or delete.
 
 FACTORY PRESETS
-Default, Stereo Width, JJ Cajun Moon, JJ Lies, JJ Dark Vocal, Octave Width, Deep Baritone, Slapback Twang.
+Default, Stereo Width, JJ Moon, JJ Lies, JJ Dark Vocal, Octave Width, Deep Baritone, Slapback Twang.
 
 IN A DAW
 1. Install and open jj-breeze once (this registers the Audio Unit).
@@ -360,7 +380,7 @@ PANEL
 Retro-Look mit zwei Finishes — Field Green und Slate. IN/OUT-LED-Meter im Header. Eigene Presets über Save As…; zum Umbenennen oder Löschen nach links wischen.
 
 FACTORY-PRESETS
-Default, Stereo Width, JJ Cajun Moon, JJ Lies, JJ Dark Vocal, Octave Width, Deep Baritone, Slapback Twang.
+Default, Stereo Width, JJ Moon, JJ Lies, JJ Dark Vocal, Octave Width, Deep Baritone, Slapback Twang.
 
 IN EINER DAW
 1. jj-breeze einmal installieren und öffnen (registriert die Audio Unit).
@@ -393,7 +413,23 @@ auv3,audio unit,widener,pitch shifter,vibrato,waerme,gesang,stereo,effekt,chorus
 
 ---
 
-## What’s New (version 1.0.0)
+## What’s New (version 1.0.1)
+
+Required for every update. Paste into the **iOS 1.0.1** version page → **What’s New in This Version**.
+
+```
+• The preset window now closes as soon as you pick a preset.
+• Renamed the “JJ Cajun Moon” preset to “JJ Moon”. Your own saved presets are untouched.
+```
+
+German (DE localization):
+
+```
+• Das Preset-Fenster schließt sich jetzt, sobald ein Preset gewählt wird.
+• Preset „JJ Cajun Moon“ heißt jetzt „JJ Moon“. Eigene gespeicherte Presets bleiben unverändert.
+```
+
+### Previous — 1.0.0 (first release)
 
 ```
 First release. Stereo micro-pitch widener, vibrato, and warmth as an AUv3 with a retro panel (Field Green / Slate), built-in host, and factory presets. 7-day free trial, then one-time unlock. Works in GarageBand, Logic for iPad, AUM, and other Audio Unit hosts after you open this app once.
@@ -447,7 +483,7 @@ HOW TO REVIEW (no GarageBand required)
 6. Turn Shift knobs (Pitch L/R, Mix). The sound should change.
 7. Enable Vibrato and Warmth with the section bat switches and move their Mix knobs.
 8. Optional: turn the finish selector between Field Green and Slate.
-9. Open the preset window and load “JJ Cajun Moon” or “Deep Baritone”.
+9. Open the preset window and load “JJ Moon” or “Deep Baritone”. The window closes as soon as a preset is picked.
 10. Tap Stop.
 
 The knobs are silent until Play is running. That is expected: this is an effect, not a synth. Demo Loop is the default source.
@@ -633,11 +669,11 @@ Apple often rejects Audio Unit apps for these. This project is set up to avoid t
 
 ## Third-party names
 
-Preset names (e.g. JJ Cajun Moon) describe a *sound*, not an endorsement. The public description states the product is not affiliated with third-party vendors or artists.
+Preset names (e.g. JJ Moon) describe a *sound*, not an endorsement. The public description states the product is not affiliated with third-party vendors or artists.
 
 Do **not** put Soundtoys, MicroShift, Stillwell, or artist names in the **subtitle, keywords, or screenshots**. Keep competitor names out of promotional text.
 
-If Legal asks you to rename presets before 1.0, change them in `JJBreezeExtension/Parameters/Presets.swift` and submit a new build.
+“JJ Cajun Moon” was shortened to **“JJ Moon”** in 1.0.1 for exactly this reason — a song title is closer to a reference than a description of a sound. If a preset name needs to change again, edit `JJBreezeExtension/Parameters/Presets.swift`, update the **FACTORY PRESETS** line in both descriptions and the reviewer notes here, and submit a new build.
 
 ---
 
@@ -652,7 +688,7 @@ If Legal asks you to rename presets before 1.0, change them in `JJBreezeExtensio
 - [ ] App Group **`group.com.gerov.jjbreeze`** on app + extension IDs
 - [ ] Sandbox tester created; unlock + restore tested on device
 - [ ] First launch: Play works with no purchase sheet
-- [ ] Version **1.0.0**, build **4** (or higher unique build)
+- [ ] Version **1.0.1**, build **1** (or higher unique build)
 - [ ] Support URL live: `https://github.com/petergerov/jj-breeze-auv3/issues`
 - [ ] Privacy Policy URL live: `https://petergerov.github.io/jj-breeze-auv3/privacy.html`
 - [ ] English description + review notes pasted

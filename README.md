@@ -54,7 +54,7 @@ After the container app has been launched once:
 
 ## Factory presets
 
-Default, Stereo Width, JJ Cajun Moon, JJ Lies, JJ Dark Vocal, Octave Width, Deep Baritone, Slapback Twang.
+Default, Stereo Width, JJ Moon, JJ Lies, JJ Dark Vocal, Octave Width, Deep Baritone, Slapback Twang.
 
 User presets: tap the preset window → **Save As…**; swipe left to rename or delete. Preset names describe a *feel* — the plug-in is not affiliated with any artist or third-party vendor.
 

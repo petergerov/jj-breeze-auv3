@@ -32,7 +32,7 @@ On iOS, **Pitch** and **Delay** can be linked. Link keeps the L/R offset while y
 ## How to use it
 
 - **Width** — Pitch L and R with opposite signs, short Delay L/R, Focus high enough that bass stays put.
-- **Processed vocal** — matching Pitch L/R (e.g. +300 or −300), Focus near the bottom, Mix to taste. See **JJ Cajun Moon** and **JJ Dark Vocal**.
+- **Processed vocal** — matching Pitch L/R (e.g. +300 or −300), Focus near the bottom, Mix to taste. See **JJ Moon** and **JJ Dark Vocal**.
 - **One-sided shift** — Pitch L at 0, Pitch R high (or the reverse). **JJ Lies** is this: R at +470 cents.
 - **Slap** — Pitch at 0, Delay around 110 / 115 ms, Focus down, Vibrato and Warmth off. **Slapback Twang**.
 - **Octave** — Pitch L −1200, Pitch R 0, Focus down. **Octave Width**.

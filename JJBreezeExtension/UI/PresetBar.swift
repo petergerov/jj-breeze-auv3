@@ -229,11 +229,13 @@ struct PresetBar: View {
     private func selectFactory(_ number: Int) {
         audioUnit?.currentPreset = audioUnit?.factoryPresets?.first { $0.number == number }
         reload()
+        showPicker = false
     }
 
     private func select(_ preset: AUAudioUnitPreset) {
         audioUnit?.currentPreset = preset
         reload()
+        showPicker = false
     }
 
     private func save() {

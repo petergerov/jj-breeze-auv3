@@ -31,7 +31,7 @@ Long-press **Drive** or **Body** on iOS for the same short help text.
 
 ## How to use it
 
-- **Dark vocal** — Tone down (around 2.5–3.5 kHz), a little Drive, Mix enough to hear the roll-off. **JJ Cajun Moon** uses Warmth without extra Body.
+- **Dark vocal** — Tone down (around 2.5–3.5 kHz), a little Drive, Mix enough to hear the roll-off. **JJ Moon** uses Warmth without extra Body.
 - **Chest / baritone** — Body up as well, especially with a downward Pitch in Shift. **Deep Baritone** leans on Body + Drive; **JJ Dark Vocal** uses a lighter Mix.
 - **Leave it off** for slap and sparkle. **Slapback Twang** and **JJ Lies** keep Warmth off so the repeat stays bright.
 
