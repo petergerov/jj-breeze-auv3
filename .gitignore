@@ -1,0 +1,16 @@
+.DS_Store
+build/
+DerivedData/
+*.xcuserstate
+*.xcuserdata/
+/.idea/
+/.vscode/
+*.moved-aside
+*.hmap
+*.ipa
+*.dSYM.zip
+*.dSYM
+
+# App Store Connect / StoreKit private keys — never commit
+api/
+*.p8
